@@ -17,8 +17,8 @@ class _IndexPageState extends State<IndexPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SizedBox(
-          width: double.infinity,
-          height: double.infinity,
+          width: double.maxFinite,
+          height: double.maxFinite,
           child: Material(
               color: Color(0xfffef7ff),
               child: ListView(
