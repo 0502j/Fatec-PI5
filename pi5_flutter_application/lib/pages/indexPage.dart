@@ -37,7 +37,9 @@ class _IndexPageState extends State<IndexPage> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                           ),
-                          child: FlutterLogo(size: 180),
+                          child: ClipOval(
+                              child: Image.asset(
+                                  'assets/images/ct-worldwmap.jpg')),
                         ),
                         SizedBox(height: 32.50),
                         SizedBox(
