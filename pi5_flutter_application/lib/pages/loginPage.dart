@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -66,6 +67,10 @@ class _loginPageState extends State<loginPage> {
                       padding: const EdgeInsets.only(
                           left: 16.0, right: 16.0, top: 16.0, bottom: 0.0),
                       child: TextField(
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(
+                              100), //Máx 100 caracteres
+                        ],
                         controller: _controller,
                         decoration: InputDecoration(
                             labelText: "Digite seu e-mail",
@@ -83,6 +88,7 @@ class _loginPageState extends State<loginPage> {
                       padding: const EdgeInsets.only(
                           left: 16.0, right: 16.0, top: 0, bottom: 8.0),
                       child: TextField(
+                        inputFormatters: [LengthLimitingTextInputFormatter(50)],
                         controller: _controllerPwd,
                         decoration: InputDecoration(
                             labelText: "Digite sua senha",
