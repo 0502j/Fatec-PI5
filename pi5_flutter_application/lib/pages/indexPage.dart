@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:pi5_flutter_application/pages/signUpPage.dart';
+import 'package:pi5_flutter_application/pages/loginPage.dart';
 
 class IndexPage extends StatefulWidget {
   const IndexPage({super.key});
@@ -96,16 +98,24 @@ class _IndexPageState extends State<IndexPage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            "Já tenho uma conta",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontFamily: "Roboto",
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          )
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const loginPage()));
+                                              },
+                                              child: Text(
+                                                "Já tenho uma conta",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 16,
+                                                  fontFamily: "Roboto",
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ))
                                         ],
                                       ),
                                     )
@@ -139,15 +149,23 @@ class _IndexPageState extends State<IndexPage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Text(
-                                      "Registrar-se",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: Color(0xff283618),
-                                          fontSize: 16,
-                                          fontFamily: "Roboto",
-                                          fontWeight: FontWeight.w500),
-                                    )
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const signUpPage()));
+                                        },
+                                        child: Text(
+                                          "Registrar-se",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Color(0xff283618),
+                                              fontSize: 16,
+                                              fontFamily: "Roboto",
+                                              fontWeight: FontWeight.w500),
+                                        ))
                                   ],
                                 ),
                               )
