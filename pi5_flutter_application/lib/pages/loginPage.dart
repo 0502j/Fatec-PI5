@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pi5_flutter_application/pages/dashboardPage.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({super.key});
@@ -107,7 +108,13 @@ class _loginPageState extends State<loginPage> {
                       child: SizedBox(
                         width: 300,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const dashboardPage()));
+                          },
                           style: ElevatedButton.styleFrom(
                             primary: Color(0xff606c38),
                             shape: RoundedRectangleBorder(

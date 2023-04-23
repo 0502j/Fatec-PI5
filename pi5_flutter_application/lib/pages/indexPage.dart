@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:pi5_flutter_application/pages/signUpPage.dart';
 import 'package:pi5_flutter_application/pages/loginPage.dart';
 
@@ -47,7 +45,7 @@ class _IndexPageState extends State<IndexPage> {
                         SizedBox(
                           width: 334,
                           child: Text(
-                            "Lorem ipsum dolor",
+                            "[Nome do projeto]",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.black,
@@ -61,7 +59,7 @@ class _IndexPageState extends State<IndexPage> {
                         SizedBox(
                           width: 257,
                           child: Text(
-                            "lorem ipsum dolor sit amet, lorem ipsum dolor sit amet",
+                            "Descubra eventos, participe e faça diferença na causa ambiental.",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.black,

@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pi5_flutter_application/pages/introPage.dart';
+import 'package:pi5_flutter_application/pages/loginPage.dart';
 
 class signUpPage extends StatefulWidget {
   const signUpPage({super.key});
@@ -246,7 +248,12 @@ class _signUpPageState extends State<signUpPage> {
                       child: SizedBox(
                         width: 300,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const introPage()));
+                          },
                           style: ElevatedButton.styleFrom(
                             primary: Color(0xff606c38),
                             shape: RoundedRectangleBorder(
