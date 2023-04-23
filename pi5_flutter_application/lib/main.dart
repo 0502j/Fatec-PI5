@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'PI5',
       theme: ThemeData(
+          scaffoldBackgroundColor: Color(0xfffef7ff),
           brightness: Brightness.light,
           useMaterial3: true,
           colorSchemeSeed: Colors.green),

@@ -78,20 +78,28 @@ class _introPageState extends State<introPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Bem vindo!",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: "Roboto",
-                          fontWeight: FontWeight.w600,
-                          fontSize: 32),
-                    ),
-                    Text("Vamos conhecer os benefícios do app?",
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          right: 8, left: 8, top: 8, bottom: 0),
+                      child: Text(
+                        "Olá!",
                         style: TextStyle(
                             color: Colors.black,
                             fontFamily: "Roboto",
                             fontWeight: FontWeight.w600,
-                            fontSize: 24)),
+                            fontSize: 32),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 8, right: 8, bottom: 4, top: 0),
+                      child: Text("Vamos conhecer os benefícios do app?",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: "Roboto",
+                              fontWeight: FontWeight.w600,
+                              fontSize: 24)),
+                    ),
                   ],
                 ),
               ),
@@ -106,6 +114,13 @@ class _introPageState extends State<introPage> {
                   children: [
                     Center(
                       child: Card(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            side: BorderSide(
+                              color: Color(0xff283618),
+                              width: 0.5,
+                            )),
                         child: Column(
                           children: [
                             Image.asset(
