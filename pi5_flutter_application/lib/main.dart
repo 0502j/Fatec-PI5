@@ -1,3 +1,4 @@
+import 'package:pi5_flutter_application/pages/dashboardPage.dart';
 import 'package:pi5_flutter_application/pages/indexPage.dart';
 import 'package:flutter/material.dart';
 
@@ -14,10 +15,11 @@ class MyApp extends StatelessWidget {
       title: 'PI5',
       theme: ThemeData(
           scaffoldBackgroundColor: Color(0xfffef7ff),
+          fontFamily: "Roboto",
           brightness: Brightness.light,
           useMaterial3: true,
           colorSchemeSeed: Colors.green),
-      home: const IndexPage(),
+      home: const dashboardPage(),
     );
   }
 }
