@@ -13,7 +13,6 @@ class _IndexPageState extends State<IndexPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: SizedBox(
           width: double.maxFinite,
           height: double.maxFinite,
@@ -69,62 +68,59 @@ class _IndexPageState extends State<IndexPage> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 32.50),
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: 270,
-                              height: 36,
-                              child: Material(
-                                color: Color(0xff606c38),
-                                borderRadius: BorderRadius.circular(100),
-                                clipBehavior: Clip.antiAlias,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 24),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          TextButton(
-                                              onPressed: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const loginPage()));
-                                              },
-                                              child: Text(
-                                                "Já tenho uma conta",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: 270,
+                          height: 36,
+                          decoration: BoxDecoration(
+                            color: Color(0xff606c38),
+                            borderRadius: BorderRadius.circular(100),
+                            border:
+                                Border.all(color: Color(0xff79747e), width: 1),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                  flex: 1,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 24),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const signUpPage()));
+                                            },
+                                            child: Text(
+                                              "Já tenho uma conta",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 16,
                                                   fontFamily: "Roboto",
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ))
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
+                                                  fontWeight: FontWeight.w500),
+                                            ))
+                                      ],
+                                    ),
+                                  ))
+                            ],
+                          ),
                         ),
                         SizedBox(
-                          height: 32.50,
+                          height: 10,
                         ),
                         Container(
                           width: 270,
@@ -135,38 +131,41 @@ class _IndexPageState extends State<IndexPage> {
                                 Border.all(color: Color(0xff79747e), width: 1),
                           ),
                           child: Column(
-                            mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 24),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const signUpPage()));
-                                        },
-                                        child: Text(
-                                          "Registrar-se",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              color: Color(0xff283618),
-                                              fontSize: 16,
-                                              fontFamily: "Roboto",
-                                              fontWeight: FontWeight.w500),
-                                        ))
-                                  ],
-                                ),
-                              )
+                              Expanded(
+                                  flex: 1,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 24),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const signUpPage()));
+                                            },
+                                            child: Text(
+                                              "Registrar-se",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: Color(0xff283618),
+                                                  fontSize: 16,
+                                                  fontFamily: "Roboto",
+                                                  fontWeight: FontWeight.w500),
+                                            ))
+                                      ],
+                                    ),
+                                  ))
                             ],
                           ),
                         )
