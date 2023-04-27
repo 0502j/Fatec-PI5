@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pi5_flutter_application/pages/dashboardPage.dart';
 import 'package:pi5_flutter_application/pages/signUpPage.dart';
 import 'package:pi5_flutter_application/pages/loginPage.dart';
 
@@ -102,7 +103,7 @@ class _IndexPageState extends State<IndexPage> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          const signUpPage()));
+                                                          const dashboardPage()));
                                             },
                                             child: Text(
                                               "Já tenho uma conta",
