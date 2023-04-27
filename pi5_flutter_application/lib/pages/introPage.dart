@@ -39,7 +39,7 @@ class _introPageState extends State<introPage> {
         case 3:
           _title = "Encontre materiais didáticos";
           _description =
-              "Você pode acessar materiais e recursos valiosos sobre a causa ambiental, compartilhando e aprendendo sobre a importância do ambiente para promover a conscientização!";
+              "Você pode acessar materiais e recursos valiosos sobre a causa ambiental, promovendo a conscientização!";
           _imageAsset = "assets/images/ct-papers.jpg";
           _showFinalButton = true;
           break;
@@ -93,7 +93,7 @@ class _introPageState extends State<introPage> {
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 8, right: 8, bottom: 4, top: 0),
-                      child: Text("Vamos conhecer os benefícios do app?",
+                      child: Text("Conheça os benefícios do app",
                           style: TextStyle(
                               color: Colors.black,
                               fontFamily: "Roboto",

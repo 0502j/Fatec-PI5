@@ -3,6 +3,7 @@ import 'package:pi5_flutter_application/pages/dashboardPage.dart';
 import 'package:pi5_flutter_application/pages/eventDetailPage.dart';
 import 'package:pi5_flutter_application/pages/indexPage.dart';
 import 'package:flutter/material.dart';
+import 'package:pi5_flutter_application/pages/introPage.dart';
 import 'package:pi5_flutter_application/pages/signUpPage.dart';
 
 void main() {
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.light,
           useMaterial3: true,
           colorSchemeSeed: Colors.green),
-      home: const signUpPage(),
+      home: const introPage(),
     );
   }
 }
