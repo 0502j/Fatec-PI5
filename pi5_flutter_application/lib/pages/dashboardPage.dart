@@ -87,7 +87,7 @@ class _dashboardPageState extends State<dashboardPage> {
               ],
             ),
             SizedBox(
-              height: 30,
+              height: 20,
             ),
             InkWell(
               onTap: () {
@@ -164,7 +164,6 @@ class _dashboardPageState extends State<dashboardPage> {
             Padding(
               padding: EdgeInsets.all(8),
               child: Container(
-                padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.transparent),
                     borderRadius: BorderRadius.circular(10)),
@@ -269,7 +268,8 @@ class _dashboardPageState extends State<dashboardPage> {
                                     Text(_truncatedDescriptionText),
                                   ],
                                 ),
-                                ClipRRect(
+                                Expanded(
+                                    child: ClipRRect(
                                   borderRadius: BorderRadius.circular(8),
                                   child: Image.asset(
                                     "assets/images/pawel-unsplash.jpg",
@@ -277,7 +277,7 @@ class _dashboardPageState extends State<dashboardPage> {
                                     width: 100,
                                     fit: BoxFit.cover,
                                   ),
-                                )
+                                ))
                               ],
                             ))
                           ],
