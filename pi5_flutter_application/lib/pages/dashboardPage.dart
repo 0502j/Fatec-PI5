@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pi5_flutter_application/pages/eventDetailPage.dart';
+import 'package:pi5_flutter_application/pages/resourcesPage.dart';
 
 class dashboardPage extends StatefulWidget {
   const dashboardPage({super.key});
@@ -123,7 +124,10 @@ class _dashboardPageState extends State<dashboardPage> {
             ),
             InkWell(
               onTap: () {
-                //To do push
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const resourcesPage()));
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
