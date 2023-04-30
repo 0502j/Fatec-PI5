@@ -26,8 +26,7 @@ class _userEventsPageState extends State<userEventsPage> {
     });
   }
 
-  //To do - lógica de seleção de cards
-
+//Seleção de cards
   bool _isSelected = false;
 
   @override

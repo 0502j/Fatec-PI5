@@ -14,11 +14,20 @@ class dashboardPage extends StatefulWidget {
 
 class _dashboardPageState extends State<dashboardPage> {
   //Controle de chips de filtro
-  bool _isChipSelected = false;
-  bool _isChip2Selected = false;
-  bool _isChip3Selected = false;
-  bool _isChip4Selected = false;
-  bool _isChip5Selected = false;
+  //Lógica de seleção de chips
+  List<bool> _isChipSelected = [false, false, false, false, false];
+
+  void selectChip(int index) {
+    setState(() {
+      _isChipSelected[index] = true;
+
+      for (int i = 0; i < _isChipSelected.length; i++) {
+        if (i != index) {
+          _isChipSelected[i] = false;
+        }
+      }
+    });
+  }
 
   //Cortar o texto com base no comprimento cadastrado
   late String _truncatedDescriptionText;
@@ -182,53 +191,51 @@ class _dashboardPageState extends State<dashboardPage> {
                     GestureDetector(
                       onTap: () {
                         //To do filtering
-                        setState(() {
-                          _isChipSelected = !_isChipSelected;
-                        });
+                        selectChip(0);
                       },
                       child: Chip(
                         label: Text("Filtro 1"),
-                        backgroundColor:
-                            _isChipSelected ? Color(0xffd9d9d9) : Colors.white,
+                        backgroundColor: _isChipSelected[0]
+                            ? Color(0xffd9d9d9)
+                            : Colors.white,
                       ),
                     ),
                     GestureDetector(
                       onTap: () {
                         //To do filtering
                         setState(() {
-                          _isChip2Selected = !_isChip2Selected;
+                          selectChip(1);
                         });
                       },
                       child: Chip(
                         label: Text("Filtro 2"),
-                        backgroundColor:
-                            _isChip2Selected ? Color(0xffd9d9d9) : Colors.white,
+                        backgroundColor: _isChipSelected[1]
+                            ? Color(0xffd9d9d9)
+                            : Colors.white,
                       ),
                     ),
                     GestureDetector(
                       onTap: () {
                         //To do filtering
-                        setState(() {
-                          _isChip3Selected = !_isChip3Selected;
-                        });
+                        selectChip(2);
                       },
                       child: Chip(
                         label: Text("Filtro 3"),
-                        backgroundColor:
-                            _isChip3Selected ? Color(0xffd9d9d9) : Colors.white,
+                        backgroundColor: _isChipSelected[2]
+                            ? Color(0xffd9d9d9)
+                            : Colors.white,
                       ),
                     ),
                     GestureDetector(
                       onTap: () {
                         //To do filtering
-                        setState(() {
-                          _isChip4Selected = !_isChip3Selected;
-                        });
+                        selectChip(3);
                       },
                       child: Chip(
                         label: Text("Filtro 4"),
-                        backgroundColor:
-                            _isChip4Selected ? Color(0xffd9d9d9) : Colors.white,
+                        backgroundColor: _isChipSelected[3]
+                            ? Color(0xffd9d9d9)
+                            : Colors.white,
                       ),
                     )
                   ],
