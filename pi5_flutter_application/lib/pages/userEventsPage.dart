@@ -11,9 +11,23 @@ class userEventsPage extends StatefulWidget {
 }
 
 class _userEventsPageState extends State<userEventsPage> {
-  bool _isChipSelected = false;
-  bool _isChip2Selected = false;
-  bool _isChip3Selected = false;
+  //Lógica de seleção de chips
+  List<bool> _isChipSelected = [false, false];
+
+  void selectChip(int index) {
+    setState(() {
+      _isChipSelected[index] = true;
+
+      for (int i = 0; i < _isChipSelected.length; i++) {
+        if (i != index) {
+          _isChipSelected[i] = false;
+        }
+      }
+    });
+  }
+
+  //To do - lógica de seleção de cards
+
   bool _isSelected = false;
 
   @override
@@ -80,13 +94,11 @@ class _userEventsPageState extends State<userEventsPage> {
                           GestureDetector(
                             onTap: () {
                               //To do filtering
-                              setState(() {
-                                _isChipSelected = !_isChipSelected;
-                              });
+                              selectChip(0);
                             },
                             child: Chip(
                               label: Text("Criados por você"),
-                              backgroundColor: _isChipSelected
+                              backgroundColor: _isChipSelected[0]
                                   ? Color(0xffd9d9d9)
                                   : Colors.white,
                             ),
@@ -95,12 +107,12 @@ class _userEventsPageState extends State<userEventsPage> {
                             onTap: () {
                               //To do filtering
                               setState(() {
-                                _isChip2Selected = !_isChip2Selected;
+                                selectChip(1);
                               });
                             },
                             child: Chip(
                               label: Text("Outros eventos"),
-                              backgroundColor: _isChip2Selected
+                              backgroundColor: _isChipSelected[1]
                                   ? Color(0xffd9d9d9)
                                   : Colors.white,
                             ),
