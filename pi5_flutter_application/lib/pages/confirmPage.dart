@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pi5_flutter_application/pages/userEventsPage.dart';
 
 class confirmPage extends StatefulWidget {
   const confirmPage({super.key});
@@ -47,11 +48,10 @@ class _confirmPageState extends State<confirmPage> {
                   width: 300,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) =>
-                      //             const introPage()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const userEventsPage()));
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Color(0xff606c38),

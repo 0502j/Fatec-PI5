@@ -125,8 +125,8 @@ class _userEventsPageState extends State<userEventsPage> {
                                 Container(
                                   decoration: BoxDecoration(
                                       color: _isSelected
-                                          ? Color(0xffededee)
-                                          : Color.fromARGB(255, 172, 188, 122),
+                                          ? Color.fromARGB(255, 172, 188, 122)
+                                          : Color(0xffededee),
                                       border: Border.all(
                                           color: Colors.grey, width: 1)),
                                   child: ListTile(
