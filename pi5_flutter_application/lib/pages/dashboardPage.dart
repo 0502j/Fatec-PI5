@@ -1,8 +1,8 @@
+// ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pi5_flutter_application/pages/eventDetailPage.dart';
+import 'package:pi5_flutter_application/pages/eventManagementPage.dart';
 import 'package:pi5_flutter_application/pages/resourcesPage.dart';
 import 'package:pi5_flutter_application/pages/userEventsPage.dart';
 
@@ -14,7 +14,6 @@ class dashboardPage extends StatefulWidget {
 }
 
 class _dashboardPageState extends State<dashboardPage> {
-  //Controle de chips de filtro
   //Lógica de seleção de chips
   List<bool> _isChipSelected = [false, false, false, false, false];
 
@@ -75,17 +74,17 @@ class _dashboardPageState extends State<dashboardPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               "Olá,",
                               style:
                                   TextStyle(color: Colors.black, fontSize: 28),
                             ),
-                            Text("[Placeholder]",
+                            const Text("[Placeholder]",
                                 style: TextStyle(
                                     color: Colors.black, fontSize: 28))
                           ],
@@ -102,7 +101,7 @@ class _dashboardPageState extends State<dashboardPage> {
                         child: Container(
                           width: 80,
                           height: 80,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
                                   fit: BoxFit.cover,
@@ -112,7 +111,7 @@ class _dashboardPageState extends State<dashboardPage> {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   InkWell(
@@ -127,12 +126,11 @@ class _dashboardPageState extends State<dashboardPage> {
                             borderRadius: BorderRadius.circular(8)),
                         child: GestureDetector(
                           onTap: () {
-                            //To do - push para página de cadastrar eventos
-                            // Navigator.push(
-                            //                             context,
-                            //                             MaterialPageRoute(
-                            //                                 builder: (context) =>
-                            //                                     const ()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const eventManagementPage()));
                           },
                           child: ListTile(
                               leading: ClipRRect(
@@ -143,14 +141,14 @@ class _dashboardPageState extends State<dashboardPage> {
                                     width: 100,
                                     height: 100),
                               ),
-                              title: Text(
+                              title: const Text(
                                 "Criar evento",
                                 style: TextStyle(
                                     fontSize: 18,
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold),
                               ),
-                              subtitle: Text("Crie seu próprio evento",
+                              subtitle: const Text("Crie seu próprio evento",
                                   style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.black,
@@ -181,14 +179,15 @@ class _dashboardPageState extends State<dashboardPage> {
                                   width: 100,
                                   height: 100),
                             ),
-                            title: Text(
+                            title: const Text(
                               "Materiais",
                               style: TextStyle(
                                   fontSize: 18,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold),
                             ),
-                            subtitle: Text("Ver materiais sobre preservação",
+                            subtitle: const Text(
+                                "Ver materiais sobre preservação",
                                 style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.black,
@@ -196,11 +195,11 @@ class _dashboardPageState extends State<dashboardPage> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Text(
                       "Últimos eventos",
                       style:
@@ -208,7 +207,7 @@ class _dashboardPageState extends State<dashboardPage> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: Container(
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.transparent),
@@ -216,7 +215,7 @@ class _dashboardPageState extends State<dashboardPage> {
                       child: Wrap(
                         spacing: 8,
                         children: [
-                          FaIcon(
+                          const FaIcon(
                             FontAwesomeIcons.filter,
                             color: Color(0xff606c38),
                           ),
@@ -226,9 +225,9 @@ class _dashboardPageState extends State<dashboardPage> {
                               selectChip(0);
                             },
                             child: Chip(
-                              label: Text("Filtro 1"),
+                              label: const Text("Filtro 1"),
                               backgroundColor: _isChipSelected[0]
-                                  ? Color(0xffd9d9d9)
+                                  ? const Color(0xffd9d9d9)
                                   : Colors.white,
                             ),
                           ),
@@ -240,9 +239,9 @@ class _dashboardPageState extends State<dashboardPage> {
                               });
                             },
                             child: Chip(
-                              label: Text("Filtro 2"),
+                              label: const Text("Filtro 2"),
                               backgroundColor: _isChipSelected[1]
-                                  ? Color(0xffd9d9d9)
+                                  ? const Color(0xffd9d9d9)
                                   : Colors.white,
                             ),
                           ),
@@ -252,9 +251,9 @@ class _dashboardPageState extends State<dashboardPage> {
                               selectChip(2);
                             },
                             child: Chip(
-                              label: Text("Filtro 3"),
+                              label: const Text("Filtro 3"),
                               backgroundColor: _isChipSelected[2]
-                                  ? Color(0xffd9d9d9)
+                                  ? const Color(0xffd9d9d9)
                                   : Colors.white,
                             ),
                           ),
@@ -264,9 +263,9 @@ class _dashboardPageState extends State<dashboardPage> {
                               selectChip(3);
                             },
                             child: Chip(
-                              label: Text("Filtro 4"),
+                              label: const Text("Filtro 4"),
                               backgroundColor: _isChipSelected[3]
-                                  ? Color(0xffd9d9d9)
+                                  ? const Color(0xffd9d9d9)
                                   : Colors.white,
                             ),
                           )
@@ -288,16 +287,16 @@ class _dashboardPageState extends State<dashboardPage> {
                           },
                           child: Card(
                             child: Padding(
-                              padding: EdgeInsets.all(8),
+                              padding: const EdgeInsets.all(8),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  CircleAvatar(
+                                  const CircleAvatar(
                                     backgroundImage: AssetImage(
                                         "assets/images/becris-user.png"),
                                     radius: 20.0,
                                   ),
-                                  SizedBox(width: 16.0),
+                                  const SizedBox(width: 16.0),
                                   Expanded(
                                       child: Row(
                                     mainAxisAlignment:
@@ -311,7 +310,7 @@ class _dashboardPageState extends State<dashboardPage> {
                                         children: [
                                           Text(
                                             _truncatedTitleText,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w600,
                                                 color: Colors.black),
@@ -353,16 +352,16 @@ class _dashboardPageState extends State<dashboardPage> {
                           },
                           child: Card(
                             child: Padding(
-                              padding: EdgeInsets.all(8),
+                              padding: const EdgeInsets.all(8),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  CircleAvatar(
+                                  const CircleAvatar(
                                     backgroundImage: AssetImage(
                                         "assets/images/becris-user.png"),
                                     radius: 20.0,
                                   ),
-                                  SizedBox(width: 16.0),
+                                  const SizedBox(width: 16.0),
                                   Expanded(
                                       child: Row(
                                     mainAxisAlignment:
@@ -376,7 +375,7 @@ class _dashboardPageState extends State<dashboardPage> {
                                         children: [
                                           Text(
                                             _truncatedTitleText,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w600,
                                                 color: Colors.black),
@@ -418,16 +417,16 @@ class _dashboardPageState extends State<dashboardPage> {
                           },
                           child: Card(
                             child: Padding(
-                              padding: EdgeInsets.all(8),
+                              padding: const EdgeInsets.all(8),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  CircleAvatar(
+                                  const CircleAvatar(
                                     backgroundImage: AssetImage(
                                         "assets/images/becris-user.png"),
                                     radius: 20.0,
                                   ),
-                                  SizedBox(width: 16.0),
+                                  const SizedBox(width: 16.0),
                                   Expanded(
                                       child: Row(
                                     mainAxisAlignment:
@@ -441,7 +440,7 @@ class _dashboardPageState extends State<dashboardPage> {
                                         children: [
                                           Text(
                                             _truncatedTitleText,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w600,
                                                 color: Colors.black),

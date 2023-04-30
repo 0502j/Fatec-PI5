@@ -1,8 +1,9 @@
+// ignore_for_file: file_names, camel_case_types
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pi5_flutter_application/pages/confirmPage.dart';
-import 'package:pi5_flutter_application/pages/eventDetailPage.dart';
 import 'package:pi5_flutter_application/pages/userEventsPage.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
@@ -77,19 +78,20 @@ class _eventManagementPageState extends State<eventManagementPage> {
       }
     } else if (status.isDenied) {
       // Processo caso usuário negue a permissão
+      // ignore: use_build_context_synchronously
       var dialogResult = await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Permissão necessária'),
-          content: Text(
+          title: const Text('Permissão necessária'),
+          content: const Text(
               'O aplicativo precisa da permissão de acesso à galeria para continuar.'),
           actions: [
             TextButton(
-              child: Text('Não'),
+              child: const Text('Não'),
               onPressed: () => Navigator.pop(context, false),
             ),
             TextButton(
-              child: Text('Sim'),
+              child: const Text('Sim'),
               onPressed: () => Navigator.pop(context, true),
             ),
           ],
@@ -124,7 +126,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
               Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -136,7 +138,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                               isUpdating
                                   ? "Atualizar evento"
                                   : "Criar novo evento",
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 28,
                                   fontWeight: FontWeight.w600),
@@ -154,7 +156,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                           child: Container(
                             width: 80,
                             height: 80,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
                                     fit: BoxFit.cover,
@@ -165,7 +167,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   Padding(
@@ -181,7 +183,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                   100), //Aceitar apenas letras e números, máx 100 caracteres
                             ],
                             controller: _controllerTitle,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                                 contentPadding:
                                     EdgeInsets.fromLTRB(12, 6, 12, 6),
                                 labelText: "Título",
@@ -193,7 +195,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                               //To do
                             },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           TextField(
@@ -204,7 +206,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                   250), //Aceitar apenas letras e números, máx 100 caracteres
                             ],
                             controller: _controllerDescription,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                                 contentPadding:
                                     EdgeInsets.fromLTRB(12, 6, 12, 6),
                                 labelText: "Descrição",
@@ -216,7 +218,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                               //To do
                             },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           TextField(
@@ -226,7 +228,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                               LengthLimitingTextInputFormatter(300),
                             ],
                             controller: _controllerAddress,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                                 contentPadding:
                                     EdgeInsets.fromLTRB(12, 6, 12, 6),
                                 labelText: "Local do evento",
@@ -238,7 +240,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                               //To do
                             },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           TextField(
@@ -250,7 +252,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                               FilteringTextInputFormatter.digitsOnly,
                             ],
                             controller: _dateController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                                 contentPadding:
                                     EdgeInsets.fromLTRB(12, 6, 12, 6),
                                 labelText: "Data do evento",
@@ -262,7 +264,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                               //To do
                             },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           TextField(
@@ -274,7 +276,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                               FilteringTextInputFormatter.digitsOnly,
                             ],
                             controller: _timeController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                                 contentPadding:
                                     EdgeInsets.fromLTRB(12, 6, 12, 6),
                                 labelText: "Hora",
@@ -286,7 +288,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                               //To do
                             },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Card(
@@ -296,7 +298,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                 child: _imageFile == null
                                     ? Container(
                                         height: 150,
-                                        child: Center(
+                                        child: const Center(
                                           child: Text('Selecione uma imagem'),
                                         ),
                                       )
@@ -304,7 +306,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           ListTile(
@@ -314,11 +316,11 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                 //To do
                               },
                             ),
-                            title: Text('Permitir inscrições'),
-                            subtitle: Text(
+                            title: const Text('Permitir inscrições'),
+                            subtitle: const Text(
                                 'Ative essa opção caso ainda esteja aceitando inscrições de usuários no evento.'),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           Center(
@@ -335,14 +337,14 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                                 const confirmPage()));
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    primary: Color(0xff606c38),
+                                    primary: const Color(0xff606c38),
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(20)),
                                   ),
                                   child: Text(
                                     isUpdating ? "Atualizar" : "Criar",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.white),

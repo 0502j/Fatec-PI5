@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pi5_flutter_application/pages/introPage.dart';
-import 'package:pi5_flutter_application/pages/loginPage.dart';
 
 class signUpPage extends StatefulWidget {
   const signUpPage({super.key});
@@ -55,7 +52,7 @@ class _signUpPageState extends State<signUpPage> {
           height: double.maxFinite,
           child: Center(
             child: Material(
-                color: Color(0xfffef7ff),
+                color: const Color(0xfffef7ff),
                 child: Center(
                   child: Padding(
                       padding: const EdgeInsets.all(8),
@@ -64,7 +61,7 @@ class _signUpPageState extends State<signUpPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               width: 334,
                               child: Text(
                                 "Cadastre-se",
@@ -77,7 +74,7 @@ class _signUpPageState extends State<signUpPage> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 25),
+                            const SizedBox(height: 25),
                             Padding(
                               padding: const EdgeInsets.only(
                                   left: 16.0, right: 16.0, top: 0, bottom: 0.0),
@@ -89,7 +86,7 @@ class _signUpPageState extends State<signUpPage> {
                                       50), //Aceitar apenas letras, máx 50 caracteres
                                 ],
                                 controller: _controllerName,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     contentPadding:
                                         EdgeInsets.fromLTRB(12, 6, 12, 6),
                                     labelText: "Digite o seu nome",
@@ -102,7 +99,7 @@ class _signUpPageState extends State<signUpPage> {
                                 },
                               ),
                             ),
-                            SizedBox(height: 30),
+                            const SizedBox(height: 30),
                             Padding(
                               padding: const EdgeInsets.only(
                                   left: 16.0, right: 16.0, top: 0, bottom: 0.0),
@@ -112,7 +109,7 @@ class _signUpPageState extends State<signUpPage> {
                                       100), //Aceitar apenas letras, máx 50 caracteres
                                 ],
                                 controller: _controllerEmail,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     contentPadding:
                                         EdgeInsets.fromLTRB(12, 6, 12, 6),
                                     labelText: "Digite seu e-mail",
@@ -125,7 +122,7 @@ class _signUpPageState extends State<signUpPage> {
                                 },
                               ),
                             ),
-                            SizedBox(height: 30),
+                            const SizedBox(height: 30),
                             Padding(
                               padding: const EdgeInsets.only(
                                   left: 16.0, right: 16.0, top: 0, bottom: 0.0),
@@ -137,7 +134,7 @@ class _signUpPageState extends State<signUpPage> {
                                   LengthLimitingTextInputFormatter(3)
                                 ], //Regex p/ autorizar somente números
                                 controller: _controllerAge,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     contentPadding:
                                         EdgeInsets.fromLTRB(12, 6, 12, 6),
                                     labelText: "Digite sua idade",
@@ -150,7 +147,7 @@ class _signUpPageState extends State<signUpPage> {
                                 },
                               ),
                             ),
-                            SizedBox(height: 30),
+                            const SizedBox(height: 30),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -158,7 +155,7 @@ class _signUpPageState extends State<signUpPage> {
                                     child: RadioListTile(
                                   title: Wrap(
                                     direction: Axis.vertical,
-                                    children: [
+                                    children: const [
                                       Text(
                                         "Masculino",
                                         style: TextStyle(fontSize: 16),
@@ -177,7 +174,7 @@ class _signUpPageState extends State<signUpPage> {
                                     child: RadioListTile(
                                   title: Wrap(
                                     direction: Axis.vertical,
-                                    children: [
+                                    children: const [
                                       Text(
                                         "Feminino",
                                         style: TextStyle(fontSize: 16),
@@ -196,7 +193,7 @@ class _signUpPageState extends State<signUpPage> {
                                     child: RadioListTile(
                                   title: Wrap(
                                     direction: Axis.vertical,
-                                    children: [
+                                    children: const [
                                       Text(
                                         "Outro",
                                         style: TextStyle(fontSize: 16),
@@ -213,7 +210,7 @@ class _signUpPageState extends State<signUpPage> {
                                 )),
                               ],
                             ),
-                            SizedBox(height: 30),
+                            const SizedBox(height: 30),
                             Padding(
                               padding: const EdgeInsets.only(
                                   left: 16.0, right: 16.0, top: 0, bottom: 8.0),
@@ -222,7 +219,7 @@ class _signUpPageState extends State<signUpPage> {
                                   LengthLimitingTextInputFormatter(50)
                                 ],
                                 controller: _controllerPwd,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     contentPadding:
                                         EdgeInsets.fromLTRB(12, 6, 12, 6),
                                     labelText: "Digite sua senha",
@@ -236,7 +233,7 @@ class _signUpPageState extends State<signUpPage> {
                                 },
                               ),
                             ),
-                            SizedBox(height: 30),
+                            const SizedBox(height: 30),
                             Padding(
                               padding: const EdgeInsets.only(
                                   left: 16.0, right: 16.0, top: 0, bottom: 8.0),
@@ -245,7 +242,7 @@ class _signUpPageState extends State<signUpPage> {
                                   LengthLimitingTextInputFormatter(50)
                                 ],
                                 controller: _controllerPwdConfirm,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     contentPadding:
                                         EdgeInsets.fromLTRB(12, 6, 12, 6),
                                     labelText: "Confirme sua senha",
@@ -272,12 +269,12 @@ class _signUpPageState extends State<signUpPage> {
                                                 const introPage()));
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    primary: Color(0xff606c38),
+                                    primary: const Color(0xff606c38),
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(20)),
                                   ),
-                                  child: Text(
+                                  child: const Text(
                                     "Cadastrar",
                                     style: TextStyle(
                                         fontSize: 16,
@@ -299,7 +296,8 @@ class _signUpPageState extends State<signUpPage> {
                                     },
                                     child: IconButton(
                                       onPressed: () {},
-                                      icon: FaIcon(FontAwesomeIcons.google,
+                                      icon: const FaIcon(
+                                          FontAwesomeIcons.google,
                                           color: Colors.black87),
                                       iconSize: 40,
                                     ),
@@ -310,7 +308,8 @@ class _signUpPageState extends State<signUpPage> {
                                     },
                                     child: IconButton(
                                       onPressed: () {},
-                                      icon: FaIcon(FontAwesomeIcons.facebook,
+                                      icon: const FaIcon(
+                                          FontAwesomeIcons.facebook,
                                           color: Colors.black87),
                                       iconSize: 40,
                                     ),
@@ -321,7 +320,8 @@ class _signUpPageState extends State<signUpPage> {
                                     },
                                     child: IconButton(
                                       onPressed: () {},
-                                      icon: FaIcon(FontAwesomeIcons.twitter,
+                                      icon: const FaIcon(
+                                          FontAwesomeIcons.twitter,
                                           color: Colors.black87),
                                       iconSize: 40,
                                     ),

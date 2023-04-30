@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pi5_flutter_application/pages/dashboardPage.dart';
 
@@ -42,7 +40,7 @@ class _loginPageState extends State<loginPage> {
           height: double.maxFinite,
           child: Center(
             child: Material(
-              color: Color(0xfffef7ff),
+              color: const Color(0xfffef7ff),
               child: Padding(
                 padding: const EdgeInsets.only(top: 174, bottom: 257),
                 child: Column(
@@ -50,7 +48,7 @@ class _loginPageState extends State<loginPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 334,
                       child: Text(
                         "Login",
@@ -63,7 +61,7 @@ class _loginPageState extends State<loginPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 57.67),
+                    const SizedBox(height: 57.67),
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 16.0, right: 16.0, top: 16.0, bottom: 0.0),
@@ -73,7 +71,7 @@ class _loginPageState extends State<loginPage> {
                               100), //Máx 100 caracteres
                         ],
                         controller: _controller,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             labelText: "Digite seu e-mail",
                             hintText: "seunome@email.com",
                             border: OutlineInputBorder(
@@ -84,14 +82,14 @@ class _loginPageState extends State<loginPage> {
                         },
                       ),
                     ),
-                    SizedBox(height: 57.67),
+                    const SizedBox(height: 57.67),
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 16.0, right: 16.0, top: 0, bottom: 8.0),
                       child: TextField(
                         inputFormatters: [LengthLimitingTextInputFormatter(50)],
                         controller: _controllerPwd,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             labelText: "Digite sua senha",
                             hintText: "*******",
                             border: OutlineInputBorder(
@@ -116,11 +114,11 @@ class _loginPageState extends State<loginPage> {
                                         const dashboardPage()));
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: Color(0xff606c38),
+                            primary: const Color(0xff606c38),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20)),
                           ),
-                          child: Text(
+                          child: const Text(
                             "Entrar",
                             style: TextStyle(
                                 fontSize: 16,
@@ -141,7 +139,7 @@ class _loginPageState extends State<loginPage> {
                             },
                             child: IconButton(
                               onPressed: () {},
-                              icon: FaIcon(FontAwesomeIcons.google,
+                              icon: const FaIcon(FontAwesomeIcons.google,
                                   color: Colors.black87),
                               iconSize: 40,
                             ),
@@ -152,7 +150,7 @@ class _loginPageState extends State<loginPage> {
                             },
                             child: IconButton(
                               onPressed: () {},
-                              icon: FaIcon(FontAwesomeIcons.facebook,
+                              icon: const FaIcon(FontAwesomeIcons.facebook,
                                   color: Colors.black87),
                               iconSize: 40,
                             ),
@@ -163,7 +161,7 @@ class _loginPageState extends State<loginPage> {
                             },
                             child: IconButton(
                               onPressed: () {},
-                              icon: FaIcon(FontAwesomeIcons.twitter,
+                              icon: const FaIcon(FontAwesomeIcons.twitter,
                                   color: Colors.black87),
                               iconSize: 40,
                             ),

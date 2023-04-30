@@ -1,6 +1,6 @@
+// ignore_for_file: file_names, camel_case_types
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pi5_flutter_application/pages/userEventsPage.dart';
 
@@ -18,28 +18,28 @@ class _confirmPageState extends State<confirmPage> {
       body: Align(
         alignment: Alignment.center,
         child: Padding(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 150,
               ),
-              FaIcon(
+              const FaIcon(
                 FontAwesomeIcons.checkCircle,
                 color: Color(0xff606c38),
                 size: 40,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Text(
+              const Text(
                 "Sucesso!",
                 style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w600,
                     fontSize: 20),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               Padding(
@@ -54,11 +54,11 @@ class _confirmPageState extends State<confirmPage> {
                               builder: (context) => const userEventsPage()));
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Color(0xff606c38),
+                      primary: const Color(0xff606c38),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                     ),
-                    child: Text(
+                    child: const Text(
                       "Ver seus eventos",
                       style: TextStyle(
                           fontSize: 16,

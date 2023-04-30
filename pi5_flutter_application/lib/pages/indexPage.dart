@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pi5_flutter_application/pages/dashboardPage.dart';
-import 'package:pi5_flutter_application/pages/signUpPage.dart';
 import 'package:pi5_flutter_application/pages/loginPage.dart';
+import 'package:pi5_flutter_application/pages/signUpPage.dart';
 
 class IndexPage extends StatefulWidget {
   const IndexPage({super.key});
@@ -18,11 +18,11 @@ class _IndexPageState extends State<IndexPage> {
           width: double.maxFinite,
           height: double.maxFinite,
           child: Material(
-              color: Color(0xfffef7ff),
+              color: const Color(0xfffef7ff),
               child: ListView(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                       top: 100,
                       bottom: 274,
                     ),
@@ -34,15 +34,15 @@ class _IndexPageState extends State<IndexPage> {
                         Container(
                           width: 180,
                           height: 180,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                           ),
                           child: ClipOval(
                               child: Image.asset(
                                   'assets/images/ct-worldwmap.jpg')),
                         ),
-                        SizedBox(height: 32.50),
-                        SizedBox(
+                        const SizedBox(height: 32.50),
+                        const SizedBox(
                           width: 334,
                           child: Text(
                             "[Nome do projeto]",
@@ -55,8 +55,8 @@ class _IndexPageState extends State<IndexPage> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 50),
-                        SizedBox(
+                        const SizedBox(height: 50),
+                        const SizedBox(
                           width: 257,
                           child: Text(
                             "Descubra eventos, participe e faça diferença na causa ambiental.",
@@ -69,17 +69,17 @@ class _IndexPageState extends State<IndexPage> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Container(
                           width: 270,
                           height: 36,
                           decoration: BoxDecoration(
-                            color: Color(0xff606c38),
+                            color: const Color(0xff606c38),
                             borderRadius: BorderRadius.circular(100),
-                            border:
-                                Border.all(color: Color(0xff79747e), width: 1),
+                            border: Border.all(
+                                color: const Color(0xff79747e), width: 1),
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -103,9 +103,9 @@ class _IndexPageState extends State<IndexPage> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          const dashboardPage()));
+                                                          const loginPage()));
                                             },
-                                            child: Text(
+                                            child: const Text(
                                               "Já tenho uma conta",
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
@@ -120,7 +120,7 @@ class _IndexPageState extends State<IndexPage> {
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Container(
@@ -128,8 +128,8 @@ class _IndexPageState extends State<IndexPage> {
                           height: 36,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
-                            border:
-                                Border.all(color: Color(0xff79747e), width: 1),
+                            border: Border.all(
+                                color: const Color(0xff79747e), width: 1),
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -155,7 +155,7 @@ class _IndexPageState extends State<IndexPage> {
                                                       builder: (context) =>
                                                           const signUpPage()));
                                             },
-                                            child: Text(
+                                            child: const Text(
                                               "Registrar-se",
                                               textAlign: TextAlign.center,
                                               style: TextStyle(

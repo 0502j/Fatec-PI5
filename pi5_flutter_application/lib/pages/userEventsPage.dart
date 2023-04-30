@@ -39,18 +39,18 @@ class _userEventsPageState extends State<userEventsPage> {
             scrollDirection: Axis.vertical,
             children: [
               Padding(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 child: Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                            children: const [
                               Text(
                                 "Seus eventos",
                                 style: TextStyle(
@@ -64,7 +64,7 @@ class _userEventsPageState extends State<userEventsPage> {
                         Container(
                           width: 80,
                           height: 80,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
                                   fit: BoxFit.cover,
@@ -73,7 +73,7 @@ class _userEventsPageState extends State<userEventsPage> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Container(
@@ -83,7 +83,7 @@ class _userEventsPageState extends State<userEventsPage> {
                       child: Wrap(
                         spacing: 8,
                         children: [
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.only(top: 8),
                             child: FaIcon(
                               FontAwesomeIcons.filter,
@@ -96,9 +96,9 @@ class _userEventsPageState extends State<userEventsPage> {
                               selectChip(0);
                             },
                             child: Chip(
-                              label: Text("Criados por você"),
+                              label: const Text("Criados por você"),
                               backgroundColor: _isChipSelected[0]
-                                  ? Color(0xffd9d9d9)
+                                  ? const Color(0xffd9d9d9)
                                   : Colors.white,
                             ),
                           ),
@@ -110,14 +110,14 @@ class _userEventsPageState extends State<userEventsPage> {
                               });
                             },
                             child: Chip(
-                              label: Text("Outros eventos"),
+                              label: const Text("Outros eventos"),
                               backgroundColor: _isChipSelected[1]
-                                  ? Color(0xffd9d9d9)
+                                  ? const Color(0xffd9d9d9)
                                   : Colors.white,
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.all(16),
+                            padding: const EdgeInsets.all(16),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -125,8 +125,9 @@ class _userEventsPageState extends State<userEventsPage> {
                                 Container(
                                   decoration: BoxDecoration(
                                       color: _isSelected
-                                          ? Color.fromARGB(255, 172, 188, 122)
-                                          : Color(0xffededee),
+                                          ? const Color.fromARGB(
+                                              255, 172, 188, 122)
+                                          : const Color(0xffededee),
                                       border: Border.all(
                                           color: Colors.grey, width: 1)),
                                   child: ListTile(
@@ -135,20 +136,22 @@ class _userEventsPageState extends State<userEventsPage> {
                                         _isSelected = !_isSelected;
                                       });
                                     },
-                                    leading: CircleAvatar(
+                                    leading: const CircleAvatar(
                                       backgroundImage: AssetImage(
                                           "assets/images/becris-user.png"),
                                     ),
-                                    title: Text("Título do card"),
+                                    title: const Text("Título do card"),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(16),
+                                  padding: const EdgeInsets.all(16),
                                   child: Center(
                                     child: Wrap(
+                                      spacing: 8,
+                                      runSpacing: 8,
                                       children: [
                                         SizedBox(
                                           width: 300,
@@ -161,13 +164,13 @@ class _userEventsPageState extends State<userEventsPage> {
                                               //             const confirmPage()));
                                             },
                                             style: ElevatedButton.styleFrom(
-                                              primary: Color(0xffc62525),
+                                              primary: const Color(0xffc62525),
                                               shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           20)),
                                             ),
-                                            child: Text(
+                                            child: const Text(
                                               "Deletar selecionado",
                                               style: TextStyle(
                                                   fontSize: 16,
@@ -176,8 +179,9 @@ class _userEventsPageState extends State<userEventsPage> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(
-                                          width: 10,
+                                        const SizedBox(
+                                          height: 20,
+                                          width: 20,
                                         ),
                                         SizedBox(
                                           width: 300,
@@ -190,13 +194,13 @@ class _userEventsPageState extends State<userEventsPage> {
                                               //             const confirmPage()));
                                             },
                                             style: ElevatedButton.styleFrom(
-                                              primary: Color(0xffc62525),
+                                              primary: const Color(0xffc62525),
                                               shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           20)),
                                             ),
-                                            child: Text(
+                                            child: const Text(
                                               "Deletar tudo",
                                               style: TextStyle(
                                                   fontSize: 16,

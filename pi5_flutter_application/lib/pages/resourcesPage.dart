@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class resourcesPage extends StatefulWidget {
   const resourcesPage({super.key});
@@ -20,19 +18,19 @@ class _resourcesPageState extends State<resourcesPage> {
           scrollDirection: Axis.vertical,
           children: [
             Padding(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Materiais",
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w600,
                         fontSize: 26),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Column(
@@ -41,7 +39,7 @@ class _resourcesPageState extends State<resourcesPage> {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                            color: Color(0xffededee),
+                            color: const Color(0xffededee),
                             border: Border.all(color: Colors.grey, width: 1)),
                         child: ListTile(
                           onTap: () {
@@ -54,8 +52,8 @@ class _resourcesPageState extends State<resourcesPage> {
                                   "assets/images/jas-min-unsplash.jpg"),
                             ),
                           ),
-                          title: Text("Título do card"),
-                          subtitle: Text("Subtítulo do card"),
+                          title: const Text("Título do card"),
+                          subtitle: const Text("Subtítulo do card"),
                         ),
                       )
                     ],
