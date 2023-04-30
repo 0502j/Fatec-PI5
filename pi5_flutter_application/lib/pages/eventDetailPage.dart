@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:pi5_flutter_application/pages/confirmPage.dart';
 
 class eventDetailPage extends StatefulWidget {
   const eventDetailPage({super.key});
@@ -179,11 +180,11 @@ class _eventDetailPageState extends State<eventDetailPage> {
                                     width: 300,
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) =>
-                                        //             const introPage()));
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const confirmPage()));
                                       },
                                       style: ElevatedButton.styleFrom(
                                         primary: Color(0xff606c38),
