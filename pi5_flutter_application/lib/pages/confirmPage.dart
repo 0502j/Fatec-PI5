@@ -33,7 +33,7 @@ class _confirmPageState extends State<confirmPage> {
                 height: 20,
               ),
               Text(
-                "Inscrição feita com sucesso!",
+                "Sucesso!",
                 style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w600,
