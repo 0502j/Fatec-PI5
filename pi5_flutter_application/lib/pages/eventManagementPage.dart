@@ -8,6 +8,7 @@ import 'package:pi5_flutter_application/pages/userEventsPage.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_material_pickers/flutter_material_pickers.dart';
 
 class eventManagementPage extends StatefulWidget {
   const eventManagementPage({super.key});
@@ -24,6 +25,15 @@ class _eventManagementPageState extends State<eventManagementPage> {
   var _controllerAddress;
   TextEditingController _dateController = TextEditingController();
   TextEditingController _timeController = TextEditingController();
+  String dropdownValue = 'Reciclagem'; // valor padrão selecionado
+  List<String> options = [
+    'Reciclagem',
+    'Reflorestamento',
+    'Limpeza de ambientes',
+    'Conscientização e educação',
+    'Conservação de espécies'
+  ];
+  TextEditingController _textFieldController = TextEditingController();
 
   //Seletor de data
   DateTime? _selectedDate;
@@ -61,6 +71,28 @@ class _eventManagementPageState extends State<eventManagementPage> {
         _timeController.text = DateFormat('HH:mm').format(_selectedTime);
       });
     }
+  }
+
+  //Dropdown
+  void _showPicker(BuildContext context) {
+    showMaterialScrollPicker(
+      context: context,
+      title: 'Selecione uma opção',
+      headerColor: Color.fromARGB(255, 47, 95, 67),
+      headerTextColor: Color.fromARGB(255, 47, 95, 67),
+      selectedItem: dropdownValue,
+      items: options,
+      onChanged: (value) {
+        setState(() {
+          dropdownValue = value;
+          _textFieldController.text = value;
+        });
+      },
+      confirmText: 'Confirmar',
+      cancelText: 'Cancelar',
+      // Define a posição do menu suspenso no centro da tela
+      showDivider: false,
+    );
   }
 
   //Uploader de imagem
@@ -112,6 +144,12 @@ class _eventManagementPageState extends State<eventManagementPage> {
         }
       }
     }
+  }
+
+  @override
+  void dispose() {
+    _textFieldController.dispose();
+    super.dispose();
   }
 
   @override
@@ -287,6 +325,29 @@ class _eventManagementPageState extends State<eventManagementPage> {
                             onChanged: (value) {
                               //To do
                             },
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TextField(
+                                  controller: _textFieldController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Selecione uma opção',
+                                    border: OutlineInputBorder(),
+                                    suffixIcon: Icon(Icons.arrow_drop_down),
+                                  ),
+                                  onTap: () {
+                                    // Fecha o teclado virtual e abre o menu suspenso
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
+                                    _showPicker(context);
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
                           const SizedBox(
                             height: 20,
