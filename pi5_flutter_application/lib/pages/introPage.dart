@@ -33,7 +33,7 @@ class _introPageState extends State<introPage> {
         case 2:
           _title = "Crie seus próprios eventos";
           _description =
-              "No app, você pode crair seus eventos e levantar causas que julga importante e fazer a diferença.";
+              "No app, você pode criar seus eventos e levantar causas que julga importante e fazer a diferença.";
           _imageAsset = "assets/images/ct-project.jpg";
           break;
         case 3:

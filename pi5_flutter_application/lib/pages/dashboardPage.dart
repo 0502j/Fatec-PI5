@@ -29,6 +29,16 @@ class _dashboardPageState extends State<dashboardPage> {
     });
   }
 
+  void unselectChip(int index) {
+    setState(() {
+      _isChipSelected[index] = true;
+
+      for (int i = 0; i < _isChipSelected.length; i++) {
+        _isChipSelected[i] = false;
+      }
+    });
+  }
+
   //Cortar o texto com base no comprimento cadastrado
   late String _truncatedDescriptionText;
   late String _descriptionText;
@@ -82,11 +92,11 @@ class _dashboardPageState extends State<dashboardPage> {
                             const Text(
                               "Olá,",
                               style:
-                                  TextStyle(color: Colors.black, fontSize: 28),
+                                  TextStyle(color: Colors.black, fontSize: 26),
                             ),
                             const Text("[Placeholder]",
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 28))
+                                    color: Colors.black, fontSize: 22))
                           ],
                         ),
                       ),
@@ -224,6 +234,11 @@ class _dashboardPageState extends State<dashboardPage> {
                               //To do filtering
                               selectChip(0);
                             },
+                            onDoubleTap: () {
+                              setState(() {
+                                unselectChip(0);
+                              });
+                            },
                             child: Chip(
                               label: const Text("Filtro 1"),
                               backgroundColor: _isChipSelected[0]
@@ -238,6 +253,11 @@ class _dashboardPageState extends State<dashboardPage> {
                                 selectChip(1);
                               });
                             },
+                            onDoubleTap: () {
+                              setState(() {
+                                unselectChip(1);
+                              });
+                            },
                             child: Chip(
                               label: const Text("Filtro 2"),
                               backgroundColor: _isChipSelected[1]
@@ -250,6 +270,11 @@ class _dashboardPageState extends State<dashboardPage> {
                               //To do filtering
                               selectChip(2);
                             },
+                            onDoubleTap: () {
+                              setState(() {
+                                unselectChip(2);
+                              });
+                            },
                             child: Chip(
                               label: const Text("Filtro 3"),
                               backgroundColor: _isChipSelected[2]
@@ -261,6 +286,11 @@ class _dashboardPageState extends State<dashboardPage> {
                             onTap: () {
                               //To do filtering
                               selectChip(3);
+                            },
+                            onDoubleTap: () {
+                              setState(() {
+                                unselectChip(3);
+                              });
                             },
                             child: Chip(
                               label: const Text("Filtro 4"),

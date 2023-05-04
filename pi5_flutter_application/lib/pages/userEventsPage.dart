@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pi5_flutter_application/pages/settingsPage.dart';
 
 class userEventsPage extends StatefulWidget {
   const userEventsPage({super.key});
@@ -22,6 +23,16 @@ class _userEventsPageState extends State<userEventsPage> {
         if (i != index) {
           _isChipSelected[i] = false;
         }
+      }
+    });
+  }
+
+  void unselectChip(int index) {
+    setState(() {
+      _isChipSelected[index] = true;
+
+      for (int i = 0; i < _isChipSelected.length; i++) {
+        _isChipSelected[i] = false;
       }
     });
   }
@@ -61,15 +72,24 @@ class _userEventsPageState extends State<userEventsPage> {
                             ],
                           ),
                         ),
-                        Container(
-                          width: 80,
-                          height: 80,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: AssetImage(
-                                      "assets/images/cd-boyicon.jpg"))),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const settingsPage()));
+                          },
+                          child: Container(
+                            width: 80,
+                            height: 80,
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage(
+                                        "assets/images/rawpixel-settings.jpg"))),
+                          ),
                         )
                       ],
                     ),
@@ -95,6 +115,11 @@ class _userEventsPageState extends State<userEventsPage> {
                               //To do filtering
                               selectChip(0);
                             },
+                            onDoubleTap: () {
+                              setState(() {
+                                unselectChip(0);
+                              });
+                            },
                             child: Chip(
                               label: const Text("Criados por você"),
                               backgroundColor: _isChipSelected[0]
@@ -107,6 +132,11 @@ class _userEventsPageState extends State<userEventsPage> {
                               //To do filtering
                               setState(() {
                                 selectChip(1);
+                              });
+                            },
+                            onDoubleTap: () {
+                              setState(() {
+                                unselectChip(1);
                               });
                             },
                             child: Chip(
@@ -149,9 +179,7 @@ class _userEventsPageState extends State<userEventsPage> {
                                 Padding(
                                   padding: const EdgeInsets.all(16),
                                   child: Center(
-                                    child: Wrap(
-                                      spacing: 8,
-                                      runSpacing: 8,
+                                    child: Column(
                                       children: [
                                         SizedBox(
                                           width: 300,
@@ -180,8 +208,8 @@ class _userEventsPageState extends State<userEventsPage> {
                                           ),
                                         ),
                                         const SizedBox(
-                                          height: 20,
-                                          width: 20,
+                                          height: 10,
+                                          width: 10,
                                         ),
                                         SizedBox(
                                           width: 300,
