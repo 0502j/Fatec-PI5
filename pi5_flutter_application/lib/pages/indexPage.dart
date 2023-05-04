@@ -26,6 +26,9 @@ class _IndexPageState extends State<IndexPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      const SizedBox(
+                        height: 30,
+                      ),
                       Container(
                         width: 200,
                         height: 200,
