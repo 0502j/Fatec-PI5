@@ -119,8 +119,12 @@ class _settingsPageState extends State<settingsPage> {
                       TextFormField(
                         initialValue: _name,
                         decoration: const InputDecoration(
-                          labelText: "Nome",
-                        ),
+                            contentPadding: EdgeInsets.fromLTRB(12, 6, 12, 6),
+                            labelText: "Nome",
+                            hintText: "Seu nome",
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.black, width: 2.0))),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Informe seu nome";
@@ -137,8 +141,12 @@ class _settingsPageState extends State<settingsPage> {
                       TextFormField(
                         initialValue: _email,
                         decoration: const InputDecoration(
-                          labelText: "E-mail",
-                        ),
+                            contentPadding: EdgeInsets.fromLTRB(12, 6, 12, 6),
+                            labelText: "E-mail",
+                            hintText: "seunovoemail@email.com",
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.black, width: 2.0))),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Informe seu e-mail";
@@ -156,8 +164,12 @@ class _settingsPageState extends State<settingsPage> {
                         initialValue: _password,
                         obscureText: true,
                         decoration: const InputDecoration(
-                          labelText: "Senha",
-                        ),
+                            contentPadding: EdgeInsets.fromLTRB(12, 6, 12, 6),
+                            labelText: "Senha",
+                            hintText: "*******",
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.black, width: 2.0))),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Informe sua senha";

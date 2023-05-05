@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
 import 'package:pi5_flutter_application/pages/indexPage.dart';
-import 'package:pi5_flutter_application/pages/settingsPage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
