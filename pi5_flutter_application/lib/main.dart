@@ -1,7 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:pi5_flutter_application/pages/indexPage.dart';
 import 'package:flutter/material.dart';
-import 'package:pi5_flutter_application/pages/loginPage.dart';
 
 void main() {
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
