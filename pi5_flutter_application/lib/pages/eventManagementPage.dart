@@ -20,9 +20,11 @@ class eventManagementPage extends StatefulWidget {
 class _eventManagementPageState extends State<eventManagementPage> {
   //Alterar valores ao criar novo evento ou atualizar existente
   bool isUpdating = false;
-  var _controllerTitle;
-  var _controllerDescription;
-  var _controllerAddress;
+  String _title = "";
+  String _description = "";
+  String _location = "";
+
+  final _formKey = GlobalKey<FormState>();
   TextEditingController _dateController = TextEditingController();
   TextEditingController _timeController = TextEditingController();
   String dropdownValue = 'Reciclagem'; // valor padrão selecionado
@@ -161,263 +163,308 @@ class _eventManagementPageState extends State<eventManagementPage> {
           child: ListView(
             scrollDirection: Axis.vertical,
             children: [
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              isUpdating
-                                  ? "Atualizar evento"
-                                  : "Criar novo evento",
-                              style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ],
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const userEventsPage()));
-                          },
-                          child: Container(
-                            width: 80,
-                            height: 80,
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: AssetImage(
-                                        "assets/images/cd-boyicon.jpg"))),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.only(
-                          left: 16.0, right: 16.0, top: 0, bottom: 0.0),
-                      child: Column(
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          TextField(
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                  RegExp(r'^[a-zA-Z ]+$')),
-                              LengthLimitingTextInputFormatter(
-                                  100), //Aceitar apenas letras e números, máx 100 caracteres
-                            ],
-                            controller: _controllerTitle,
-                            decoration: const InputDecoration(
-                                contentPadding:
-                                    EdgeInsets.fromLTRB(12, 6, 12, 6),
-                                labelText: "Título",
-                                hintText: "Título do seu evento",
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.black, width: 2.0))),
-                            onChanged: (value) {
-                              //To do
-                            },
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          TextField(
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                  RegExp(r'^[a-zA-Z ]+$')),
-                              LengthLimitingTextInputFormatter(
-                                  250), //Aceitar apenas letras e números, máx 100 caracteres
-                            ],
-                            controller: _controllerDescription,
-                            decoration: const InputDecoration(
-                                contentPadding:
-                                    EdgeInsets.fromLTRB(12, 6, 12, 6),
-                                labelText: "Descrição",
-                                hintText: "Uma breve descrição sobre o evento",
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.black, width: 2.0))),
-                            onChanged: (value) {
-                              //To do
-                            },
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          TextField(
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                  RegExp(r'^[a-zA-Z ]+$')),
-                              LengthLimitingTextInputFormatter(300),
-                            ],
-                            controller: _controllerAddress,
-                            decoration: const InputDecoration(
-                                contentPadding:
-                                    EdgeInsets.fromLTRB(12, 6, 12, 6),
-                                labelText: "Local do evento",
-                                hintText: "Endereço onde acontecerá o evento",
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.black, width: 2.0))),
-                            onChanged: (value) {
-                              //To do
-                            },
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          TextField(
-                            onTap: () {
-                              _selectDate(context);
-                            },
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(10),
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                            controller: _dateController,
-                            decoration: const InputDecoration(
-                                contentPadding:
-                                    EdgeInsets.fromLTRB(12, 6, 12, 6),
-                                labelText: "Data do evento",
-                                hintText: "DD/MM/YYYY",
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.black, width: 2.0))),
-                            onChanged: (value) {
-                              //To do
-                            },
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          TextField(
-                            onTap: () {
-                              _selectTime(context);
-                            },
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(10),
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                            controller: _timeController,
-                            decoration: const InputDecoration(
-                                contentPadding:
-                                    EdgeInsets.fromLTRB(12, 6, 12, 6),
-                                labelText: "Hora",
-                                hintText: "00:00",
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.black, width: 2.0))),
-                            onChanged: (value) {
-                              //To do
-                            },
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Row(
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Expanded(
-                                child: TextField(
-                                  controller: _textFieldController,
-                                  decoration: InputDecoration(
-                                    labelText: 'Selecione uma opção',
-                                    border: OutlineInputBorder(),
-                                    suffixIcon: Icon(Icons.arrow_drop_down),
-                                  ),
-                                  onTap: () {
-                                    // Fecha o teclado virtual e abre o menu suspenso
-                                    FocusScope.of(context)
-                                        .requestFocus(FocusNode());
-                                    _showPicker(context);
-                                  },
-                                ),
+                              Text(
+                                isUpdating
+                                    ? "Atualizar evento"
+                                    : "Criar novo evento",
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.w600),
                               ),
                             ],
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Card(
-                            child: GestureDetector(
-                              onTap: _getImage,
-                              child: InkWell(
-                                child: _imageFile == null
-                                    ? Container(
-                                        height: 150,
-                                        child: const Center(
-                                          child: Text('Selecione uma imagem'),
-                                        ),
-                                      )
-                                    : Image.file(_imageFile!),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          ListTile(
-                            leading: Switch(
-                              value: true,
-                              onChanged: (bool value) {
-                                //To do
-                              },
-                            ),
-                            title: const Text('Permitir inscrições'),
-                            subtitle: const Text(
-                                'Ative essa opção caso ainda esteja aceitando inscrições de usuários no evento.'),
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: SizedBox(
-                                width: 300,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const confirmPage()));
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    primary: const Color(0xff606c38),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                  ),
-                                  child: Text(
-                                    isUpdating ? "Atualizar" : "Criar",
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.white),
-                                  ),
-                                ),
-                              ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const userEventsPage()));
+                            },
+                            child: Container(
+                              width: 80,
+                              height: 80,
+                              decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: AssetImage(
+                                          "assets/images/cd-boyicon.jpg"))),
                             ),
                           )
                         ],
-                      )),
-                ],
-              ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.only(
+                            left: 16.0, right: 16.0, top: 0, bottom: 0.0),
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(
+                                    100), //Aceitar apenas letras e números, máx 100 caracteres
+                              ],
+                              decoration: const InputDecoration(
+                                  contentPadding:
+                                      EdgeInsets.fromLTRB(12, 6, 12, 6),
+                                  labelText: "Título",
+                                  hintText: "Título do seu evento",
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.black, width: 2.0))),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Informe o título";
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                setState(() {
+                                  _title = value!;
+                                });
+                              },
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            TextFormField(
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(
+                                    250), //Aceitar apenas letras e números, máx 100 caracteres
+                              ],
+                              decoration: const InputDecoration(
+                                  contentPadding:
+                                      EdgeInsets.fromLTRB(12, 6, 12, 6),
+                                  labelText: "Descrição",
+                                  hintText:
+                                      "Uma breve descrição sobre o evento",
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.black, width: 2.0))),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Informe a descrição";
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                setState(() {
+                                  _description = value!;
+                                });
+                              },
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            TextFormField(
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(300),
+                              ],
+                              decoration: const InputDecoration(
+                                  contentPadding:
+                                      EdgeInsets.fromLTRB(12, 6, 12, 6),
+                                  labelText: "Local do evento",
+                                  hintText: "Endereço onde acontecerá o evento",
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.black, width: 2.0))),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Informe o endereço";
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                setState(() {
+                                  _location = value!;
+                                });
+                              },
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            TextFormField(
+                              onTap: () {
+                                _selectDate(context);
+                              },
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(10),
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              controller: _dateController,
+                              decoration: const InputDecoration(
+                                  contentPadding:
+                                      EdgeInsets.fromLTRB(12, 6, 12, 6),
+                                  labelText: "Data do evento",
+                                  hintText: "DD/MM/YYYY",
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.black, width: 2.0))),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Informe a data";
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                setState(() {
+                                  _dateController =
+                                      value as TextEditingController;
+                                });
+                              },
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            TextFormField(
+                              onTap: () {
+                                _selectTime(context);
+                              },
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(10),
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              controller: _timeController,
+                              decoration: const InputDecoration(
+                                  contentPadding:
+                                      EdgeInsets.fromLTRB(12, 6, 12, 6),
+                                  labelText: "Hora",
+                                  hintText: "00:00",
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.black, width: 2.0))),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Informe a hora";
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                setState(() {
+                                  _timeController =
+                                      value as TextEditingController;
+                                });
+                              },
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: _textFieldController,
+                                    decoration: InputDecoration(
+                                      labelText: 'Selecione uma opção',
+                                      border: OutlineInputBorder(),
+                                      suffixIcon: Icon(Icons.arrow_drop_down),
+                                    ),
+                                    onTap: () {
+                                      FocusScope.of(context)
+                                          .requestFocus(FocusNode());
+                                      _showPicker(context);
+                                    },
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return "Informe a categoria";
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Card(
+                              child: GestureDetector(
+                                onTap: _getImage,
+                                child: InkWell(
+                                  child: _imageFile == null
+                                      ? Container(
+                                          height: 150,
+                                          child: const Center(
+                                            child: Text('Selecione uma imagem'),
+                                          ),
+                                        )
+                                      : Image.file(_imageFile!),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            ListTile(
+                              leading: Switch(
+                                value: true,
+                                onChanged: (bool value) {
+                                  //To do
+                                },
+                              ),
+                              title: const Text('Permitir inscrições'),
+                              subtitle: const Text(
+                                  'Ative essa opção caso ainda esteja aceitando inscrições de usuários no evento.'),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: SizedBox(
+                                  width: 300,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      if (_formKey.currentState!.validate()) {
+                                        _formKey.currentState!.save();
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const confirmPage()));
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      primary: const Color(0xff606c38),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                    ),
+                                    child: Text(
+                                      isUpdating ? "Atualizar" : "Criar",
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        )),
+                  ],
+                ),
+              )
             ],
           )),
     );

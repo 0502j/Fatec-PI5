@@ -135,6 +135,36 @@ class _signUpPageState extends State<signUpPage> {
                     ),
                   ),
                   const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 16.0, right: 16.0, top: 0, bottom: 0.0),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                        LengthLimitingTextInputFormatter(3)
+                      ], //Regex p/ autorizar somente números
+                      decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.fromLTRB(12, 6, 12, 6),
+                          labelText: "Digite sua idade",
+                          hintText: "Idade",
+                          border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 2.0))),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Informe sua idade";
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        setState(() {
+                          _age = value! as int;
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
