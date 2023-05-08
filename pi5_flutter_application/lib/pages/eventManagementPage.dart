@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_material_pickers/flutter_material_pickers.dart';
+import 'package:device_info/device_info.dart';
 
 class eventManagementPage extends StatefulWidget {
   final bool isUpdating;
@@ -30,6 +31,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
   String _title = "";
   String _description = "";
   String _location = "";
+  bool isAllowingSubscriptions = false;
 
   final _formKey = GlobalKey<FormState>();
   TextEditingController _dateController = TextEditingController();
@@ -110,46 +112,98 @@ class _eventManagementPageState extends State<eventManagementPage> {
   File? _imageFile;
 
   Future<void> _getImage() async {
-    var status = await Permission.photos.request();
-    if (status.isGranted) {
-      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-      if (pickedFile != null) {
-        setState(() {
-          _imageFile = File(pickedFile.path);
-        });
-      }
-    } else if (status.isDenied) {
-      // Processo caso usuário negue a permissão
-      // ignore: use_build_context_synchronously
-      var dialogResult = await showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Permissão necessária'),
-          content: const Text(
-              'O aplicativo precisa da permissão de acesso à galeria para continuar.'),
-          actions: [
-            TextButton(
-              child: const Text('Não'),
-              onPressed: () => Navigator.pop(context, false),
-            ),
-            TextButton(
-              child: const Text('Sim'),
-              onPressed: () => Navigator.pop(context, true),
-            ),
-          ],
-        ),
-      );
-
-      if (dialogResult == true) {
-        // Usuário liberou a permissão
-        var newStatus = await Permission.photos.request();
-        if (newStatus.isGranted) {
+    if (Platform.isAndroid) {
+      final androidInfo = await DeviceInfoPlugin().androidInfo;
+      if (androidInfo.version.sdkInt <= 32) {
+        var status = await Permission.storage.request();
+        if (status.isGranted) {
           final pickedFile =
               await picker.pickImage(source: ImageSource.gallery);
           if (pickedFile != null) {
             setState(() {
               _imageFile = File(pickedFile.path);
             });
+          }
+        } else if (status.isDenied) {
+          // Processo caso usuário negue a permissão
+          // ignore: use_build_context_synchronously
+          var dialogResult = await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Permissão necessária'),
+              content: const Text(
+                  'O aplicativo precisa da permissão de acesso à galeria para continuar.'),
+              actions: [
+                TextButton(
+                  child: const Text('Não'),
+                  onPressed: () => Navigator.pop(context, false),
+                ),
+                TextButton(
+                  child: const Text('Sim'),
+                  onPressed: () => Navigator.pop(context, true),
+                ),
+              ],
+            ),
+          );
+
+          if (dialogResult == true) {
+            // Usuário liberou a permissão
+            var newStatus = await Permission.photos.request();
+            if (newStatus.isGranted) {
+              final pickedFile =
+                  await picker.pickImage(source: ImageSource.gallery);
+              if (pickedFile != null) {
+                setState(() {
+                  _imageFile = File(pickedFile.path);
+                });
+              }
+            }
+          }
+        }
+      } else {
+        var status = await Permission.photos.request();
+        if (status.isGranted) {
+          final pickedFile =
+              await picker.pickImage(source: ImageSource.gallery);
+          if (pickedFile != null) {
+            setState(() {
+              _imageFile = File(pickedFile.path);
+            });
+          }
+        } else if (status.isDenied) {
+          // Processo caso usuário negue a permissão
+          // ignore: use_build_context_synchronously
+          var dialogResult = await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Permissão necessária'),
+              content: const Text(
+                  'O aplicativo precisa da permissão de acesso à galeria para continuar.'),
+              actions: [
+                TextButton(
+                  child: const Text('Não'),
+                  onPressed: () => Navigator.pop(context, false),
+                ),
+                TextButton(
+                  child: const Text('Sim'),
+                  onPressed: () => Navigator.pop(context, true),
+                ),
+              ],
+            ),
+          );
+
+          if (dialogResult == true) {
+            // Usuário liberou a permissão
+            var newStatus = await Permission.photos.request();
+            if (newStatus.isGranted) {
+              final pickedFile =
+                  await picker.pickImage(source: ImageSource.gallery);
+              if (pickedFile != null) {
+                setState(() {
+                  _imageFile = File(pickedFile.path);
+                });
+              }
+            }
           }
         }
       }
@@ -414,7 +468,16 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                             child: Text('Selecione uma imagem'),
                                           ),
                                         )
-                                      : Image.file(_imageFile!),
+                                      : Container(
+                                          width: double.infinity,
+                                          height: 150,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: FileImage(_imageFile!),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
                                 ),
                               ),
                             ),
@@ -423,9 +486,11 @@ class _eventManagementPageState extends State<eventManagementPage> {
                             ),
                             ListTile(
                               leading: Switch(
-                                value: true,
+                                value: isAllowingSubscriptions,
                                 onChanged: (bool value) {
-                                  //To do
+                                  setState(() {
+                                    isAllowingSubscriptions = value;
+                                  });
                                 },
                               ),
                               title: const Text('Permitir inscrições'),
