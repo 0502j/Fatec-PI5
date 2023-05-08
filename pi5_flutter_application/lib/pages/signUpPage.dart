@@ -159,7 +159,7 @@ class _signUpPageState extends State<signUpPage> {
                       },
                       onSaved: (value) {
                         setState(() {
-                          _age = value! as int;
+                          _age = int.parse(value!);
                         });
                       },
                     ),

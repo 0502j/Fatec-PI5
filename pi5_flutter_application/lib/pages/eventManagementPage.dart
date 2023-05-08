@@ -11,7 +11,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_material_pickers/flutter_material_pickers.dart';
 
 class eventManagementPage extends StatefulWidget {
-  const eventManagementPage({super.key});
+  final bool isUpdating;
+  const eventManagementPage({super.key, required this.isUpdating});
 
   @override
   State<eventManagementPage> createState() => _eventManagementPageState();
@@ -19,7 +20,13 @@ class eventManagementPage extends StatefulWidget {
 
 class _eventManagementPageState extends State<eventManagementPage> {
   //Alterar valores ao criar novo evento ou atualizar existente
-  bool isUpdating = false;
+  late bool isUpdating;
+  @override
+  void initState() {
+    super.initState();
+    isUpdating = widget.isUpdating;
+  }
+
   String _title = "";
   String _description = "";
   String _location = "";
@@ -39,6 +46,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
 
   //Seletor de data
   DateTime? _selectedDate;
+
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,

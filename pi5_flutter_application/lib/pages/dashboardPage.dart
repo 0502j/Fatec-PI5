@@ -140,7 +140,9 @@ class _dashboardPageState extends State<dashboardPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const eventManagementPage()));
+                                        const eventManagementPage(
+                                          isUpdating: false,
+                                        )));
                           },
                           child: ListTile(
                               leading: ClipRRect(

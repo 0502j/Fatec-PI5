@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pi5_flutter_application/pages/eventManagementPage.dart';
 import 'package:pi5_flutter_application/pages/settingsPage.dart';
 
 class userEventsPage extends StatefulWidget {
@@ -154,12 +155,13 @@ class _userEventsPageState extends State<userEventsPage> {
                               children: [
                                 Container(
                                   decoration: BoxDecoration(
-                                      color: _isSelected
-                                          ? const Color.fromARGB(
-                                              255, 172, 188, 122)
-                                          : const Color(0xffededee),
-                                      border: Border.all(
-                                          color: Colors.grey, width: 1)),
+                                    color: _isSelected
+                                        ? const Color.fromARGB(
+                                            255, 172, 188, 122)
+                                        : const Color(0xffededee),
+                                    border: Border.all(
+                                        color: Colors.grey, width: 1),
+                                  ),
                                   child: ListTile(
                                     onTap: () {
                                       setState(() {
@@ -170,7 +172,30 @@ class _userEventsPageState extends State<userEventsPage> {
                                       backgroundImage: AssetImage(
                                           "assets/images/becris-user.png"),
                                     ),
-                                    title: const Text("Título do card"),
+                                    title: Row(
+                                      children: [
+                                        Expanded(
+                                          child: const Text("Título do card"),
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const eventManagementPage(
+                                                          isUpdating: true,
+                                                        )));
+                                          },
+                                          child: const FaIcon(
+                                            FontAwesomeIcons.edit,
+                                            size: 16,
+                                            color: Color.fromARGB(
+                                                255, 25, 107, 30),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(
