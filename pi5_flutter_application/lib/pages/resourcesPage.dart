@@ -62,7 +62,7 @@ class _resourcesPageState extends State<resourcesPage> {
               height: 10,
             ),
             Padding(
-              padding: EdgeInsets.all(8),
+              padding: EdgeInsets.only(top: 4, bottom: 4, left: 8, right: 8),
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(
@@ -79,7 +79,7 @@ class _resourcesPageState extends State<resourcesPage> {
                   ),
                   title: Text(link['title']!),
                   onTap: () async {
-                    if (await canLaunch(link['url']!)) {
+                    if (!await canLaunch(link['url']!)) {
                       await launch(link['url']!);
                     } else {
                       throw 'Could not launch ${link['url']}';
@@ -110,7 +110,7 @@ class _resourcesPageState extends State<resourcesPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.only(right: 8, left: 8),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
