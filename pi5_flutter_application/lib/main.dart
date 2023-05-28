@@ -1,5 +1,4 @@
 import 'package:flutter/services.dart';
-import 'package:pi5_flutter_application/pages/eventManagementPage.dart';
 import 'package:pi5_flutter_application/pages/indexPage.dart';
 import 'package:flutter/material.dart';
 

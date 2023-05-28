@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:pi5_flutter_application/pages/confirmPage.dart';
+import 'package:pi5_flutter_application/pages/participantsPage.dart';
 
 class eventDetailPage extends StatefulWidget {
   const eventDetailPage({super.key});
@@ -83,19 +84,31 @@ class _eventDetailPageState extends State<eventDetailPage> {
                                   "Lorem ipsum dolor sit amet",
                                   style: TextStyle(
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16),
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 18),
                                 ),
                               ),
-                              const Padding(
-                                padding: EdgeInsets.only(
-                                    top: 0, bottom: 0, right: 16, left: 16),
-                                child: Text(
-                                  "Lorem ipsum dolor sit amet",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 16),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              GestureDetector(
+                                onTap: () => {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const participantsPage()))
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.only(
+                                      top: 0, bottom: 0, right: 16, left: 16),
+                                  child: Text(
+                                    "Ver lista de participantes",
+                                    style: TextStyle(
+                                        color: const Color(0xff606c38),
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16),
+                                  ),
                                 ),
                               ),
                               const SizedBox(
@@ -175,7 +188,7 @@ class _eventDetailPageState extends State<eventDetailPage> {
                               ),
                               Center(
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8),
+                                  padding: const EdgeInsets.all(16),
                                   child: SizedBox(
                                     width: 300,
                                     child: ElevatedButton(
