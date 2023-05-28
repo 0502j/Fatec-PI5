@@ -3,6 +3,7 @@ import 'package:pi5_flutter_application/pages/eventDetailPage.dart';
 import 'package:pi5_flutter_application/pages/indexPage.dart';
 import 'package:flutter/material.dart';
 import 'package:pi5_flutter_application/pages/participantsPage.dart';
+import 'package:pi5_flutter_application/pages/userEventsPage.dart';
 
 void main() {
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
@@ -22,6 +23,6 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.light,
             useMaterial3: true,
             colorSchemeSeed: Colors.green),
-        home: const participantsPage());
+        home: const userEventsPage());
   }
 }
