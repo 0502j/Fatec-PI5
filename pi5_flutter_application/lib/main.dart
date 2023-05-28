@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:pi5_flutter_application/pages/eventManagementPage.dart';
+import 'package:pi5_flutter_application/pages/eventDetailPage.dart';
 import 'package:pi5_flutter_application/pages/indexPage.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +21,6 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.light,
             useMaterial3: true,
             colorSchemeSeed: Colors.green),
-        home: const IndexPage());
+        home: const eventDetailPage());
   }
 }
