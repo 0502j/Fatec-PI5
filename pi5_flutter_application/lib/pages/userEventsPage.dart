@@ -68,7 +68,7 @@ class _userEventsPageState extends State<userEventsPage> {
                                 "Seus eventos",
                                 style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 28,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.w600),
                               ),
                             ],
