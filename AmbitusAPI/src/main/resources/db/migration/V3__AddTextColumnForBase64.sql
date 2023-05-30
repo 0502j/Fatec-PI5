@@ -1,0 +1,1 @@
+ALTER TABLE evento add image text;

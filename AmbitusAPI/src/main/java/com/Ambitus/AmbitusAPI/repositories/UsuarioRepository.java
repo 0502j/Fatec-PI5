@@ -7,6 +7,6 @@ import com.Ambitus.AmbitusAPI.entities.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 	
-	UserDetails findByEmail(String email);
+	Usuario findByEmail(String email);
 
 }
