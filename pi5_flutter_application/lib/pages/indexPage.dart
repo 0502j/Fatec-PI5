@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pi5_flutter_application/pages/dashboardPage.dart';
 import 'package:pi5_flutter_application/pages/loginPage.dart';
 import 'package:pi5_flutter_application/pages/signUpPage.dart';
+import 'package:pi5_flutter_application/widgets/ProgressiveImage.dart';
 
 class IndexPage extends StatefulWidget {
   const IndexPage({super.key});
@@ -29,15 +29,22 @@ class _IndexPageState extends State<IndexPage> {
                       const SizedBox(
                         height: 30,
                       ),
-                      Container(
-                        width: 200,
-                        height: 200,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                        ),
-                        child: ClipOval(
-                            child:
-                                Image.asset('assets/images/ct-worldwmap.jpg')),
+                      // Container(
+                      //   width: 200,
+                      //   height: 200,
+                      //   decoration: const BoxDecoration(
+                      //     shape: BoxShape.circle,
+                      //   ),
+                      //   child: ClipOval(
+                      //       child:
+                      //           // Image.asset('assets/images/ct-worldwmap.jpg')),
+
+                      // ),
+                      ProgressiveImageWidget(
+                        imgPath: 'assets/images/ct-worldwmap.jpg',
+                        isOval: true,
+                        widthValue: 200,
+                        heightValue: 200,
                       ),
                       const SizedBox(height: 32.50),
                       const SizedBox(
