@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:pi5_flutter_application/pages/confirmPage.dart';
+import 'package:pi5_flutter_application/widgets/ProgressiveImage.dart';
 
 class participantsPage extends StatefulWidget {
   const participantsPage({super.key});
@@ -44,19 +45,28 @@ class _participantsPageState extends State<participantsPage> {
                           )),
                       child: Column(
                         children: [
+                          //Uso de mediaquery para adequar o tamanho da imagem do evento
                           Container(
-                            width: double.infinity,
-                            height: 200,
-                            decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                      "assets/images/gabriel-jimenez-unsplash.jpg"),
-                                  fit: BoxFit.cover,
-                                ),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10),
-                                )),
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.width * 0.5,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10),
+                              ),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10),
+                              ),
+                              child: ProgressiveImageWidget(
+                                imgPath: 'assets/images/pawel-unsplash.jpg',
+                                isOval: false,
+                                heightValue: double.infinity,
+                                widthValue: double.infinity,
+                              ),
+                            ),
                           ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,

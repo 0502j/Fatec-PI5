@@ -5,6 +5,7 @@ import 'package:pi5_flutter_application/pages/eventDetailPage.dart';
 import 'package:pi5_flutter_application/pages/eventManagementPage.dart';
 import 'package:pi5_flutter_application/pages/resourcesPage.dart';
 import 'package:pi5_flutter_application/pages/userEventsPage.dart';
+import 'package:pi5_flutter_application/widgets/ProgressiveImage.dart';
 
 class dashboardPage extends StatefulWidget {
   const dashboardPage({super.key});
@@ -342,11 +343,12 @@ class _dashboardPageState extends State<dashboardPage> {
                                     const SizedBox(width: 16.0),
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(8),
-                                      child: Image.asset(
-                                        "assets/images/pawel-unsplash.jpg",
-                                        height: 80,
-                                        width: 80,
-                                        fit: BoxFit.cover,
+                                      child: ProgressiveImageWidget(
+                                        imgPath:
+                                            'assets/images/pawel-unsplash.jpg',
+                                        isOval: false,
+                                        heightValue: 80,
+                                        widthValue: 100,
                                       ),
                                     ),
                                   ],
@@ -414,11 +416,12 @@ class _dashboardPageState extends State<dashboardPage> {
                                     const SizedBox(width: 16.0),
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(8),
-                                      child: Image.asset(
-                                        "assets/images/matthew-smith-unsplash.jpg",
-                                        height: 80,
-                                        width: 80,
-                                        fit: BoxFit.cover,
+                                      child: ProgressiveImageWidget(
+                                        imgPath:
+                                            'assets/images/matthew-smith-unsplash.jpg',
+                                        isOval: false,
+                                        heightValue: 80,
+                                        widthValue: 100,
                                       ),
                                     ),
                                   ],
@@ -486,11 +489,12 @@ class _dashboardPageState extends State<dashboardPage> {
                                     const SizedBox(width: 16.0),
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(8),
-                                      child: Image.asset(
-                                        "assets/images/jas-min-unsplash.jpg",
-                                        height: 80,
-                                        width: 80,
-                                        fit: BoxFit.cover,
+                                      child: ProgressiveImageWidget(
+                                        imgPath:
+                                            'assets/images/jas-min-unsplash.jpg',
+                                        isOval: false,
+                                        heightValue: 80,
+                                        widthValue: 100,
                                       ),
                                     ),
                                   ],
