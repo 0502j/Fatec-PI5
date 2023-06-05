@@ -31,7 +31,7 @@ class _resourcesPageState extends State<resourcesPage> {
     },
     {
       'title':
-          'Quem são os coletores de sementes e grama que protegem o Cerrado brasileiro de desaparecer?',
+          'Quem são os coletores que protegem o Cerrado brasileiro de desaparecer?',
       'url':
           'https://www.nationalgeographicbrasil.com/meio-ambiente/2023/04/dia-da-terra-quem-sao-os-coletores-de-sementes-e-grama-que-protegem-o-cerrado-brasileiro-de-desaparecer'
     },
@@ -54,42 +54,69 @@ class _resourcesPageState extends State<resourcesPage> {
       links.length,
       (index) {
         final link = links[index];
+        final url = Uri.parse(link['url']!);
         final imagePath = imagePaths[index % imagePaths.length];
 
         return Column(
           children: [
-            SizedBox(
-              height: 10,
-            ),
             Padding(
-              padding: EdgeInsets.only(top: 4, bottom: 4, left: 8, right: 8),
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.grey,
-                    width: 1.0,
+              padding: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                onTap: () async {
+                  if (await canLaunchUrl(Uri.parse(link['url']!))) {
+                    await launchUrl(Uri.parse(link['url']!));
+                  } else {
+                    throw 'Could not launch $link';
+                  }
+                },
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6.0),
+                      side: BorderSide(color: Colors.grey, width: 1)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                fit: FlexFit.loose,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      link['title']!,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 10.0),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.asset(
+                                  imagePath,
+                                  height: 100,
+                                  width: 100,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: ListTile(
-                  tileColor: Color.fromARGB(255, 243, 243, 243),
-                  leading: AspectRatio(
-                    aspectRatio: 1.2,
-                    child: Image.asset(imagePath),
-                  ),
-                  title: Text(link['title']!),
-                  onTap: () async {
-                    if (!await canLaunch(link['url']!)) {
-                      await launch(link['url']!);
-                    } else {
-                      throw 'Could not launch ${link['url']}';
-                    }
-                  },
                 ),
               ),
-            ),
-            SizedBox(
-              height: 10,
             ),
           ],
         );
@@ -97,44 +124,50 @@ class _resourcesPageState extends State<resourcesPage> {
     );
 
     return Scaffold(
-      body: SizedBox(
-        width: double.maxFinite,
-        child: ListView(
-          children: [
-            Container(
-              height: 150, // altura definida
-              width: double.infinity,
-              child: Image.asset(
-                'assets/images/ct-papers.jpg',
-                fit: BoxFit.cover,
+      body: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          Image.asset(
+            'assets/images/ct-papers.jpg',
+            height: 150,
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 16, right: 16, top: 16),
+                child: const Text(
+                  "Materiais",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 26),
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 8, left: 8),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Materiais",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 26),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: listTiles,
-                  )
-                ],
+              Padding(
+                padding: EdgeInsets.only(left: 16, right: 16),
+                child: const Text(
+                  "Fique atualizado sobre notícias do meio ambiente semanalmente",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 15),
+                ),
               ),
-            )
-          ],
-        ),
+              const SizedBox(
+                height: 20,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: listTiles,
+              )
+            ],
+          ),
+        ],
       ),
     );
   }
