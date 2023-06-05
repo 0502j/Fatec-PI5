@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pi5_flutter_application/pages/dashboardPage.dart';
+import 'package:pi5_flutter_application/widgets/ProgressiveImage.dart';
+import 'package:progressive_image/progressive_image.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({super.key});
@@ -42,7 +44,7 @@ class _loginPageState extends State<loginPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    height: 150, // altura definida
+                    height: 150,
                     width: double.infinity,
                     child: Image.asset(
                       'assets/images/ct-worldwmap.jpg',
