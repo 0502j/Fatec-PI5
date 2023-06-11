@@ -20,6 +20,7 @@ public class SecurityConfiguration {
 	@Autowired
 	private SecurityFilter scFilter;
 
+
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception {
 		return http.csrf(csrf -> csrf.disable())
@@ -36,4 +37,6 @@ public class SecurityConfiguration {
 	public PasswordEncoder passwordEncoder() {
 	        return new BCryptPasswordEncoder();    
 	}
+	
+	
 }

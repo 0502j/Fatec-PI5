@@ -61,4 +61,21 @@ public class Evento {
 		CONSERVACAO_DE_ESPECIES;
 	}
 
+	public void atualizarDados(DadosEvento dados) {
+		if(dados.titulo()!=null)
+			this.titulo = dados.titulo();
+		if(dados.descricao()!=null)
+			this.descricao = dados.descricao();
+		if(dados.local()!=null)
+			this.local = dados.local();
+		if(dados.data()!=null)
+			this.data = dados.data();
+		if(dados.hora()!=null)
+			this.hora = dados.hora();
+		if(dados.tipo()!=null)
+			this.tipo = dados.tipo();
+		if(dados.image()!=null)
+			this.image = dados.image();
+	}
+
 }
