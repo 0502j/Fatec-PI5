@@ -13,8 +13,9 @@ class userEventsPage extends StatefulWidget {
 }
 
 class _userEventsPageState extends State<userEventsPage> {
-  //Lógica de seleção de chips
+  //Lógica de seleção de chips e edição de eventos
   List<bool> _isChipSelected = [false, false];
+  bool _isEventByCurUser = true;
 
   void selectChip(int index) {
     setState(() {
@@ -67,7 +68,7 @@ class _userEventsPageState extends State<userEventsPage> {
                                 "Seus eventos",
                                 style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 28,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.w600),
                               ),
                             ],
@@ -82,14 +83,14 @@ class _userEventsPageState extends State<userEventsPage> {
                                         const settingsPage()));
                           },
                           child: Container(
-                            width: 80,
-                            height: 80,
+                            width: 40,
+                            height: 40,
                             decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
                                     fit: BoxFit.cover,
                                     image: AssetImage(
-                                        "assets/images/rawpixel-settings.jpg"))),
+                                        "assets/images/freepik-settings.png"))),
                           ),
                         )
                       ],
@@ -147,6 +148,9 @@ class _userEventsPageState extends State<userEventsPage> {
                                   : Colors.white,
                             ),
                           ),
+                          SizedBox(
+                            height: 25,
+                          ),
                           Padding(
                             padding: const EdgeInsets.all(16),
                             child: Column(
@@ -154,14 +158,15 @@ class _userEventsPageState extends State<userEventsPage> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
+                                  padding: EdgeInsets.symmetric(vertical: 8),
                                   decoration: BoxDecoration(
-                                    color: _isSelected
-                                        ? const Color.fromARGB(
-                                            255, 172, 188, 122)
-                                        : const Color(0xffededee),
-                                    border: Border.all(
-                                        color: Colors.grey, width: 1),
-                                  ),
+                                      color: Color.fromARGB(255, 244, 244, 244),
+                                      border: Border.all(
+                                          color: _isSelected
+                                              ? Color.fromARGB(255, 160, 3, 3)
+                                              : Colors.grey,
+                                          width: _isSelected ? 2 : 1),
+                                      borderRadius: BorderRadius.circular(8)),
                                   child: ListTile(
                                     onTap: () {
                                       setState(() {
@@ -175,25 +180,32 @@ class _userEventsPageState extends State<userEventsPage> {
                                     title: Row(
                                       children: [
                                         Expanded(
-                                          child: const Text("Título do card"),
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const eventManagementPage(
-                                                          isUpdating: true,
-                                                        )));
-                                          },
-                                          child: const FaIcon(
-                                            FontAwesomeIcons.edit,
-                                            size: 16,
-                                            color: Color.fromARGB(
-                                                255, 25, 107, 30),
+                                          child: const Text(
+                                            "Título do card",
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(fontSize: 14),
                                           ),
                                         ),
+                                        Visibility(
+                                          visible: _isEventByCurUser,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const eventManagementPage(
+                                                            isUpdating: true,
+                                                          )));
+                                            },
+                                            child: const FaIcon(
+                                              FontAwesomeIcons.edit,
+                                              size: 16,
+                                              color: Color.fromARGB(
+                                                  255, 25, 107, 30),
+                                            ),
+                                          ),
+                                        )
                                       ],
                                     ),
                                   ),

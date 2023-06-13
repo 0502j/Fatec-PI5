@@ -82,8 +82,7 @@ class _signUpPageState extends State<signUpPage> {
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(
                             RegExp(r'^[a-zA-Z\s]+$')),
-                        LengthLimitingTextInputFormatter(
-                            50), //Aceitar apenas letras, máx 50 caracteres
+                        LengthLimitingTextInputFormatter(50),
                       ],
                       decoration: const InputDecoration(
                           contentPadding: EdgeInsets.fromLTRB(12, 6, 12, 6),
