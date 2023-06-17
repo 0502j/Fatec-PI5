@@ -1,4 +1,5 @@
 // ignore_for_file: camel_case_types
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pi5_flutter_application/pages/eventDetailPage.dart';
@@ -9,6 +10,37 @@ import 'package:pi5_flutter_application/services/api_services.dart';
 import 'package:pi5_flutter_application/widgets/ProgressiveImage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+class Event {
+  int id;
+  String nome;
+  String data;
+  String hora;
+  String descricao;
+  String tipo;
+  String? image;
+
+  Event(
+      {required this.id,
+      required this.nome,
+      required this.data,
+      required this.hora,
+      required this.descricao,
+      required this.tipo,
+      this.image});
+
+  factory Event.fromJson(Map<String, dynamic> json) {
+    return Event(
+      id: json['id'] ?? 0,
+      nome: json['titulo'] ?? '',
+      descricao: json['descricao'] ?? '',
+      data: json['data'] ?? '',
+      hora: json['hora'] ?? '',
+      image: json['image'] ?? '',
+      tipo: json['tipo'] ?? '',
+    );
+  }
+}
 
 class dashboardPage extends StatefulWidget {
   const dashboardPage({super.key});
@@ -43,12 +75,6 @@ class _dashboardPageState extends State<dashboardPage> {
     });
   }
 
-  //Cortar o texto com base no comprimento cadastrado
-  late String _truncatedDescriptionText;
-  late String _descriptionText;
-  late String _truncatedTitleText;
-  late String _titleText;
-
   bool isLoading = false;
   bool isContentLoading = false;
 
@@ -57,23 +83,6 @@ class _dashboardPageState extends State<dashboardPage> {
 
   @override
   void initState() {
-    _titleText = "Este é um título modelo que será substituído";
-
-    _descriptionText =
-        "Este é um texto modelo que será substituído conforme cadastro de eventos";
-
-    if (_descriptionText.length > 25) {
-      _truncatedDescriptionText = "${_descriptionText.substring(0, 25)}...";
-    } else {
-      _truncatedDescriptionText = _descriptionText;
-    }
-
-    if (_titleText.length > 25) {
-      _truncatedTitleText = "${_descriptionText.substring(0, 25)}...";
-    } else {
-      _truncatedTitleText = _titleText;
-    }
-
     super.initState();
 
     loadToken();
@@ -83,6 +92,9 @@ class _dashboardPageState extends State<dashboardPage> {
 
 //Carregar token do usuário
   Future<void> loadToken() async {
+    setState(() {
+      isLoading = true;
+    });
     String? token = await storage.read(key: "token");
     if (token != null) {
       setState(() {
@@ -91,13 +103,28 @@ class _dashboardPageState extends State<dashboardPage> {
     }
     print("Token atual: $token");
     getEventsFunction(userToken);
+    setState(() {
+      isLoading = false;
+    });
   }
+
+  List<Event> events = [];
 
   //Carregar eventos usando token do usuário
   void getEventsFunction(String? userToken) async {
+    setState(() {
+      isContentLoading = true;
+    });
     try {
       if (userToken != null) {
         var response = await getEvents(userToken);
+        if (response.statusCode == 200) {
+          var data = json.decode(response.body);
+          List<dynamic> eventList = data['content'];
+          events = eventList
+              .map<Event>((eventData) => Event.fromJson(eventData))
+              .toList();
+        }
         print(response);
         print(response.body);
         print(response.statusCode);
@@ -105,6 +132,9 @@ class _dashboardPageState extends State<dashboardPage> {
     } catch (e) {
       print(e);
     }
+    setState(() {
+      isContentLoading = false;
+    });
   }
 
   @override
@@ -358,106 +388,225 @@ class _dashboardPageState extends State<dashboardPage> {
                             ),
                           ),
                         ),
-                        Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const eventDetailPage()));
-                                },
-                                child: Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(6.0),
-                                      side: BorderSide(
-                                          color: Colors.grey, width: 1)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        isContentLoading
-                                            ? const CircleAvatar(
-                                                backgroundImage: AssetImage(
-                                                    "assets/images/becris-user.png"),
-                                                radius: 20.0,
-                                              )
-                                            : const CircleAvatar(
-                                                backgroundImage: AssetImage(
-                                                    "assets/images/becris-user.png"),
-                                                radius: 20.0,
-                                              ),
-                                        const SizedBox(width: 16.0),
-                                        Expanded(
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Flexible(
-                                                fit: FlexFit.loose,
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    isContentLoading
-                                                        ? Text("")
-                                                        : Text(
-                                                            _truncatedTitleText,
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              color:
-                                                                  Colors.black,
-                                                            ),
-                                                          ),
-                                                    isContentLoading
-                                                        ? Text("")
-                                                        : Text(
-                                                            _truncatedDescriptionText),
-                                                  ],
-                                                ),
-                                              ),
-                                              const SizedBox(width: 16.0),
-                                              ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                                child: isContentLoading
-                                                    ? SpinKitPulse(
-                                                        color: const Color(
-                                                            0xff606c38),
-                                                        size: 50.0,
-                                                      )
-                                                    : ProgressiveImageWidget(
-                                                        imgPath:
-                                                            'assets/images/pawel-unsplash.jpg',
-                                                        isOval: false,
-                                                        heightValue: 80,
-                                                        widthValue: 100,
-                                                      ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
+                        // Column(
+                        //   children: [
+                        //     Padding(
+                        //       padding: const EdgeInsets.all(8.0),
+                        //       child: GestureDetector(
+                        //         onTap: () {
+                        //           Navigator.push(
+                        //               context,
+                        //               MaterialPageRoute(
+                        //                   builder: (context) =>
+                        //                       const eventDetailPage()));
+                        //         },
+                        //         child: Card(
+                        //           shape: RoundedRectangleBorder(
+                        //               borderRadius: BorderRadius.circular(6.0),
+                        //               side: BorderSide(
+                        //                   color: Colors.grey, width: 1)),
+                        //           child: Padding(
+                        //             padding: const EdgeInsets.all(8),
+                        //             child: Row(
+                        //               crossAxisAlignment:
+                        //                   CrossAxisAlignment.center,
+                        //               children: [
+                        //                 isContentLoading
+                        //                     ? const CircleAvatar(
+                        //                         backgroundImage: AssetImage(
+                        //                             "assets/images/becris-user.png"),
+                        //                         radius: 20.0,
+                        //                       )
+                        //                     : const CircleAvatar(
+                        //                         backgroundImage: AssetImage(
+                        //                             "assets/images/becris-user.png"),
+                        //                         radius: 20.0,
+                        //                       ),
+                        //                 const SizedBox(width: 16.0),
+                        //                 Expanded(
+                        //                   child: Row(
+                        //                     mainAxisAlignment:
+                        //                         MainAxisAlignment.spaceBetween,
+                        //                     children: [
+                        //                       Flexible(
+                        //                         fit: FlexFit.loose,
+                        //                         child: Column(
+                        //                           mainAxisAlignment:
+                        //                               MainAxisAlignment.start,
+                        //                           crossAxisAlignment:
+                        //                               CrossAxisAlignment.start,
+                        //                           children: [
+                        //                             isContentLoading
+                        //                                 ? Text("")
+                        //                                 : Text(
+                        //                                     _truncatedTitleText,
+                        //                                     style:
+                        //                                         const TextStyle(
+                        //                                       fontSize: 16,
+                        //                                       fontWeight:
+                        //                                           FontWeight
+                        //                                               .w600,
+                        //                                       color:
+                        //                                           Colors.black,
+                        //                                     ),
+                        //                                   ),
+                        //                             isContentLoading
+                        //                                 ? Text("")
+                        //                                 : Text(
+                        //                                     _truncatedDescriptionText),
+                        //                           ],
+                        //                         ),
+                        //                       ),
+                        //                       const SizedBox(width: 16.0),
+                        //                       ClipRRect(
+                        //                         borderRadius:
+                        //                             BorderRadius.circular(8),
+                        //                         child: isContentLoading
+                        //                             ? SpinKitPulse(
+                        //                                 color: const Color(
+                        //                                     0xff606c38),
+                        //                                 size: 50.0,
+                        //                               )
+                        //                             : ProgressiveImageWidget(
+                        //                                 imgPath:
+                        //                                     'assets/images/pawel-unsplash.jpg',
+                        //                                 isOval: false,
+                        //                                 heightValue: 80,
+                        //                                 widthValue: 100,
+                        //                               ),
+                        //                       ),
+                        //                     ],
+                        //                   ),
+                        //                 ),
+                        //               ],
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
                       ],
                     ),
+          isContentLoading
+              ? Container(
+                  child: Center(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      child: Center(
+                        child: SpinKitPulse(
+                          color: const Color(0xff606c38),
+                          size: 50.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              : events == null
+                  ? Text("Sem eventos ainda.")
+                  : Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Column(
+                        children: events.map((event) {
+                          final nome = event.nome;
+                          final descricao = event.descricao;
+                          final data = event.data;
+                          final hora = event.hora;
+                          final tipo = event.tipo;
+
+                          // To do - Verifica se a imagem base64 não é nula
+                          // final imageWidget = event.image != null
+                          //     ? Image.memory(
+                          //         base64Decode(event.image!
+                          //             .replaceAll(RegExp(r'\s+'), '')),
+                          //         fit: BoxFit.cover,
+                          //         height: 80,
+                          //         width: 100,
+                          //       )
+                          //     : SizedBox(
+                          //         height: 80,
+                          //         width: 100,
+                          //         child: Center(
+                          //           child: Text("No Image"),
+                          //         ),
+                          //       );
+
+                          return GestureDetector(
+                            onTap: () {
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (context) =>
+                              //           EventDetailPage(event: event)),
+                              // );
+                            },
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(6.0),
+                                side: BorderSide(color: Colors.grey, width: 1),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundImage: AssetImage(
+                                          "assets/images/becris-user.png"),
+                                      radius: 20.0,
+                                    ),
+                                    const SizedBox(width: 16.0),
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            nome,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          Text("Categoria: $tipo"),
+                                          Text("Data: $data"),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(width: 16.0),
+
+                                    //To do - renderização base 64
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: isContentLoading
+                                          ? SpinKitPulse(
+                                              color: const Color(0xff606c38),
+                                              size: 50.0,
+                                            )
+                                          : ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              child: ProgressiveImageWidget(
+                                                imgPath:
+                                                    'assets/images/pawel-unsplash.jpg',
+                                                isOval: false,
+                                                heightValue: 80,
+                                                widthValue: 100,
+                                              ),
+                                            ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    )
         ],
       ),
     );
