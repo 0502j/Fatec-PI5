@@ -1,13 +1,11 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pi5_flutter_application/pages/dashboardPage.dart';
 import 'package:pi5_flutter_application/services/api_services.dart';
-import 'package:pi5_flutter_application/widgets/ProgressiveImage.dart';
-import 'package:progressive_image/progressive_image.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({super.key});
@@ -49,7 +47,7 @@ class _loginPageState extends State<loginPage> {
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
                     child: Center(
-                      child: SpinKitCircle(
+                      child: SpinKitPulse(
                         color: const Color(0xff606c38),
                         size: 50.0,
                       ),
@@ -185,37 +183,6 @@ class _loginPageState extends State<loginPage> {
                                 child: SizedBox(
                                   width: 300,
                                   child: ElevatedButton(
-                                    // onPressed: () async {
-                                    //   if (_formKey.currentState!.validate()) {
-                                    //     // _formKey.currentState!.save();
-                                    //     try {
-                                    //     var response = await loginUser(
-
-                                    //         _email,
-                                    //         _password);
-                                    //     print(response.statusCode);
-                                    //     print(response.body);
-                                    //     if (response.statusCode == 200 ||
-                                    //         response.statusCode == 201) {
-                                    //        Navigator.push(
-                                    //         context,
-                                    //         MaterialPageRoute(
-                                    //             builder: (context) =>
-                                    //                 const dashboardPage()));
-                                    //   }
-                                    //     } else {
-                                    //       hasError =
-                                    //           "Não foi possível cadastrar: $response.statusCode";
-                                    //     }
-                                    //   } catch (error) {
-                                    //     setState(() {
-                                    //       hasError =
-                                    //           "Não foi possível cadastrar: $error";
-                                    //     });
-                                    //   }
-
-                                    // },
-
                                     onPressed: () async {
                                       if (_formKey.currentState!.validate()) {
                                         setState(() {
@@ -224,17 +191,23 @@ class _loginPageState extends State<loginPage> {
                                         try {
                                           var response = await loginUser(
                                               _email, _password);
-                                          print(response.statusCode);
-                                          print(response.body);
-
                                           if (response.statusCode == 200 ||
                                               response.statusCode == 201 ||
                                               response.statusCode == 202) {
+                                            var responseBody =
+                                                jsonDecode(response.body);
+                                            var token =
+                                                responseBody['token'] as String;
+
+                                            await setToken(token);
+
                                             Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const dashboardPage()));
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    dashboardPage(),
+                                              ),
+                                            );
                                           } else {
                                             hasError =
                                                 "Não foi possível entrar. Verifique suas informações e tente novamente.";
@@ -264,7 +237,6 @@ class _loginPageState extends State<loginPage> {
                                           borderRadius:
                                               BorderRadius.circular(20)),
                                     ),
-
                                     child: const Text(
                                       "Entrar",
                                       style: TextStyle(

@@ -52,7 +52,7 @@ class _signUpPageState extends State<signUpPage> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   child: Center(
-                    child: SpinKitCircle(
+                    child: SpinKitPulse(
                       color: const Color(0xff606c38),
                       size: 50.0,
                     ),
