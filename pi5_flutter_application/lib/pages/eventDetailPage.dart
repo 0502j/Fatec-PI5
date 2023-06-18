@@ -2,11 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:pi5_flutter_application/pages/confirmPage.dart';
+import 'package:pi5_flutter_application/pages/dashboardPage.dart';
 import 'package:pi5_flutter_application/pages/participantsPage.dart';
 import 'package:pi5_flutter_application/widgets/ProgressiveImage.dart';
 
 class eventDetailPage extends StatefulWidget {
-  const eventDetailPage({super.key});
+  final Event event;
+
+  const eventDetailPage({super.key, required this.event});
 
   @override
   State<eventDetailPage> createState() => _eventDetailPageState();
@@ -15,6 +18,8 @@ class eventDetailPage extends StatefulWidget {
 class _eventDetailPageState extends State<eventDetailPage> {
   @override
   Widget build(BuildContext context) {
+    final event = widget.event;
+
     return Scaffold(
         body: ListView(
       shrinkWrap: true,
@@ -88,11 +93,11 @@ class _eventDetailPageState extends State<eventDetailPage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Padding(
+                              Padding(
                                 padding: EdgeInsets.only(
                                     top: 0, bottom: 0, right: 16, left: 16),
                                 child: Text(
-                                  "Lorem ipsum dolor sit amet",
+                                  "${event.nome}",
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w900,
@@ -128,9 +133,9 @@ class _eventDetailPageState extends State<eventDetailPage> {
                               Padding(
                                 padding: const EdgeInsets.all(16),
                                 child: Wrap(
-                                  children: const [
+                                  children: [
                                     Text(
-                                      "Lorem ipsum:",
+                                      "Sobre o evento:",
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.w600,
@@ -140,7 +145,7 @@ class _eventDetailPageState extends State<eventDetailPage> {
                                       height: 15,
                                     ),
                                     Text(
-                                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+                                      "${event.descricao}",
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.normal,
@@ -152,9 +157,9 @@ class _eventDetailPageState extends State<eventDetailPage> {
                               Padding(
                                 padding: const EdgeInsets.all(16),
                                 child: Wrap(
-                                  children: const [
+                                  children: [
                                     Text(
-                                      "Lorem ipsum: ",
+                                      "Local do evento:",
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.w600,
@@ -164,7 +169,7 @@ class _eventDetailPageState extends State<eventDetailPage> {
                                       height: 15,
                                     ),
                                     Text(
-                                      "Lorem ipsum dolor, 0000 - lorem ipsum dolor",
+                                      "${event.local}",
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.normal,
@@ -176,19 +181,32 @@ class _eventDetailPageState extends State<eventDetailPage> {
                               Padding(
                                 padding: const EdgeInsets.all(16),
                                 child: Wrap(
-                                  children: const [
+                                  children: [
                                     Text(
-                                      "Lorem ipsum: ",
+                                      "Data / Horário:",
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 16),
                                     ),
                                     SizedBox(
+                                      width: 10,
+                                    ),
+                                    SizedBox(
                                       height: 15,
                                     ),
                                     Text(
-                                      "00:00 - 00:00",
+                                      "${event.data}",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 16),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "${event.hora}",
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.normal,

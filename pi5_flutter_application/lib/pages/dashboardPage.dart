@@ -19,6 +19,7 @@ class Event {
   String descricao;
   String tipo;
   String? image;
+  String local;
 
   Event(
       {required this.id,
@@ -27,6 +28,7 @@ class Event {
       required this.hora,
       required this.descricao,
       required this.tipo,
+      required this.local,
       this.image});
 
   factory Event.fromJson(Map<String, dynamic> json) {
@@ -38,6 +40,7 @@ class Event {
       hora: json['hora'] ?? '',
       image: json['image'] ?? '',
       tipo: json['tipo'] ?? '',
+      local: json['local'] ?? '',
     );
   }
 }
@@ -540,6 +543,11 @@ class _dashboardPageState extends State<dashboardPage> {
                               //       builder: (context) =>
                               //           EventDetailPage(event: event)),
                               // );
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          eventDetailPage(event: event)));
                             },
                             child: Card(
                               shape: RoundedRectangleBorder(
