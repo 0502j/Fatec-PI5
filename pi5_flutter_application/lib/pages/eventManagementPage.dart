@@ -602,6 +602,9 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                                         _textFieldController
                                                             .text
                                                             .toString();
+                                                    var _cvTypeReplaced =
+                                                        _cvType.replaceAll(
+                                                            ' ', '_');
                                                     var response =
                                                         await signUpEvent(
                                                       _title,
@@ -609,7 +612,8 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                                       _location,
                                                       _dateController.text,
                                                       _cvTime.substring(11, 16),
-                                                      _cvType.toUpperCase(),
+                                                      _cvTypeReplaced
+                                                          .toUpperCase(),
                                                       userToken,
                                                     );
 

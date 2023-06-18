@@ -7,7 +7,6 @@ import 'package:pi5_flutter_application/pages/eventManagementPage.dart';
 import 'package:pi5_flutter_application/pages/resourcesPage.dart';
 import 'package:pi5_flutter_application/pages/userEventsPage.dart';
 import 'package:pi5_flutter_application/services/api_services.dart';
-import 'package:pi5_flutter_application/widgets/ProgressiveImage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -38,7 +37,7 @@ class Event {
       descricao: json['descricao'] ?? '',
       data: json['data'] ?? '',
       hora: json['hora'] ?? '',
-      image: json['image'] ?? '',
+      image: json['image'],
       tipo: json['tipo'] ?? '',
       local: json['local'] ?? '',
     );
@@ -122,7 +121,7 @@ class _dashboardPageState extends State<dashboardPage> {
       if (userToken != null) {
         var response = await getEvents(userToken);
         if (response.statusCode == 200) {
-          var data = json.decode(response.body);
+          var data = json.decode(utf8.decode(response.bodyBytes));
           List<dynamic> eventList = data['content'];
           events = eventList
               .map<Event>((eventData) => Event.fromJson(eventData))
@@ -506,8 +505,11 @@ class _dashboardPageState extends State<dashboardPage> {
                     ),
                   ),
                 )
-              : events == null
-                  ? Text("Sem eventos ainda.")
+              : events.isEmpty && userToken != null
+                  ? Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Text("Sem eventos ainda. Comece criando um!"),
+                    )
                   : Padding(
                       padding: EdgeInsets.all(8),
                       child: Column(
@@ -517,32 +519,16 @@ class _dashboardPageState extends State<dashboardPage> {
                           final data = event.data;
                           final hora = event.hora;
                           final tipo = event.tipo;
+                          final imagem = event.image;
 
-                          // To do - Verifica se a imagem base64 não é nula
-                          // final imageWidget = event.image != null
-                          //     ? Image.memory(
-                          //         base64Decode(event.image!
-                          //             .replaceAll(RegExp(r'\s+'), '')),
-                          //         fit: BoxFit.cover,
-                          //         height: 80,
-                          //         width: 100,
-                          //       )
-                          //     : SizedBox(
-                          //         height: 80,
-                          //         width: 100,
-                          //         child: Center(
-                          //           child: Text("No Image"),
-                          //         ),
-                          //       );
+                          var cvTipo = event.tipo.toString();
+                          var tipoReplaced = cvTipo.replaceAll('_', ' ');
+                          var tipoLower = tipoReplaced.toLowerCase();
+
+                          print(tipoLower);
 
                           return GestureDetector(
                             onTap: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //       builder: (context) =>
-                              //           EventDetailPage(event: event)),
-                              // );
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -559,12 +545,6 @@ class _dashboardPageState extends State<dashboardPage> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    CircleAvatar(
-                                      backgroundImage: AssetImage(
-                                          "assets/images/becris-user.png"),
-                                      radius: 20.0,
-                                    ),
-                                    const SizedBox(width: 16.0),
                                     Expanded(
                                       child: Column(
                                         mainAxisAlignment:
@@ -580,33 +560,37 @@ class _dashboardPageState extends State<dashboardPage> {
                                               color: Colors.black,
                                             ),
                                           ),
-                                          Text("Categoria: $tipo"),
+                                          Text("Categoria: $tipoLower"),
                                           Text("Data: $data"),
                                         ],
                                       ),
                                     ),
                                     const SizedBox(width: 16.0),
-
-                                    //To do - renderização base 64
                                     ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: isContentLoading
-                                          ? SpinKitPulse(
-                                              color: const Color(0xff606c38),
-                                              size: 50.0,
-                                            )
-                                          : ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              child: ProgressiveImageWidget(
-                                                imgPath:
-                                                    'assets/images/pawel-unsplash.jpg',
-                                                isOval: false,
-                                                heightValue: 80,
-                                                widthValue: 100,
-                                              ),
-                                            ),
-                                    ),
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: isContentLoading
+                                            ? SpinKitPulse(
+                                                color: const Color(0xff606c38),
+                                                size: 50.0,
+                                              )
+                                            : imagem == null
+                                                ? ClipRRect(
+                                                    child: Image.asset(
+                                                      'assets/images/rawpixel-eventPlaceholder.jpg',
+                                                      fit: BoxFit.cover,
+                                                      height: 80,
+                                                      width: 100,
+                                                    ),
+                                                  )
+                                                : Image.memory(
+                                                    base64Decode(event.image!
+                                                        .replaceAll(
+                                                            RegExp(r'\s+'),
+                                                            '')),
+                                                    fit: BoxFit.cover,
+                                                    height: 80,
+                                                    width: 100,
+                                                  )),
                                   ],
                                 ),
                               ),
