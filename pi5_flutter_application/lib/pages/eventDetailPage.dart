@@ -8,7 +8,6 @@ import 'package:pi5_flutter_application/pages/confirmPage.dart';
 import 'package:pi5_flutter_application/pages/dashboardPage.dart';
 import 'package:pi5_flutter_application/pages/participantsPage.dart';
 import 'package:pi5_flutter_application/services/api_services.dart';
-import 'package:pi5_flutter_application/widgets/ProgressiveImage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class eventDetailPage extends StatefulWidget {
@@ -170,7 +169,8 @@ class _eventDetailPageState extends State<eventDetailPage> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        const participantsPage()))
+                                                        participantsPage(
+                                                            event: event)))
                                           },
                                           child: const Padding(
                                             padding: EdgeInsets.only(

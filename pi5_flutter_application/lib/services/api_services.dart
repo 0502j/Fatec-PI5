@@ -100,6 +100,21 @@ Future<http.Response> getEventByType(String token, String type) async {
   return response;
 }
 
+Future<http.Response> getEventParticipants(String token, int id) async {
+  var url = Uri.parse(
+      "http://ec2-18-118-151-165.us-east-2.compute.amazonaws.com:8080/eventos/participantes/$id");
+
+  var response = await http.get(
+    url,
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': token,
+    },
+  );
+
+  return response;
+}
+
 Future<void> setToken(String token) async {
   await storage.write(key: "token", value: token);
 }
