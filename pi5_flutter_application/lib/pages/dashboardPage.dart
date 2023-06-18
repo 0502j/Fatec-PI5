@@ -77,11 +77,21 @@ class _dashboardPageState extends State<dashboardPage> {
     });
   }
 
+  void unselectAllChips() {
+    setState(() {
+      for (int i = 0; i < _isChipSelected.length; i++) {
+        _isChipSelected[i] = false;
+      }
+    });
+  }
+
   bool isLoading = false;
   bool isContentLoading = false;
 
   final storage = FlutterSecureStorage();
   String? userToken;
+  String? userImage;
+  String? username;
 
   @override
   void initState() {
@@ -102,6 +112,7 @@ class _dashboardPageState extends State<dashboardPage> {
       });
     }
     getEventsFunction(userToken);
+    loadUserInfo();
     setState(() {
       isLoading = false;
     });
@@ -133,6 +144,62 @@ class _dashboardPageState extends State<dashboardPage> {
     });
   }
 
+  void getEventsByTypeFunction(String? userToken, String type) async {
+    setState(() {
+      isContentLoading = true;
+    });
+
+    try {
+      if (userToken != null) {
+        var response = await getEventByType(userToken, type);
+
+        if (response.statusCode == 200) {
+          var data = json.decode(utf8.decode(response.bodyBytes));
+          List<dynamic> eventDataList = data as List<dynamic>;
+          events = eventDataList
+              .map<Event>((eventData) => Event.fromJson(eventData))
+              .toList();
+        }
+      }
+    } catch (e) {
+      print("Erro do catch: $e");
+    }
+
+    setState(() {
+      isContentLoading = false;
+    });
+  }
+
+  //Carregar informações do usuário
+  Future<void> loadUserInfo() async {
+    setState(() {
+      isLoading = true;
+    });
+    String? name = await storage.read(key: "name");
+    String? image = await storage.read(key: "image");
+    if (name != null) {
+      setState(() {
+        username = name;
+      });
+    } else {
+      setState(() {
+        username = "";
+      });
+    }
+    if (image != null) {
+      setState(() {
+        userImage = image;
+      });
+    } else {
+      setState(() {
+        userImage = "";
+      });
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,9 +224,15 @@ class _dashboardPageState extends State<dashboardPage> {
                     )
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
                       children: [
+                        Container(
+                          height: 90, // altura definida
+                          width: double.infinity,
+                          child: Image.asset(
+                            'assets/images/Header.png',
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -172,11 +245,16 @@ class _dashboardPageState extends State<dashboardPage> {
                                   const Text(
                                     "Olá,",
                                     style: TextStyle(
-                                        color: Colors.black, fontSize: 26),
+                                        color: Color.fromARGB(255, 0, 0, 0),
+                                        fontSize: 24),
                                   ),
-                                  const Text("[Placeholder]",
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 22))
+                                  username != null
+                                      ? Text(username!,
+                                          style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 18, 47, 30),
+                                              fontSize: 20))
+                                      : Text(""),
                                 ],
                               ),
                             ),
@@ -189,14 +267,14 @@ class _dashboardPageState extends State<dashboardPage> {
                                             const userEventsPage()));
                               },
                               child: Container(
-                                width: 80,
-                                height: 80,
+                                width: 50,
+                                height: 50,
                                 decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
                                         fit: BoxFit.cover,
                                         image: AssetImage(
-                                            "assets/images/cd-boyicon.jpg"))),
+                                            "assets/images/becris-user.png"))),
                               ),
                             )
                           ],
@@ -301,187 +379,125 @@ class _dashboardPageState extends State<dashboardPage> {
                           padding: const EdgeInsets.all(8),
                           child: Container(
                             decoration: BoxDecoration(
-                                border: Border.all(color: Colors.transparent),
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Wrap(
-                              spacing: 8,
-                              children: [
-                                const FaIcon(
-                                  FontAwesomeIcons.filter,
-                                  color: Color(0xff606c38),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    //To do filtering
-                                    selectChip(0);
-                                  },
-                                  onDoubleTap: () {
-                                    setState(() {
-                                      unselectChip(0);
-                                    });
-                                  },
-                                  child: Chip(
-                                    label: const Text("Filtro 1"),
-                                    backgroundColor: _isChipSelected[0]
-                                        ? const Color(0xffd9d9d9)
-                                        : Colors.white,
+                              border: Border.all(color: Colors.transparent),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+                                  const FaIcon(
+                                    FontAwesomeIcons.filter,
+                                    color: Color(0xff606c38),
                                   ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    //To do filtering
-                                    setState(() {
-                                      selectChip(1);
-                                    });
-                                  },
-                                  onDoubleTap: () {
-                                    setState(() {
-                                      unselectChip(1);
-                                    });
-                                  },
-                                  child: Chip(
-                                    label: const Text("Filtro 2"),
-                                    backgroundColor: _isChipSelected[1]
-                                        ? const Color(0xffd9d9d9)
-                                        : Colors.white,
+                                  SizedBox(width: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      var type = "RECICLAGEM";
+                                      selectChip(0);
+                                      getEventsByTypeFunction(
+                                          userToken, type.toString());
+                                    },
+                                    onDoubleTap: () {
+                                      setState(() {
+                                        unselectAllChips();
+                                        getEventsFunction(userToken);
+                                      });
+                                    },
+                                    child: Chip(
+                                      label: const Text("Reciclagem"),
+                                      backgroundColor: _isChipSelected[0]
+                                          ? const Color(0xffd9d9d9)
+                                          : Colors.white,
+                                    ),
                                   ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    //To do filtering
-                                    selectChip(2);
-                                  },
-                                  onDoubleTap: () {
-                                    setState(() {
-                                      unselectChip(2);
-                                    });
-                                  },
-                                  child: Chip(
-                                    label: const Text("Filtro 3"),
-                                    backgroundColor: _isChipSelected[2]
-                                        ? const Color(0xffd9d9d9)
-                                        : Colors.white,
+                                  SizedBox(width: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        selectChip(1);
+                                      });
+                                      getEventsByTypeFunction(
+                                          userToken, "LIMPEZA_DE_AMBIENTES");
+                                    },
+                                    onDoubleTap: () {
+                                      setState(() {
+                                        unselectAllChips();
+                                        getEventsFunction(userToken);
+                                      });
+                                    },
+                                    child: Chip(
+                                      label: const Text("Limpeza de ambientes"),
+                                      backgroundColor: _isChipSelected[1]
+                                          ? const Color(0xffd9d9d9)
+                                          : Colors.white,
+                                    ),
                                   ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    //To do filtering
-                                    selectChip(3);
-                                  },
-                                  onDoubleTap: () {
-                                    setState(() {
-                                      unselectChip(3);
-                                    });
-                                  },
-                                  child: Chip(
-                                    label: const Text("Filtro 4"),
-                                    backgroundColor: _isChipSelected[3]
-                                        ? const Color(0xffd9d9d9)
-                                        : Colors.white,
+                                  SizedBox(width: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      selectChip(2);
+                                      getEventsByTypeFunction(
+                                          userToken, "REFLORESTAMENTO");
+                                    },
+                                    onDoubleTap: () {
+                                      setState(() {
+                                        unselectAllChips();
+                                        getEventsFunction(userToken);
+                                      });
+                                    },
+                                    child: Chip(
+                                      label: const Text("Reflorestamento"),
+                                      backgroundColor: _isChipSelected[2]
+                                          ? const Color(0xffd9d9d9)
+                                          : Colors.white,
+                                    ),
                                   ),
-                                )
-                              ],
+                                  SizedBox(width: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      selectChip(3);
+                                      getEventsByTypeFunction(userToken,
+                                          "CONSCIENTIZACAO_E_EDUCACAO");
+                                    },
+                                    onDoubleTap: () {
+                                      setState(() {
+                                        unselectAllChips();
+                                        getEventsFunction(userToken);
+                                      });
+                                    },
+                                    child: Chip(
+                                      label: const Text("Conscientização"),
+                                      backgroundColor: _isChipSelected[3]
+                                          ? const Color(0xffd9d9d9)
+                                          : Colors.white,
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      selectChip(4);
+                                      getEventsByTypeFunction(
+                                          userToken, "CONSERVACAO_DE_ESPECIES");
+                                    },
+                                    onDoubleTap: () {
+                                      setState(() {
+                                        unselectAllChips();
+                                        getEventsFunction(userToken);
+                                      });
+                                    },
+                                    child: Chip(
+                                      label: const Text("Conservação"),
+                                      backgroundColor: _isChipSelected[4]
+                                          ? const Color(0xffd9d9d9)
+                                          : Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                        // Column(
-                        //   children: [
-                        //     Padding(
-                        //       padding: const EdgeInsets.all(8.0),
-                        //       child: GestureDetector(
-                        //         onTap: () {
-                        //           Navigator.push(
-                        //               context,
-                        //               MaterialPageRoute(
-                        //                   builder: (context) =>
-                        //                       const eventDetailPage()));
-                        //         },
-                        //         child: Card(
-                        //           shape: RoundedRectangleBorder(
-                        //               borderRadius: BorderRadius.circular(6.0),
-                        //               side: BorderSide(
-                        //                   color: Colors.grey, width: 1)),
-                        //           child: Padding(
-                        //             padding: const EdgeInsets.all(8),
-                        //             child: Row(
-                        //               crossAxisAlignment:
-                        //                   CrossAxisAlignment.center,
-                        //               children: [
-                        //                 isContentLoading
-                        //                     ? const CircleAvatar(
-                        //                         backgroundImage: AssetImage(
-                        //                             "assets/images/becris-user.png"),
-                        //                         radius: 20.0,
-                        //                       )
-                        //                     : const CircleAvatar(
-                        //                         backgroundImage: AssetImage(
-                        //                             "assets/images/becris-user.png"),
-                        //                         radius: 20.0,
-                        //                       ),
-                        //                 const SizedBox(width: 16.0),
-                        //                 Expanded(
-                        //                   child: Row(
-                        //                     mainAxisAlignment:
-                        //                         MainAxisAlignment.spaceBetween,
-                        //                     children: [
-                        //                       Flexible(
-                        //                         fit: FlexFit.loose,
-                        //                         child: Column(
-                        //                           mainAxisAlignment:
-                        //                               MainAxisAlignment.start,
-                        //                           crossAxisAlignment:
-                        //                               CrossAxisAlignment.start,
-                        //                           children: [
-                        //                             isContentLoading
-                        //                                 ? Text("")
-                        //                                 : Text(
-                        //                                     _truncatedTitleText,
-                        //                                     style:
-                        //                                         const TextStyle(
-                        //                                       fontSize: 16,
-                        //                                       fontWeight:
-                        //                                           FontWeight
-                        //                                               .w600,
-                        //                                       color:
-                        //                                           Colors.black,
-                        //                                     ),
-                        //                                   ),
-                        //                             isContentLoading
-                        //                                 ? Text("")
-                        //                                 : Text(
-                        //                                     _truncatedDescriptionText),
-                        //                           ],
-                        //                         ),
-                        //                       ),
-                        //                       const SizedBox(width: 16.0),
-                        //                       ClipRRect(
-                        //                         borderRadius:
-                        //                             BorderRadius.circular(8),
-                        //                         child: isContentLoading
-                        //                             ? SpinKitPulse(
-                        //                                 color: const Color(
-                        //                                     0xff606c38),
-                        //                                 size: 50.0,
-                        //                               )
-                        //                             : ProgressiveImageWidget(
-                        //                                 imgPath:
-                        //                                     'assets/images/pawel-unsplash.jpg',
-                        //                                 isOval: false,
-                        //                                 heightValue: 80,
-                        //                                 widthValue: 100,
-                        //                               ),
-                        //                       ),
-                        //                     ],
-                        //                   ),
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     )
-                        //   ],
-                        // ),
                       ],
                     ),
           isContentLoading

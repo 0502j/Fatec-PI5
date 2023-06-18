@@ -201,6 +201,17 @@ class _loginPageState extends State<loginPage> {
 
                                             await setToken(token);
 
+                                            var name = responseBody['nome'];
+                                            await setUserName(name);
+
+                                            var image =
+                                                responseBody['image'] == null
+                                                    ? ''
+                                                    : responseBody['image']
+                                                        as String;
+
+                                            await setUserImage(image);
+
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(

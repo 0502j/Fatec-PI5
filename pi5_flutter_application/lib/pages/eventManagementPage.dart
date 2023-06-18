@@ -38,8 +38,6 @@ class _eventManagementPageState extends State<eventManagementPage> {
     isUpdating = widget.isUpdating;
 
     loadToken();
-
-    print("Token atual: $userToken");
   }
 
   //Carregar token do usuário
@@ -62,7 +60,6 @@ class _eventManagementPageState extends State<eventManagementPage> {
   String _title = "";
   String _description = "";
   String _location = "";
-  bool isAllowingSubscriptions = false;
 
   final _formKey = GlobalKey<FormState>();
   TextEditingController _dateController = TextEditingController();
@@ -549,20 +546,6 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                       ),
                                       const SizedBox(
                                         height: 20,
-                                      ),
-                                      ListTile(
-                                        leading: Switch(
-                                          value: isAllowingSubscriptions,
-                                          onChanged: (bool value) {
-                                            setState(() {
-                                              isAllowingSubscriptions = value;
-                                            });
-                                          },
-                                        ),
-                                        title:
-                                            const Text('Permitir inscrições'),
-                                        subtitle: const Text(
-                                            'Ative essa opção caso ainda esteja aceitando inscrições de usuários no evento.'),
                                       ),
                                       const SizedBox(
                                         height: 15,
