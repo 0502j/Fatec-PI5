@@ -88,8 +88,6 @@ class _dashboardPageState extends State<dashboardPage> {
     super.initState();
 
     loadToken();
-
-    print("Token atual: $userToken");
   }
 
 //Carregar token do usuário
@@ -103,7 +101,6 @@ class _dashboardPageState extends State<dashboardPage> {
         userToken = token;
       });
     }
-    print("Token atual: $token");
     getEventsFunction(userToken);
     setState(() {
       isLoading = false;
@@ -127,9 +124,6 @@ class _dashboardPageState extends State<dashboardPage> {
               .map<Event>((eventData) => Event.fromJson(eventData))
               .toList();
         }
-        print(response);
-        print(response.body);
-        print(response.statusCode);
       }
     } catch (e) {
       print(e);
@@ -524,8 +518,6 @@ class _dashboardPageState extends State<dashboardPage> {
                           var cvTipo = event.tipo.toString();
                           var tipoReplaced = cvTipo.replaceAll('_', ' ');
                           var tipoLower = tipoReplaced.toLowerCase();
-
-                          print(tipoLower);
 
                           return GestureDetector(
                             onTap: () {

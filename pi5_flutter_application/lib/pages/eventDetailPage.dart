@@ -1,5 +1,7 @@
 // ignore_for_file: camel_case_types
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:pi5_flutter_application/pages/confirmPage.dart';
 import 'package:pi5_flutter_application/pages/dashboardPage.dart';
@@ -16,6 +18,8 @@ class eventDetailPage extends StatefulWidget {
 }
 
 class _eventDetailPageState extends State<eventDetailPage> {
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     final event = widget.event;
@@ -62,37 +66,35 @@ class _eventDetailPageState extends State<eventDetailPage> {
                               ),
                             ),
                             child: ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                              ),
-                              child: ProgressiveImageWidget(
-                                imgPath: 'assets/images/pawel-unsplash.jpg',
-                                isOval: false,
-                                heightValue: double.infinity,
-                                widthValue: double.infinity,
-                              ),
-                            ),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10),
+                                ),
+                                child: event.image == null
+                                    ? ClipRRect(
+                                        child: Image.asset(
+                                          'assets/images/rawpixel-eventPlaceholder.jpg',
+                                          fit: BoxFit.cover,
+                                          height: 80,
+                                          width: 100,
+                                        ),
+                                      )
+                                    : Image.memory(
+                                        base64Decode(event.image!
+                                            .replaceAll(RegExp(r'\s+'), '')),
+                                        fit: BoxFit.cover,
+                                        height: 80,
+                                        width: 100,
+                                      )),
                           ),
 
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Padding(
-                                padding: EdgeInsets.all(16),
-                                child: CircleAvatar(
-                                  backgroundImage: AssetImage(
-                                      "assets/images/becris-user.png"),
-                                  radius: 20,
-                                ),
-                              ),
-                            ],
-                          ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              SizedBox(
+                                height: 10,
+                              ),
                               Padding(
                                 padding: EdgeInsets.only(
                                     top: 0, bottom: 0, right: 16, left: 16),
@@ -101,7 +103,7 @@ class _eventDetailPageState extends State<eventDetailPage> {
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w900,
-                                      fontSize: 18),
+                                      fontSize: 20),
                                 ),
                               ),
                               SizedBox(
