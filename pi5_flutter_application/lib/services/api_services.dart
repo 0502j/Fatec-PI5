@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -36,7 +37,7 @@ Future<http.Response> loginUser(email, pwd) {
 }
 
 Future<http.Response> signUpEvent(
-    title, description, place, date, time, type, token) {
+    title, description, place, date, time, type, image, token) {
   return http.post(
     Uri.parse(
         "http://ec2-18-118-151-165.us-east-2.compute.amazonaws.com:8080/eventos/cadastro"),
@@ -51,6 +52,7 @@ Future<http.Response> signUpEvent(
       'data': date.substring(0, 10),
       'hora': time.toString(),
       'tipo': type.toString(),
+      'image': image.toString(),
     }),
   );
 }

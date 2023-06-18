@@ -12,8 +12,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_material_pickers/flutter_material_pickers.dart';
 import 'package:device_info/device_info.dart';
-import 'package:pi5_flutter_application/services/api_services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+import '../services/api_services.dart';
 
 class eventManagementPage extends StatefulWidget {
   final bool isUpdating;
@@ -29,7 +30,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
   String hasError = "";
   bool isLoading = false;
 
-  final storage = FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
   String? userToken;
 
   @override
@@ -52,7 +53,6 @@ class _eventManagementPageState extends State<eventManagementPage> {
         userToken = token;
       });
     }
-    print("Token atual: $token");
     setState(() {
       isLoading = false;
     });
@@ -73,7 +73,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
     'Conscientizacao e educacao',
     'Conservacao de especies'
   ];
-  TextEditingController _textFieldController = TextEditingController();
+  final TextEditingController _textFieldController = TextEditingController();
 
   //Seletor de data
   DateTime? _selectedDate;
@@ -119,8 +119,8 @@ class _eventManagementPageState extends State<eventManagementPage> {
     showMaterialScrollPicker(
       context: context,
       title: 'Selecione uma opção',
-      headerColor: Color.fromARGB(255, 47, 95, 67),
-      headerTextColor: Color.fromARGB(255, 47, 95, 67),
+      headerColor: const Color.fromARGB(255, 47, 95, 67),
+      headerTextColor: const Color.fromARGB(255, 47, 95, 67),
       selectedItem: dropdownValue,
       items: options,
       onChanged: (value) {
@@ -185,6 +185,8 @@ class _eventManagementPageState extends State<eventManagementPage> {
                 setState(() {
                   _imageFile = File(pickedFile.path);
                 });
+
+                var image = await converToBase64(_imageFile!);
               }
             }
           }
@@ -239,10 +241,14 @@ class _eventManagementPageState extends State<eventManagementPage> {
     }
   }
 
-  Future<String> converToBase64(File imageFile) async {
-    List<int> imageBytes = await imageFile.readAsBytes();
-    String base64Image = base64Encode(imageBytes);
-    return base64Image;
+  String converToBase64(File imageFile) {
+    // List<int> imageBytes = await imageFile.readAsBytes();
+    // String base64Image = base64Encode(imageBytes);
+    // return base64Image;
+
+    List<int> imageBytes = imageFile.readAsBytesSync();
+    String base64File = base64Encode(imageBytes);
+    return base64File;
   }
 
   @override
@@ -255,16 +261,16 @@ class _eventManagementPageState extends State<eventManagementPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: userToken == null && !isLoading
-            ? Text("Usuário não autenticado. Necessário login")
+            ? const Text("Usuário não autenticado. Necessário login")
             : isLoading
                 ? Container(
                     child: Center(
                       child: Container(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height,
-                        child: Center(
+                        child: const Center(
                           child: SpinKitPulse(
-                            color: const Color(0xff606c38),
+                            color: Color(0xff606c38),
                             size: 50.0,
                           ),
                         ),
@@ -389,7 +395,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                         },
                                         onChanged: (value) {
                                           setState(() {
-                                            _description = value!;
+                                            _description = value;
                                           });
                                         },
                                       ),
@@ -418,7 +424,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                         },
                                         onChanged: (value) {
                                           setState(() {
-                                            _location = value!;
+                                            _location = value;
                                           });
                                         },
                                       ),
@@ -576,9 +582,14 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                                 if (_formKey.currentState!
                                                     .validate()) {
                                                   try {
-                                                    var test = converToBase64(
+                                                    setState(() {
+                                                      isLoading = true;
+                                                    });
+
+                                                    var image = converToBase64(
                                                         _imageFile!);
-                                                    print(test);
+                                                    print("Converted image:");
+                                                    print(image);
 
                                                     var _cvDate = _selectedDate
                                                         .toString();
@@ -608,33 +619,39 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                                     print(_cvtypeRegexed
                                                         .toUpperCase());
                                                     print(userToken);
+                                                    print(image);
 
-                                                    // var response =
-                                                    //     await signUpEvent(
-                                                    //   _title,
-                                                    //   _description,
-                                                    //   _location,
-                                                    //   _dateController.text,
-                                                    //   _cvTime.substring(11, 16),
-                                                    //   _cvtypeRegexed
-                                                    //       .toUpperCase(),
-                                                    //   userToken,
-                                                    // );
+                                                    var response =
+                                                        await signUpEvent(
+                                                      _title,
+                                                      _description,
+                                                      _location,
+                                                      _dateController.text,
+                                                      _cvTime.substring(11, 16),
+                                                      _cvtypeRegexed
+                                                          .toUpperCase(),
+                                                      image.toString(),
+                                                      userToken,
+                                                    );
 
-                                                    // if (response.statusCode ==
-                                                    //         200 ||
-                                                    //     response.statusCode ==
-                                                    //         201) {
-                                                    //   Navigator.push(
-                                                    //       context,
-                                                    //       MaterialPageRoute(
-                                                    //           builder: (context) =>
-                                                    //               const confirmPage()));
-                                                    // } else {
-                                                    //   print(response);
-                                                    //   hasError =
-                                                    //       "Não foi possível concluir a ação: $response.statusCode";
-                                                    // }
+                                                    if (response.statusCode ==
+                                                            200 ||
+                                                        response.statusCode ==
+                                                            201) {
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  const confirmPage()));
+                                                    } else {
+                                                      print(response.body);
+                                                      hasError =
+                                                          "Não foi possível concluir a ação: $response";
+                                                    }
+
+                                                    setState(() {
+                                                      isLoading = false;
+                                                    });
                                                   } catch (error) {
                                                     setState(() {
                                                       hasError =
