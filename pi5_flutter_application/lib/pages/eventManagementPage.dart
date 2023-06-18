@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, camel_case_types
 
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -69,8 +70,8 @@ class _eventManagementPageState extends State<eventManagementPage> {
     'Reciclagem',
     'Reflorestamento',
     'Limpeza de ambientes',
-    'Conscientização e educação',
-    'Conservação de espécies'
+    'Conscientizacao e educacao',
+    'Conservacao de especies'
   ];
   TextEditingController _textFieldController = TextEditingController();
 
@@ -238,6 +239,12 @@ class _eventManagementPageState extends State<eventManagementPage> {
     }
   }
 
+  Future<String> converToBase64(File imageFile) async {
+    List<int> imageBytes = await imageFile.readAsBytes();
+    String base64Image = base64Encode(imageBytes);
+    return base64Image;
+  }
+
   @override
   void dispose() {
     _textFieldController.dispose();
@@ -247,7 +254,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: userToken == null
+        body: userToken == null && !isLoading
             ? Text("Usuário não autenticado. Necessário login")
             : isLoading
                 ? Container(
@@ -568,14 +575,11 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                               onPressed: () async {
                                                 if (_formKey.currentState!
                                                     .validate()) {
-                                                  // _formKey.currentState!.save();
-                                                  // Navigator.push(
-                                                  //     context,
-                                                  //     MaterialPageRoute(
-                                                  //         builder: (context) =>
-                                                  //             const confirmPage()));
-
                                                   try {
+                                                    var test = converToBase64(
+                                                        _imageFile!);
+                                                    print(test);
+
                                                     var _cvDate = _selectedDate
                                                         .toString();
                                                     var _cvTime = _selectedTime
@@ -588,32 +592,49 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                                     var _cvTypeReplaced =
                                                         _cvType.replaceAll(
                                                             ' ', '_');
-                                                    var response =
-                                                        await signUpEvent(
-                                                      _title,
-                                                      _description,
-                                                      _location,
-                                                      _dateController.text,
-                                                      _cvTime.substring(11, 16),
-                                                      _cvTypeReplaced
-                                                          .toUpperCase(),
-                                                      userToken,
-                                                    );
+                                                    String _cvtypeRegexed =
+                                                        _cvTypeReplaced
+                                                            .replaceAll(
+                                                                RegExp(
+                                                                    r'[ÇÃÉ]'),
+                                                                '');
 
-                                                    if (response.statusCode ==
-                                                            200 ||
-                                                        response.statusCode ==
-                                                            201) {
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  const confirmPage()));
-                                                    } else {
-                                                      print(response);
-                                                      hasError =
-                                                          "Não foi possível concluir a ação: $response.statusCode";
-                                                    }
+                                                    print(_title);
+                                                    print(_description);
+                                                    print(_location);
+                                                    print(_dateController.text);
+                                                    print(_cvTime.substring(
+                                                        11, 16));
+                                                    print(_cvtypeRegexed
+                                                        .toUpperCase());
+                                                    print(userToken);
+
+                                                    // var response =
+                                                    //     await signUpEvent(
+                                                    //   _title,
+                                                    //   _description,
+                                                    //   _location,
+                                                    //   _dateController.text,
+                                                    //   _cvTime.substring(11, 16),
+                                                    //   _cvtypeRegexed
+                                                    //       .toUpperCase(),
+                                                    //   userToken,
+                                                    // );
+
+                                                    // if (response.statusCode ==
+                                                    //         200 ||
+                                                    //     response.statusCode ==
+                                                    //         201) {
+                                                    //   Navigator.push(
+                                                    //       context,
+                                                    //       MaterialPageRoute(
+                                                    //           builder: (context) =>
+                                                    //               const confirmPage()));
+                                                    // } else {
+                                                    //   print(response);
+                                                    //   hasError =
+                                                    //       "Não foi possível concluir a ação: $response.statusCode";
+                                                    // }
                                                   } catch (error) {
                                                     setState(() {
                                                       hasError =

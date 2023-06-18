@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:pi5_flutter_application/pages/dashboardPage.dart';
+import 'package:pi5_flutter_application/pages/eventManagementPage.dart';
 import 'package:pi5_flutter_application/pages/indexPage.dart';
 import 'package:pi5_flutter_application/pages/loginPage.dart';
 import 'package:pi5_flutter_application/pages/signUpPage.dart';

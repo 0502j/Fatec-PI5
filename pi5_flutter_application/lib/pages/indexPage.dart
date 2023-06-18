@@ -29,17 +29,6 @@ class _IndexPageState extends State<IndexPage> {
                       const SizedBox(
                         height: 30,
                       ),
-                      // Container(
-                      //   width: 200,
-                      //   height: 200,
-                      //   decoration: const BoxDecoration(
-                      //     shape: BoxShape.circle,
-                      //   ),
-                      //   child: ClipOval(
-                      //       child:
-                      //           // Image.asset('assets/images/ct-worldwmap.jpg')),
-
-                      // ),
                       ProgressiveImageWidget(
                         imgPath: 'assets/images/ct-worldwmap.jpg',
                         isOval: true,

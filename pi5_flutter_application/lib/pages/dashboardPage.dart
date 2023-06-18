@@ -205,7 +205,7 @@ class _dashboardPageState extends State<dashboardPage> {
     return Scaffold(
       body: ListView(
         children: [
-          userToken == null
+          userToken == null && !isLoading
               ? Text("Usuário não autenticado, necessário login.")
               : isLoading
                   ? Container(
@@ -237,7 +237,8 @@ class _dashboardPageState extends State<dashboardPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(8),
+                              padding: const EdgeInsets.only(
+                                  top: 16, left: 16, bottom: 0, right: 16),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -258,25 +259,36 @@ class _dashboardPageState extends State<dashboardPage> {
                                 ],
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const userEventsPage()));
-                              },
-                              child: Container(
-                                width: 50,
-                                height: 50,
-                                decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: AssetImage(
-                                            "assets/images/becris-user.png"))),
-                              ),
-                            )
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: 16, left: 16, bottom: 0, right: 16),
+                              child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const userEventsPage()));
+                                  },
+                                  child: userImage == null || userImage == ""
+                                      ? Container(
+                                          width: 50,
+                                          height: 50,
+                                          decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: AssetImage(
+                                                      "assets/images/becris-user.png"))),
+                                        )
+                                      : Image.memory(
+                                          base64Decode(userImage!
+                                              .replaceAll(RegExp(r'\s+'), '')),
+                                          fit: BoxFit.cover,
+                                          height: 80,
+                                          width: 100,
+                                        )),
+                            ),
                           ],
                         ),
                         const SizedBox(
@@ -368,7 +380,8 @@ class _dashboardPageState extends State<dashboardPage> {
                           height: 25,
                         ),
                         const Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: EdgeInsets.only(
+                              top: 16.0, bottom: 8, left: 16, right: 16),
                           child: Text(
                             "Últimos eventos",
                             style: TextStyle(
@@ -376,7 +389,8 @@ class _dashboardPageState extends State<dashboardPage> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(8),
+                          padding: const EdgeInsets.only(
+                              top: 8, bottom: 8, left: 16, right: 8),
                           child: Container(
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.transparent),
@@ -517,11 +531,31 @@ class _dashboardPageState extends State<dashboardPage> {
                 )
               : events.isEmpty && userToken != null
                   ? Padding(
-                      padding: EdgeInsets.all(8),
-                      child: Text("Sem eventos ainda. Comece criando um!"),
-                    )
+                      padding: EdgeInsets.all(16),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            const Text(
+                              "Nenhum evento ainda. Que tal criar um agora mesmo?",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Color.fromARGB(179, 25, 93, 27),
+                                fontWeight: FontWeight.w600,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              height: 80,
+                              width: 80,
+                              child:
+                                  Image.asset('assets/images/freepik-wind.png'),
+                            )
+                          ],
+                        ),
+                      ))
                   : Padding(
-                      padding: EdgeInsets.all(8),
+                      padding: EdgeInsets.all(16),
                       child: Column(
                         children: events.map((event) {
                           final nome = event.nome;
@@ -574,14 +608,21 @@ class _dashboardPageState extends State<dashboardPage> {
                                       ),
                                     ),
                                     const SizedBox(width: 16.0),
-                                    ClipRRect(
-                                        borderRadius: BorderRadius.circular(8),
-                                        child: isContentLoading
-                                            ? SpinKitPulse(
+                                    isContentLoading
+                                        ? Container(
+                                            width: 50,
+                                            height: 50,
+                                            child: Center(
+                                              child: SpinKitPulse(
                                                 color: const Color(0xff606c38),
                                                 size: 50.0,
-                                              )
-                                            : imagem == null
+                                              ),
+                                            ),
+                                          )
+                                        : ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            child: imagem == null
                                                 ? ClipRRect(
                                                     child: Image.asset(
                                                       'assets/images/rawpixel-eventPlaceholder.jpg',

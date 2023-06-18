@@ -118,7 +118,7 @@ class _participantsPageState extends State<participantsPage> {
       shrinkWrap: true,
       physics: const ClampingScrollPhysics(),
       children: [
-        userToken == null
+        userToken == null && !isLoading
             ? Text("Usuário não autenticado. Necessário login.")
             : isLoading
                 ? Text("Loading...")
@@ -203,7 +203,9 @@ class _participantsPageState extends State<participantsPage> {
                                                 fontSize: 16),
                                           ),
                                         ),
-                                        participants.isEmpty
+                                        participants.isEmpty &&
+                                                !isLoading &&
+                                                !isContentLoading
                                             ? Padding(
                                                 padding: EdgeInsets.all(16),
                                                 child: Center(
