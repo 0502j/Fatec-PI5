@@ -35,6 +35,26 @@ Future<http.Response> loginUser(email, pwd) {
   );
 }
 
+Future<http.Response> signUpEvent(
+    title, description, place, date, time, type, token) {
+  return http.post(
+    Uri.parse(
+        "http://ec2-18-118-151-165.us-east-2.compute.amazonaws.com:8080/eventos/cadastro"),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': token,
+    },
+    body: jsonEncode(<String, dynamic>{
+      'titulo': title.toString(),
+      'descricao': description.toString(),
+      'local': place.toString(),
+      'data': date.substring(0, 10),
+      'hora': time.toString(),
+      'tipo': type.toString(),
+    }),
+  );
+}
+
 Future<http.Response> getEvents(String token) async {
   var url = Uri.parse(
       "http://ec2-18-118-151-165.us-east-2.compute.amazonaws.com:8080/eventos");
