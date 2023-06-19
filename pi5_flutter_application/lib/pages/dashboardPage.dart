@@ -518,8 +518,8 @@ class _dashboardPageState extends State<dashboardPage> {
               ? Container(
                   child: Center(
                     child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
+                      width: 100,
+                      height: 100,
                       child: Center(
                         child: SpinKitPulse(
                           color: const Color(0xff606c38),

@@ -579,6 +579,15 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                             width: 300,
                                             child: ElevatedButton(
                                               onPressed: () async {
+                                                if (_imageFile == null ||
+                                                    _imageFile == "") {
+                                                  setState(() {
+                                                    hasError =
+                                                        "Selecione uma imagem.";
+                                                  });
+                                                  return;
+                                                }
+
                                                 if (_formKey.currentState!
                                                     .validate()) {
                                                   try {
