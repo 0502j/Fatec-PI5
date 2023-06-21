@@ -1,15 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:progressive_image/progressive_image.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-
-/*
-
-  Widget usado SOMENTE em imagens que não precisam de requisição com back-end, 
-  como exemplo página de introdução após registro do usuário, trazendo efeito
-  de progresso de carregamento.
-
-
- */
 
 class ProgressiveImageWidget extends StatelessWidget {
   final String? imgPath;

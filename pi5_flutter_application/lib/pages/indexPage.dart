@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pi5_flutter_application/pages/loginPage.dart';
 import 'package:pi5_flutter_application/pages/signUpPage.dart';
 import 'package:pi5_flutter_application/widgets/ProgressiveImage.dart';
@@ -11,6 +12,13 @@ class IndexPage extends StatefulWidget {
 }
 
 class _IndexPageState extends State<IndexPage> {
+  @override
+  void initState() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top]);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,8 +40,8 @@ class _IndexPageState extends State<IndexPage> {
                       ProgressiveImageWidget(
                         imgPath: 'assets/images/ct-worldwmap.jpg',
                         isOval: true,
-                        widthValue: 200,
-                        heightValue: 200,
+                        widthValue: 200.0,
+                        heightValue: 200.0,
                       ),
                       const SizedBox(height: 32.50),
                       const SizedBox(

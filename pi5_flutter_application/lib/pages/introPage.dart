@@ -128,8 +128,8 @@ class _introPageState extends State<introPage> {
                               // ),
                               ProgressiveImageWidget(
                                 imgPath: _imageAsset,
-                                widthValue: double.maxFinite,
-                                heightValue: 350,
+                                widthValue: 400.0,
+                                heightValue: 350.0,
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(16),
