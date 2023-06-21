@@ -3,6 +3,15 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:progressive_image/progressive_image.dart';
 
+/*
+
+  Widget usado SOMENTE em imagens que não precisam de requisição com back-end, 
+  como exemplo página de introdução após registro do usuário, trazendo efeito
+  de progressão de carregamento.
+
+
+ */
+
 class ProgressiveImageWidget extends StatelessWidget {
   final String? imgPath;
   final bool isOval;

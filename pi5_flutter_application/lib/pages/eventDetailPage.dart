@@ -1,11 +1,8 @@
-// ignore_for_file: camel_case_types
-
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pi5_flutter_application/pages/confirmPage.dart';
-import 'package:pi5_flutter_application/pages/dashboardPage.dart';
+import 'package:pi5_flutter_application/model/model.dart';
 import 'package:pi5_flutter_application/pages/participantsPage.dart';
 import 'package:pi5_flutter_application/services/api_services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';

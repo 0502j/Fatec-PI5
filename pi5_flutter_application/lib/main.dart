@@ -25,6 +25,6 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.light,
             useMaterial3: true,
             colorSchemeSeed: Colors.green),
-        home: userEventsPage());
+        home: IndexPage());
   }
 }

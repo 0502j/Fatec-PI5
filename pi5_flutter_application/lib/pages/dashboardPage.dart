@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pi5_flutter_application/model/model.dart';
 import 'package:pi5_flutter_application/pages/eventDetailPage.dart';
 import 'package:pi5_flutter_application/pages/eventManagementPage.dart';
 import 'package:pi5_flutter_application/pages/resourcesPage.dart';
@@ -9,40 +10,6 @@ import 'package:pi5_flutter_application/pages/userEventsPage.dart';
 import 'package:pi5_flutter_application/services/api_services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-class Event {
-  int id;
-  String nome;
-  String data;
-  String hora;
-  String descricao;
-  String tipo;
-  String? image;
-  String local;
-
-  Event(
-      {required this.id,
-      required this.nome,
-      required this.data,
-      required this.hora,
-      required this.descricao,
-      required this.tipo,
-      required this.local,
-      this.image});
-
-  factory Event.fromJson(Map<String, dynamic> json) {
-    return Event(
-      id: json['id'] ?? 0,
-      nome: json['titulo'] ?? '',
-      descricao: json['descricao'] ?? '',
-      data: json['data'] ?? '',
-      hora: json['hora'] ?? '',
-      image: json['image'],
-      tipo: json['tipo'] ?? '',
-      local: json['local'] ?? '',
-    );
-  }
-}
 
 class dashboardPage extends StatefulWidget {
   const dashboardPage({super.key});

@@ -2,31 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pi5_flutter_application/pages/confirmPage.dart';
-import 'package:pi5_flutter_application/pages/dashboardPage.dart';
 import 'package:pi5_flutter_application/services/api_services.dart';
-
-class Participant {
-  final int id;
-  final String nome;
-  final String email;
-  final String? image;
-
-  Participant({
-    required this.id,
-    required this.nome,
-    required this.email,
-    this.image,
-  });
-
-  factory Participant.fromJson(Map<String, dynamic> json) {
-    return Participant(
-      id: json['id'],
-      nome: json['nome'],
-      email: json['email'],
-      image: json['image'],
-    );
-  }
-}
+import 'package:pi5_flutter_application/model/model.dart';
 
 class participantsPage extends StatefulWidget {
   final Event event;
