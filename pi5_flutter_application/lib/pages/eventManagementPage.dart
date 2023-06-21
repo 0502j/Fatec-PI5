@@ -597,8 +597,6 @@ class _eventManagementPageState extends State<eventManagementPage> {
 
                                                     var image = converToBase64(
                                                         _imageFile!);
-                                                    print("Converted image:");
-                                                    print(image);
 
                                                     var _cvDate = _selectedDate
                                                         .toString();
@@ -618,17 +616,6 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                                                 RegExp(
                                                                     r'[ÇÃÉ]'),
                                                                 '');
-
-                                                    print(_title);
-                                                    print(_description);
-                                                    print(_location);
-                                                    print(_dateController.text);
-                                                    print(_cvTime.substring(
-                                                        11, 16));
-                                                    print(_cvtypeRegexed
-                                                        .toUpperCase());
-                                                    print(userToken);
-                                                    print(image);
 
                                                     var response =
                                                         await signUpEvent(
@@ -653,9 +640,8 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                                               builder: (context) =>
                                                                   const confirmPage()));
                                                     } else {
-                                                      print(response.body);
                                                       hasError =
-                                                          "Não foi possível concluir a ação: $response";
+                                                          "Não foi possível concluir a ação. Verifique se todos os dados estão preenchidos.";
                                                     }
 
                                                     setState(() {
