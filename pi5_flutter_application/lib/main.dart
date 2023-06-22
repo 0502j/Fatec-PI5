@@ -30,6 +30,6 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.light,
             useMaterial3: true,
             colorSchemeSeed: Colors.green),
-        home: IndexPage());
+        home: loginPage());
   }
 }

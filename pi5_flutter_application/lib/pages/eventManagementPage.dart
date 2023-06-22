@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:pi5_flutter_application/model/model.dart';
 import 'package:pi5_flutter_application/pages/confirmPage.dart';
 import 'package:pi5_flutter_application/pages/userEventsPage.dart';
 import 'package:intl/intl.dart';
@@ -18,7 +19,8 @@ import '../services/api_services.dart';
 
 class eventManagementPage extends StatefulWidget {
   final bool isUpdating;
-  const eventManagementPage({super.key, required this.isUpdating});
+  final Event? event;
+  const eventManagementPage({super.key, required this.isUpdating, this.event});
 
   @override
   State<eventManagementPage> createState() => _eventManagementPageState();
@@ -31,6 +33,8 @@ class _eventManagementPageState extends State<eventManagementPage> {
   bool isLoading = false;
 
   final storage = const FlutterSecureStorage();
+  String? userImage;
+
   String? userToken;
 
   @override
@@ -51,6 +55,28 @@ class _eventManagementPageState extends State<eventManagementPage> {
     if (token != null) {
       setState(() {
         userToken = token;
+      });
+      loadUserInfo();
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  //Carregar informações do usuário
+  Future<void> loadUserInfo() async {
+    setState(() {
+      isLoading = true;
+    });
+    String? image = await storage.read(key: "image");
+
+    if (image != null) {
+      setState(() {
+        userImage = image;
+      });
+    } else {
+      setState(() {
+        userImage = "";
       });
     }
     setState(() {
@@ -259,6 +285,8 @@ class _eventManagementPageState extends State<eventManagementPage> {
 
   @override
   Widget build(BuildContext context) {
+    final event = widget.event;
+
     return Scaffold(
         body: userToken == null && !isLoading
             ? const Text("Usuário não autenticado. Necessário login")
@@ -288,7 +316,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                           child: Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(16),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -305,30 +333,46 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                               : "Criar novo evento",
                                           style: const TextStyle(
                                               color: Colors.black,
-                                              fontSize: 28,
+                                              fontSize: 20,
                                               fontWeight: FontWeight.w600),
                                         ),
                                       ],
                                     ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const userEventsPage()));
-                                      },
-                                      child: Container(
-                                        width: 80,
-                                        height: 80,
-                                        decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: AssetImage(
-                                                    "assets/images/cd-boyicon.jpg"))),
-                                      ),
-                                    )
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          top: 0,
+                                          left: 16,
+                                          bottom: 0,
+                                          right: 0),
+                                      child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const userEventsPage()));
+                                          },
+                                          child: userImage == null ||
+                                                  userImage == ""
+                                              ? Container(
+                                                  width: 50,
+                                                  height: 50,
+                                                  decoration: const BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      image: DecorationImage(
+                                                          fit: BoxFit.cover,
+                                                          image: AssetImage(
+                                                              "assets/images/becris-user.png"))),
+                                                )
+                                              : Image.memory(
+                                                  base64Decode(userImage!
+                                                      .replaceAll(
+                                                          RegExp(r'\s+'), '')),
+                                                  fit: BoxFit.cover,
+                                                  height: 80,
+                                                  width: 100,
+                                                )),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -344,6 +388,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                   child: Column(
                                     children: [
                                       TextFormField(
+                                        initialValue: event?.nome ?? null,
                                         inputFormatters: [
                                           LengthLimitingTextInputFormatter(
                                               100), //Aceitar apenas letras e números, máx 100 caracteres
@@ -373,6 +418,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                         height: 20,
                                       ),
                                       TextFormField(
+                                        initialValue: event?.descricao ?? null,
                                         inputFormatters: [
                                           LengthLimitingTextInputFormatter(
                                               250), //Aceitar apenas letras e números, máx 100 caracteres
@@ -403,6 +449,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                         height: 20,
                                       ),
                                       TextFormField(
+                                        initialValue: event?.local ?? null,
                                         inputFormatters: [
                                           LengthLimitingTextInputFormatter(300),
                                         ],
@@ -590,68 +637,145 @@ class _eventManagementPageState extends State<eventManagementPage> {
 
                                                 if (_formKey.currentState!
                                                     .validate()) {
-                                                  try {
-                                                    setState(() {
-                                                      isLoading = true;
-                                                    });
+                                                  if (!isUpdating) {
+                                                    try {
+                                                      setState(() {
+                                                        isLoading = true;
+                                                      });
 
-                                                    var image = converToBase64(
-                                                        _imageFile!);
+                                                      var image =
+                                                          converToBase64(
+                                                              _imageFile!);
 
-                                                    var _cvDate = _selectedDate
-                                                        .toString();
-                                                    var _cvTime = _selectedTime
-                                                        .toString();
+                                                      var _cvDate =
+                                                          _selectedDate
+                                                              .toString();
+                                                      var _cvTime =
+                                                          _selectedTime
+                                                              .toString();
 
-                                                    var _cvType =
-                                                        _textFieldController
-                                                            .text
-                                                            .toString();
-                                                    var _cvTypeReplaced =
-                                                        _cvType.replaceAll(
-                                                            ' ', '_');
-                                                    String _cvtypeRegexed =
-                                                        _cvTypeReplaced
-                                                            .replaceAll(
-                                                                RegExp(
-                                                                    r'[ÇÃÉ]'),
-                                                                '');
+                                                      var _cvType =
+                                                          _textFieldController
+                                                              .text
+                                                              .toString();
+                                                      var _cvTypeReplaced =
+                                                          _cvType.replaceAll(
+                                                              ' ', '_');
+                                                      String _cvtypeRegexed =
+                                                          _cvTypeReplaced
+                                                              .replaceAll(
+                                                                  RegExp(
+                                                                      r'[ÇÃÉ]'),
+                                                                  '');
 
-                                                    var response =
-                                                        await signUpEvent(
-                                                      _title,
-                                                      _description,
-                                                      _location,
-                                                      _dateController.text,
-                                                      _cvTime.substring(11, 16),
-                                                      _cvtypeRegexed
-                                                          .toUpperCase(),
-                                                      image.toString(),
-                                                      userToken,
-                                                    );
+                                                      var response =
+                                                          await signUpEvent(
+                                                        _title,
+                                                        _description,
+                                                        _location,
+                                                        _dateController.text,
+                                                        _cvTime.substring(
+                                                            11, 16),
+                                                        _cvtypeRegexed
+                                                            .toUpperCase(),
+                                                        image.toString(),
+                                                        userToken,
+                                                      );
 
-                                                    if (response.statusCode ==
-                                                            200 ||
-                                                        response.statusCode ==
-                                                            201) {
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  const confirmPage()));
-                                                    } else {
-                                                      hasError =
-                                                          "Não foi possível concluir a ação. Verifique se todos os dados estão preenchidos.";
+                                                      if (response.statusCode ==
+                                                              200 ||
+                                                          response.statusCode ==
+                                                              201) {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const confirmPage()));
+                                                      } else {
+                                                        hasError =
+                                                            "Não foi possível concluir a ação. Verifique se todos os dados estão preenchidos.";
+                                                      }
+
+                                                      setState(() {
+                                                        isLoading = false;
+                                                      });
+                                                    } catch (error) {
+                                                      setState(() {
+                                                        hasError =
+                                                            "Não foi possível concluir a ação: $error";
+                                                      });
                                                     }
+                                                  } else {
+                                                    try {
+                                                      setState(() {
+                                                        isLoading = true;
+                                                      });
 
-                                                    setState(() {
-                                                      isLoading = false;
-                                                    });
-                                                  } catch (error) {
-                                                    setState(() {
-                                                      hasError =
-                                                          "Não foi possível concluir a ação: $error";
-                                                    });
+                                                      var image =
+                                                          converToBase64(
+                                                              _imageFile!);
+
+                                                      var _cvDate =
+                                                          _selectedDate
+                                                              .toString();
+                                                      var _cvTime =
+                                                          _selectedTime
+                                                              .toString();
+
+                                                      var _cvType =
+                                                          _textFieldController
+                                                              .text
+                                                              .toString();
+                                                      var _cvTypeReplaced =
+                                                          _cvType.replaceAll(
+                                                              ' ', '_');
+                                                      String _cvtypeRegexed =
+                                                          _cvTypeReplaced
+                                                              .replaceAll(
+                                                                  RegExp(
+                                                                      r'[ÇÃÉ]'),
+                                                                  '');
+
+                                                      var response =
+                                                          await updateEvent(
+                                                              _title,
+                                                              _description,
+                                                              _location,
+                                                              _dateController
+                                                                  .text,
+                                                              _cvTime.substring(
+                                                                  11, 16),
+                                                              _cvtypeRegexed
+                                                                  .toUpperCase(),
+                                                              image.toString(),
+                                                              userToken,
+                                                              event?.id);
+
+                                                      if (response.statusCode ==
+                                                              200 ||
+                                                          response.statusCode ==
+                                                              201) {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const confirmPage()));
+                                                      } else {
+                                                        hasError =
+                                                            "Não foi possível concluir a ação. Verifique se todos os dados estão preenchidos.";
+                                                      }
+
+                                                      setState(() {
+                                                        isLoading = false;
+                                                      });
+                                                    } catch (error) {
+                                                      setState(() {
+                                                        hasError =
+                                                            "Não foi possível concluir a ação: $error";
+                                                      });
+                                                    }
                                                   }
                                                 }
                                               },

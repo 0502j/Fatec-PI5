@@ -134,7 +134,7 @@ Future<http.Response> getUserEvents(String token) async {
 
 Future<http.Response> cancelEventSubscription(String token, int id) async {
   var url = Uri.parse(
-      "http://ec2-18-118-151-165.us-east-2.compute.amazonaws.com:8080/eventos/participantes/$id");
+      "http://ec2-18-118-151-165.us-east-2.compute.amazonaws.com:8080/eventos/cancelarInscricao/$id");
 
   var response = await http.delete(
     url,
@@ -146,6 +146,31 @@ Future<http.Response> cancelEventSubscription(String token, int id) async {
 
   return response;
 }
+
+Future<http.Response> updateEvent(
+    title, description, place, date, time, type, image, token, id) async {
+  var url = Uri.parse(
+      "http://ec2-18-118-151-165.us-east-2.compute.amazonaws.com:8080/eventos/editarEvento/$id");
+
+  var response = await http.put(url,
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': token,
+      },
+      body: jsonEncode(<String, dynamic>{
+        'titulo': title.toString(),
+        'descricao': description.toString(),
+        'local': place.toString(),
+        'data': date.substring(0, 10),
+        'hora': time.toString(),
+        'tipo': type.toString(),
+        'image': image.toString(),
+      }));
+
+  return response;
+}
+
+/* funções FlutterSecureStorage */
 
 Future<void> setToken(String token) async {
   await storage.write(key: "token", value: token);
