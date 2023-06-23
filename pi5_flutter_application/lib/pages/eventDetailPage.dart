@@ -9,8 +9,14 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class eventDetailPage extends StatefulWidget {
   final Event event;
+  final bool hideSignUpButton;
+  final bool hideParticipantsList;
 
-  const eventDetailPage({super.key, required this.event});
+  const eventDetailPage(
+      {super.key,
+      required this.event,
+      required this.hideSignUpButton,
+      required this.hideParticipantsList});
 
   @override
   State<eventDetailPage> createState() => _eventDetailPageState();
@@ -49,6 +55,8 @@ class _eventDetailPageState extends State<eventDetailPage> {
   @override
   Widget build(BuildContext context) {
     final event = widget.event;
+    var hideSignUpButton = widget.hideSignUpButton;
+    var hideParticipantsList = widget.hideParticipantsList;
 
     return Scaffold(
         body: ListView(
@@ -68,14 +76,14 @@ class _eventDetailPageState extends State<eventDetailPage> {
               )
             : userToken == null && isLoading == false
                 ? Padding(
-                    padding: EdgeInsets.all(8),
+                    padding: EdgeInsets.all(16),
                     child: Text(
                         "Você não pode ver os detalhes desse evento. Por favor, faça seu login."),
                   )
                 : SizedBox(
                     width: double.maxFinite,
                     child: Padding(
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(16),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,33 +168,39 @@ class _eventDetailPageState extends State<eventDetailPage> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        GestureDetector(
-                                          onTap: () => {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        participantsPage(
-                                                            event: event)))
-                                          },
-                                          child: const Padding(
-                                            padding: EdgeInsets.only(
-                                                top: 0,
-                                                bottom: 0,
-                                                right: 16,
-                                                left: 16),
-                                            child: Text(
-                                              "Ver lista de participantes",
-                                              style: TextStyle(
-                                                  color:
-                                                      const Color(0xff606c38),
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 16),
-                                            ),
-                                          ),
-                                        ),
+                                        hideParticipantsList
+                                            ? SizedBox(
+                                                height: 0,
+                                              )
+                                            : GestureDetector(
+                                                onTap: () => {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              participantsPage(
+                                                                  event:
+                                                                      event)))
+                                                },
+                                                child: const Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top: 0,
+                                                      bottom: 0,
+                                                      right: 16,
+                                                      left: 16),
+                                                  child: Text(
+                                                    "Ver lista de participantes",
+                                                    style: TextStyle(
+                                                        color: const Color(
+                                                            0xff606c38),
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 16),
+                                                  ),
+                                                ),
+                                              ),
                                         const SizedBox(
-                                          height: 20,
+                                          height: 10,
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.all(16),
@@ -286,58 +300,67 @@ class _eventDetailPageState extends State<eventDetailPage> {
                                                 style: TextStyle(
                                                     color: Colors.red),
                                               ),
-                                        Center(
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(16),
-                                            child: SizedBox(
-                                              width: 300,
-                                              child: ElevatedButton(
-                                                onPressed: () async {
-                                                  try {
-                                                    if (userToken != null) {
-                                                      var response =
-                                                          await sendEventSubscription(
-                                                              userToken!,
-                                                              event.id);
-                                                      if (response.statusCode ==
-                                                              200 ||
-                                                          response.statusCode ==
-                                                              201) {
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        const confirmPage()));
-                                                      } else {
-                                                        hasError =
-                                                            "Não foi possível se inscrever. $response.body";
-                                                      }
-                                                    }
-                                                  } catch (e) {
-                                                    print(e);
-                                                  }
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                  primary:
-                                                      const Color(0xff606c38),
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20)),
+                                        hideSignUpButton
+                                            ? SizedBox(
+                                                height: 10,
+                                              )
+                                            : Center(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(16),
+                                                  child: SizedBox(
+                                                    width: 300,
+                                                    child: ElevatedButton(
+                                                      onPressed: () async {
+                                                        try {
+                                                          if (userToken !=
+                                                              null) {
+                                                            var response =
+                                                                await sendEventSubscription(
+                                                                    userToken!,
+                                                                    event.id);
+                                                            if (response.statusCode ==
+                                                                    200 ||
+                                                                response.statusCode ==
+                                                                    201) {
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              const confirmPage()));
+                                                            } else {
+                                                              hasError =
+                                                                  "Não foi possível se inscrever. $response.body";
+                                                            }
+                                                          }
+                                                        } catch (e) {
+                                                          print(e);
+                                                        }
+                                                      },
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        primary: const Color(
+                                                            0xff606c38),
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20)),
+                                                      ),
+                                                      child: const Text(
+                                                        "Inscrever-se",
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ),
-                                                child: const Text(
-                                                  "Inscrever-se",
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color: Colors.white),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        )
+                                              )
                                       ],
                                     )
                                   ],

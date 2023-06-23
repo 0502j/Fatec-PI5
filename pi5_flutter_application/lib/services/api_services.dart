@@ -147,6 +147,21 @@ Future<http.Response> cancelEventSubscription(String token, int id) async {
   return response;
 }
 
+Future<http.Response> deleteEvent(String token, int id) async {
+  var url = Uri.parse(
+      "http://ec2-18-118-151-165.us-east-2.compute.amazonaws.com:8080/eventos/$id");
+
+  var response = await http.delete(
+    url,
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': token,
+    },
+  );
+
+  return response;
+}
+
 Future<http.Response> updateEvent(
     title, description, place, date, time, type, image, token, id) async {
   var url = Uri.parse(

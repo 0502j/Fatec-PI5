@@ -103,7 +103,7 @@ class _participantsPageState extends State<participantsPage> {
                     height: MediaQuery.of(context).size.height,
                     width: double.maxFinite,
                     child: Padding(
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(16),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,

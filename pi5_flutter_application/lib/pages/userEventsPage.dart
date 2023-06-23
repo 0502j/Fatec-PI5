@@ -278,8 +278,12 @@ class _userEventsPageState extends State<userEventsPage> {
                                                         MaterialPageRoute(
                                                             builder: (context) =>
                                                                 eventDetailPage(
-                                                                    event:
-                                                                        event)));
+                                                                  event: event,
+                                                                  hideSignUpButton:
+                                                                      true,
+                                                                  hideParticipantsList:
+                                                                      true,
+                                                                )));
                                                   },
                                                   child: Card(
                                                     shape:
@@ -398,12 +402,53 @@ class _userEventsPageState extends State<userEventsPage> {
                                                                         ),
                                                                         SizedBox(
                                                                           width:
-                                                                              10,
+                                                                              15,
                                                                         ),
                                                                         GestureDetector(
-                                                                          // onTap: {
-                                                                          //   //todo
-                                                                          // },
+                                                                          onTap:
+                                                                              () async {
+                                                                            try {
+                                                                              var response = await deleteEvent(userToken!, event.id);
+                                                                              if (response.statusCode == 200) {
+                                                                                //abrir modal
+                                                                                showDialog(
+                                                                                    context: context,
+                                                                                    builder: (BuildContext context) {
+                                                                                      return AlertDialog(
+                                                                                        title: Text("Evento deletado"),
+                                                                                        content: Text("O evento ' $nome ' foi deletado com sucesso. "),
+                                                                                        actions: <Widget>[
+                                                                                          TextButton(
+                                                                                            child: Text('Fechar'),
+                                                                                            onPressed: () {
+                                                                                              Navigator.of(context).pop();
+                                                                                            },
+                                                                                          ),
+                                                                                        ],
+                                                                                      );
+                                                                                    });
+
+                                                                                getUserEventsFunction(userToken);
+                                                                              } else {
+                                                                                showDialog(
+                                                                                    context: context,
+                                                                                    builder: (BuildContext context) {
+                                                                                      return AlertDialog(
+                                                                                        title: Text("Não foi possível deletar."),
+                                                                                        content: Text("Tente novamente mais tarde!"),
+                                                                                        actions: <Widget>[
+                                                                                          TextButton(
+                                                                                            child: Text('Fechar'),
+                                                                                            onPressed: () {
+                                                                                              Navigator.of(context).pop();
+                                                                                            },
+                                                                                          ),
+                                                                                        ],
+                                                                                      );
+                                                                                    });
+                                                                              }
+                                                                            } catch (e) {}
+                                                                          },
                                                                           child:
                                                                               FaIcon(
                                                                             FontAwesomeIcons.trash,
@@ -418,7 +463,7 @@ class _userEventsPageState extends State<userEventsPage> {
                                                                         ),
                                                                         SizedBox(
                                                                           width:
-                                                                              10,
+                                                                              15,
                                                                         ),
                                                                         GestureDetector(
                                                                           onTap:
@@ -472,9 +517,9 @@ class _userEventsPageState extends State<userEventsPage> {
                                                                                 20,
                                                                             color: Color.fromARGB(
                                                                                 255,
-                                                                                162,
-                                                                                35,
-                                                                                16),
+                                                                                31,
+                                                                                5,
+                                                                                1),
                                                                           ),
                                                                         ),
                                                                       ],

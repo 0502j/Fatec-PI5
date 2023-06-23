@@ -541,8 +541,11 @@ class _dashboardPageState extends State<dashboardPage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          eventDetailPage(event: event)));
+                                      builder: (context) => eventDetailPage(
+                                            event: event,
+                                            hideSignUpButton: false,
+                                            hideParticipantsList: false,
+                                          )));
                             },
                             child: Card(
                               shape: RoundedRectangleBorder(
