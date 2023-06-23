@@ -27,7 +27,6 @@ class eventManagementPage extends StatefulWidget {
 }
 
 class _eventManagementPageState extends State<eventManagementPage> {
-  //Alterar valores ao criar novo evento ou atualizar existente
   late bool isUpdating;
   String hasError = "";
   bool isLoading = false;
@@ -91,7 +90,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _dateController = TextEditingController();
   TextEditingController _timeController = TextEditingController();
-  String dropdownValue = 'Reciclagem'; // valor padrão selecionado
+  String dropdownValue = 'Reciclagem';
   List<String> options = [
     'Reciclagem',
     'Reflorestamento',
@@ -157,7 +156,6 @@ class _eventManagementPageState extends State<eventManagementPage> {
       },
       confirmText: 'Confirmar',
       cancelText: 'Cancelar',
-      // Define a posição do menu suspenso no centro da tela
       showDivider: false,
     );
   }
@@ -268,10 +266,6 @@ class _eventManagementPageState extends State<eventManagementPage> {
   }
 
   String converToBase64(File imageFile) {
-    // List<int> imageBytes = await imageFile.readAsBytes();
-    // String base64Image = base64Encode(imageBytes);
-    // return base64Image;
-
     List<int> imageBytes = imageFile.readAsBytesSync();
     String base64File = base64Encode(imageBytes);
     return base64File;
@@ -393,8 +387,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                       TextFormField(
                                         initialValue: event?.nome ?? null,
                                         inputFormatters: [
-                                          LengthLimitingTextInputFormatter(
-                                              100), //Aceitar apenas letras e números, máx 100 caracteres
+                                          LengthLimitingTextInputFormatter(100),
                                         ],
                                         decoration: const InputDecoration(
                                             contentPadding: EdgeInsets.fromLTRB(
@@ -423,8 +416,7 @@ class _eventManagementPageState extends State<eventManagementPage> {
                                       TextFormField(
                                         initialValue: event?.descricao ?? null,
                                         inputFormatters: [
-                                          LengthLimitingTextInputFormatter(
-                                              250), //Aceitar apenas letras e números, máx 100 caracteres
+                                          LengthLimitingTextInputFormatter(250),
                                         ],
                                         decoration: const InputDecoration(
                                             contentPadding: EdgeInsets.fromLTRB(

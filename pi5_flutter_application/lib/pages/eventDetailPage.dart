@@ -106,7 +106,6 @@ class _eventDetailPageState extends State<eventDetailPage> {
                                     )),
                                 child: Column(
                                   children: [
-                                    //Uso de mediaquery para adequar o tamanho da imagem do evento
                                     Container(
                                       width: MediaQuery.of(context).size.width,
                                       height:
@@ -141,7 +140,6 @@ class _eventDetailPageState extends State<eventDetailPage> {
                                                   width: 100,
                                                 )),
                                     ),
-
                                     Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,

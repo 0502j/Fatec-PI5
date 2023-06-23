@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter/services.dart';
 
 class resourcesPage extends StatefulWidget {
   const resourcesPage({Key? key}) : super(key: key);

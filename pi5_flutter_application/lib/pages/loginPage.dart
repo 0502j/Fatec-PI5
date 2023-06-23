@@ -5,7 +5,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pi5_flutter_application/pages/dashboardPage.dart';
 import 'package:pi5_flutter_application/services/api_services.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({super.key});
@@ -231,8 +230,6 @@ class _loginPageState extends State<loginPage> {
                                           });
                                         }
 
-                                        // signUpUser(_name, _email, _age,
-                                        //     _gender.substring(0, 1), _password);
                                         setState(() {
                                           isLoading = false;
                                         });

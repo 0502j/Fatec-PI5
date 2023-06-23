@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pi5_flutter_application/pages/dashboardPage.dart';
 import 'package:pi5_flutter_application/pages/loginPage.dart';
 import 'package:pi5_flutter_application/widgets/ProgressiveImage.dart';
 
@@ -122,10 +121,6 @@ class _introPageState extends State<introPage> {
                               )),
                           child: Column(
                             children: [
-                              // Image.asset(
-                              //   _imageAsset,
-                              //   fit: BoxFit.fitWidth,
-                              // ),
                               ProgressiveImageWidget(
                                 imgPath: _imageAsset,
                                 widthValue: 400.0,

@@ -193,7 +193,7 @@ class _dashboardPageState extends State<dashboardPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          height: 90, // altura definida
+                          height: 90,
                           width: double.infinity,
                           child: Image.asset(
                             'assets/images/Header.png',
