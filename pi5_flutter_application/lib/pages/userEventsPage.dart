@@ -272,7 +272,7 @@ class _userEventsPageState extends State<userEventsPage> {
                                                     tipoReplaced.toLowerCase();
 
                                                 return GestureDetector(
-                                                  onTap: () {
+                                                  onTap: () async {
                                                     Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
@@ -383,6 +383,40 @@ class _userEventsPageState extends State<userEventsPage> {
                                                                         GestureDetector(
                                                                           onTap:
                                                                               () {
+                                                                            /* TO DO - verifica se o usuário é dono do evento ou não antes de atualizar
+                                                                            var email =
+                                                                                await getUserEmail();
+                                                                            print(email);
+                                                                            print(event.id);
+
+                                                                            var participants =
+                                                                                await getEventParticipants(
+                                                                                    userToken!,
+                                                                                    event.id);
+                                                                            print(participants.body);
+
+                                                                            List<dynamic>
+                                                                                participantes =
+                                                                                jsonDecode(participants
+                                                                                        .body
+                                                                                        .toString())[
+                                                                                    'participantes'];
+                                                                            List emails = participantes
+                                                                                .map((participante) =>
+                                                                                    participante[
+                                                                                        'email'])
+                                                                                .toList();
+
+                                                                            if (emails
+                                                                                .contains(email)) {
+                                                                              print(
+                                                                                  'O e-mail do usuário logado corresponde a um dos e-mails na resposta.');
+                                                                            } else {
+                                                                              print(
+                                                                                  'O e-mail do usuário logado não corresponde a nenhum dos e-mails na resposta.');
+                                                                            }
+                                                                            */
+
                                                                             Navigator.push(
                                                                               context,
                                                                               MaterialPageRoute(builder: (context) => eventManagementPage(isUpdating: true, event: event)),

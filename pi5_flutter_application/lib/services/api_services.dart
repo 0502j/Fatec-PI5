@@ -5,7 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 final storage = FlutterSecureStorage();
 
-Future<http.Response> signUpUser(name, age, gender, email, pwd) {
+Future<http.Response> signUpUser(name, age, gender, email, pwd, image) {
   return http.post(
     Uri.parse(
         "http://ec2-18-118-151-165.us-east-2.compute.amazonaws.com:8080/usuario/cadastro"),
@@ -18,6 +18,7 @@ Future<http.Response> signUpUser(name, age, gender, email, pwd) {
       'sexo': gender.toString(),
       'email': email.toString(),
       'senha': pwd.toString(),
+      'image': image.toString(),
     }),
   );
 }
@@ -211,5 +212,14 @@ Future<void> setUserImage(String image) async {
 
 Future<String?> getUserImage() async {
   var res = await storage.read(key: "image");
+  return res;
+}
+
+Future<void> setUserEmail(String email) async {
+  await storage.write(key: "image", value: email);
+}
+
+Future<String?> getUserEmail() async {
+  var res = await storage.read(key: "email");
   return res;
 }

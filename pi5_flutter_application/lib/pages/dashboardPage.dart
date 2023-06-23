@@ -230,31 +230,34 @@ class _dashboardPageState extends State<dashboardPage> {
                               padding: EdgeInsets.only(
                                   top: 16, left: 16, bottom: 0, right: 16),
                               child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const userEventsPage()));
-                                  },
-                                  child: userImage == null || userImage == ""
-                                      ? Container(
-                                          width: 50,
-                                          height: 50,
-                                          decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              image: DecorationImage(
-                                                  fit: BoxFit.cover,
-                                                  image: AssetImage(
-                                                      "assets/images/becris-user.png"))),
-                                        )
-                                      : Image.memory(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const userEventsPage()));
+                                },
+                                child: userImage == null || userImage == ""
+                                    ? Container(
+                                        width: 50,
+                                        height: 50,
+                                        decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: AssetImage(
+                                                    "assets/images/becris-user.png"))),
+                                      )
+                                    : ClipOval(
+                                        child: Image.memory(
                                           base64Decode(userImage!
                                               .replaceAll(RegExp(r'\s+'), '')),
                                           fit: BoxFit.cover,
                                           height: 80,
-                                          width: 100,
-                                        )),
+                                          width: 80,
+                                        ),
+                                      ),
+                              ),
                             ),
                           ],
                         ),

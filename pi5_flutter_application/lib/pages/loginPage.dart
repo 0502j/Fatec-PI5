@@ -200,6 +200,7 @@ class _loginPageState extends State<loginPage> {
                                                 responseBody['token'] as String;
 
                                             await setToken(token);
+                                            await setUserEmail(_email);
 
                                             var name = responseBody['nome'];
                                             await setUserName(name);

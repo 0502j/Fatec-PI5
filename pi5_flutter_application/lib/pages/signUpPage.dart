@@ -1,7 +1,14 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:pi5_flutter_application/pages/introPage.dart';
 import 'package:pi5_flutter_application/services/api_services.dart';
 
@@ -13,6 +20,9 @@ class signUpPage extends StatefulWidget {
 }
 
 class _signUpPageState extends State<signUpPage> {
+  final storage = const FlutterSecureStorage();
+  String? userImage;
+
   //Controllers de text field
 
   String _name = "";
@@ -39,6 +49,117 @@ class _signUpPageState extends State<signUpPage> {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  //Uploader de imagem
+  final picker = ImagePicker();
+  File? _imageFile;
+
+  Future<void> _getImage() async {
+    if (Platform.isAndroid) {
+      final androidInfo = await DeviceInfoPlugin().androidInfo;
+      if (androidInfo.version.sdkInt <= 32) {
+        var status = await Permission.storage.request();
+        if (status.isGranted) {
+          final pickedFile =
+              await picker.pickImage(source: ImageSource.gallery);
+          if (pickedFile != null) {
+            setState(() {
+              _imageFile = File(pickedFile.path);
+            });
+          }
+        } else if (status.isDenied) {
+          // Processo caso usuário negue a permissão
+          // ignore: use_build_context_synchronously
+          var dialogResult = await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Permissão necessária'),
+              content: const Text(
+                  'O aplicativo precisa da permissão de acesso à galeria para continuar.'),
+              actions: [
+                TextButton(
+                  child: const Text('Não'),
+                  onPressed: () => Navigator.pop(context, false),
+                ),
+                TextButton(
+                  child: const Text('Sim'),
+                  onPressed: () => Navigator.pop(context, true),
+                ),
+              ],
+            ),
+          );
+
+          if (dialogResult == true) {
+            // Usuário liberou a permissão
+            var newStatus = await Permission.photos.request();
+            if (newStatus.isGranted) {
+              final pickedFile =
+                  await picker.pickImage(source: ImageSource.gallery);
+              if (pickedFile != null) {
+                setState(() {
+                  _imageFile = File(pickedFile.path);
+                });
+
+                var image = await converToBase64(_imageFile!);
+              }
+            }
+          }
+        }
+      } else {
+        var status = await Permission.photos.request();
+        if (status.isGranted) {
+          final pickedFile =
+              await picker.pickImage(source: ImageSource.gallery);
+          if (pickedFile != null) {
+            setState(() {
+              _imageFile = File(pickedFile.path);
+            });
+          }
+        } else if (status.isDenied) {
+          // Processo caso usuário negue a permissão
+          // ignore: use_build_context_synchronously
+          var dialogResult = await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Permissão necessária'),
+              content: const Text(
+                  'O aplicativo precisa da permissão de acesso à galeria para continuar.'),
+              actions: [
+                TextButton(
+                  child: const Text('Não'),
+                  onPressed: () => Navigator.pop(context, false),
+                ),
+                TextButton(
+                  child: const Text('Sim'),
+                  onPressed: () => Navigator.pop(context, true),
+                ),
+              ],
+            ),
+          );
+
+          if (dialogResult == true) {
+            // Usuário liberou a permissão
+            var newStatus = await Permission.photos.request();
+            if (newStatus.isGranted) {
+              final pickedFile =
+                  await picker.pickImage(source: ImageSource.gallery);
+              if (pickedFile != null) {
+                setState(() {
+                  _imageFile = File(pickedFile.path);
+                });
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  String converToBase64(File imageFile) {
+    List<int> imageBytes = imageFile.readAsBytesSync();
+    String base64File = base64Encode(imageBytes);
+    return base64File;
   }
 
   @override
@@ -266,6 +387,34 @@ class _signUpPageState extends State<signUpPage> {
                             )),
                           ],
                         ),
+                        Padding(
+                          padding: EdgeInsets.all(16),
+                          child: Card(
+                            child: GestureDetector(
+                              onTap: _getImage,
+                              child: InkWell(
+                                child: _imageFile == null
+                                    ? Container(
+                                        height: 150,
+                                        child: const Center(
+                                          child: Text(
+                                              'Selecione uma foto de perfil'),
+                                        ),
+                                      )
+                                    : Container(
+                                        width: double.infinity,
+                                        height: 150,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: FileImage(_imageFile!),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                              ),
+                            ),
+                          ),
+                        ),
                         const SizedBox(height: 20),
                         Padding(
                           padding: const EdgeInsets.only(
@@ -350,6 +499,13 @@ class _signUpPageState extends State<signUpPage> {
                             width: 300,
                             child: ElevatedButton(
                               onPressed: () async {
+                                if (_imageFile == null || _imageFile == "") {
+                                  setState(() {
+                                    hasError = "Selecione uma foto de perfil.";
+                                  });
+                                  return;
+                                }
+
                                 if (_formKey.currentState!.validate() &&
                                     _password == _confirmPassword &&
                                     _gender != null &&
@@ -357,13 +513,18 @@ class _signUpPageState extends State<signUpPage> {
                                   setState(() {
                                     isLoading = true;
                                   });
+
                                   try {
+                                    var image = converToBase64(_imageFile!);
+
                                     var response = await signUpUser(
-                                        _name,
-                                        int.parse(_age),
-                                        _gender.substring(0, 1),
-                                        _email,
-                                        _password);
+                                      _name,
+                                      int.parse(_age),
+                                      _gender.substring(0, 1),
+                                      _email,
+                                      _password,
+                                      image.toString(),
+                                    );
                                     if (response.statusCode == 200 ||
                                         response.statusCode == 201) {
                                       Navigator.push(
@@ -382,8 +543,6 @@ class _signUpPageState extends State<signUpPage> {
                                     });
                                   }
 
-                                  // signUpUser(_name, _email, _age,
-                                  //     _gender.substring(0, 1), _password);
                                   setState(() {
                                     isLoading = false;
                                   });
