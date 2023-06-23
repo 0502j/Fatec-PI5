@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter/services.dart';
 
 class resourcesPage extends StatefulWidget {
   const resourcesPage({Key? key}) : super(key: key);
@@ -125,14 +124,17 @@ class _resourcesPageState extends State<resourcesPage> {
 
     return Scaffold(
       body: ListView(
-        padding: EdgeInsets.zero,
         children: [
-          Image.asset(
-            'assets/images/ct-papers.jpg',
-            height: 150,
-            width: double.infinity,
-            fit: BoxFit.cover,
-          ),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Container(
+              height: 100, // altura definida
+              width: double.infinity,
+              child: Image.asset(
+                'assets/images/ct-papers.jpg',
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+          ]),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,

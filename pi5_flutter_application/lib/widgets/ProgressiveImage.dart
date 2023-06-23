@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:progressive_image/progressive_image.dart';
 
 class ProgressiveImageWidget extends StatelessWidget {
@@ -22,26 +20,28 @@ class ProgressiveImageWidget extends StatelessWidget {
     if (isOval == true) {
       return ClipOval(
         child: ProgressiveImage(
-          placeholder: const AssetImage('assets/images/loading.gif'),
-          thumbnail: imgPath != AssetImage('assets/images/loading.gif')
+          placeholder:
+              const AssetImage('assets/images/blurred-placeholder.jpg'),
+          thumbnail: imgPath != AssetImage('blurred-placeholder.jpg')
               ? AssetImage(imgPath!)
-              : AssetImage('assets/images/loading.gif'),
+              : AssetImage('assets/images/blurred-placeholder.jpg'),
           image: imgPath != null
               ? AssetImage(imgPath!)
-              : AssetImage('assets/images/loading.gif'),
+              : AssetImage('assets/images/blurred-placeholder.jpg'),
           height: heightValue ?? 100,
           width: widthValue ?? 100,
         ),
       );
     }
+
     return ProgressiveImage(
-      placeholder: AssetImage('assets/images/loading.gif'),
+      placeholder: AssetImage('assets/images/blurred-placeholder.jpg'),
       thumbnail: imgPath != null
           ? AssetImage(imgPath!)
-          : AssetImage('assets/images/loading.gif'),
+          : AssetImage('assets/images/blurred-placeholder.jpg'),
       image: imgPath != null
           ? AssetImage(imgPath!)
-          : AssetImage('assets/images/loading.gif'),
+          : AssetImage('assets/images/blurred-placeholder.jpg'),
       height: heightValue ?? 100,
       width: widthValue ?? 100,
     );

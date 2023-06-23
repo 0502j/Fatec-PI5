@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pi5_flutter_application/pages/dashboardPage.dart';
 import 'package:pi5_flutter_application/pages/userEventsPage.dart';
 
 class confirmPage extends StatefulWidget {
@@ -45,28 +46,56 @@ class _confirmPageState extends State<confirmPage> {
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: SizedBox(
-                  width: 300,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const userEventsPage()));
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: const Color(0xff606c38),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                    ),
-                    child: const Text(
-                      "Ver seus eventos",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                    ),
-                  ),
-                ),
+                    width: 300,
+                    child: Column(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const userEventsPage()));
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: const Color(0xff606c38),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                          ),
+                          child: const Text(
+                            "Ver seus eventos",
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const dashboardPage()));
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: const Color(0xff606c38),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                          ),
+                          child: const Text(
+                            "Voltar para o início",
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    )),
               ),
             ],
           ),

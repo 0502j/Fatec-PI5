@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pi5_flutter_application/pages/dashboardPage.dart';
+import 'package:pi5_flutter_application/pages/loginPage.dart';
 import 'package:pi5_flutter_application/widgets/ProgressiveImage.dart';
 
 class introPage extends StatefulWidget {
@@ -51,8 +51,8 @@ class _introPageState extends State<introPage> {
   }
 
   void pushNewPage() {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const dashboardPage()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const loginPage()));
   }
 
   @override
@@ -121,14 +121,10 @@ class _introPageState extends State<introPage> {
                               )),
                           child: Column(
                             children: [
-                              // Image.asset(
-                              //   _imageAsset,
-                              //   fit: BoxFit.fitWidth,
-                              // ),
                               ProgressiveImageWidget(
                                 imgPath: _imageAsset,
-                                widthValue: double.maxFinite,
-                                heightValue: 350,
+                                widthValue: 400.0,
+                                heightValue: 350.0,
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(16),
