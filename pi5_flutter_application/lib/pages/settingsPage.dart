@@ -11,9 +11,9 @@ class settingsPage extends StatefulWidget {
 }
 
 class _settingsPageState extends State<settingsPage> {
-  String _name = "Lorem ipsum";
-  String _email = "lorem@lorem.com";
-  String _password = "********";
+  String _name = "";
+  String _email = "";
+  String _password = "";
   final _formKey = GlobalKey<FormState>();
 
   //Uploader de imagem
@@ -192,8 +192,8 @@ class _settingsPageState extends State<settingsPage> {
                           _formKey.currentState!.save();
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                                content:
-                                    Text("Configurações salvas com sucesso!")),
+                                content: Text(
+                                    "Não foi possível salvar. Esta funcionalidade ainda está em construção!")),
                           );
                         }
                       },
