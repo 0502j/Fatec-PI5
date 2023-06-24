@@ -3,8 +3,6 @@ package com.Ambitus.AmbitusAPI.DTOs;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.Ambitus.AmbitusAPI.entities.Evento.OpcaoEvento;
 import com.fasterxml.jackson.annotation.JsonFormat;
 

@@ -47,10 +47,11 @@ public class UsuarioController {
 	public ResponseEntity<UsuarioController.TokenAccess> login(@RequestBody @Valid DadosLogin dados){
 		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(dados.email(),dados.senha());
 		Authentication auth = authManager.authenticate(authToken);
+		Usuario user = (Usuario)auth.getPrincipal();
 		String tokenAcesso = tokenGenerate.genToken((Usuario)auth.getPrincipal());
-		return ResponseEntity.accepted().body(new TokenAccess(tokenAcesso));
+		return ResponseEntity.accepted().body(new TokenAccess(tokenAcesso,user.getNome(),user.getImage()));
 	}
 	
-	public record TokenAccess(String token) {}
+	public record TokenAccess(String token,String nome,String image) {}
 
 }

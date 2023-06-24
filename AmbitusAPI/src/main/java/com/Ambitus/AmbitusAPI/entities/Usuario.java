@@ -46,6 +46,7 @@ public class Usuario implements UserDetails{
 	@Getter(onMethod = @__(@JsonIgnore))
 	@ManyToMany(mappedBy = "participantes",fetch = FetchType.EAGER)
 	private Set<Evento> eventosInscrito;
+	private String image;
 	
 	public Usuario(DadosCadastro dados) {
 		this.nome = dados.nome();
@@ -53,6 +54,7 @@ public class Usuario implements UserDetails{
 		this.sexo = dados.sexo();
 		this.email = dados.email();
 		this.senha = dados.senha();
+		this.image = dados.image();
 	}
 
 	public void criptografarSenha(BCryptPasswordEncoder encoder) {

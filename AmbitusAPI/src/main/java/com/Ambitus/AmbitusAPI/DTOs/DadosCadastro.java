@@ -14,7 +14,8 @@ public record DadosCadastro(
 		@Email
 		String email,
 		@NotBlank
-		String senha
+		String senha,
+		String image
 		) {
 
 }

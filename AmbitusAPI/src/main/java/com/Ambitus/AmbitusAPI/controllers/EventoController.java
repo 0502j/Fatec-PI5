@@ -1,10 +1,10 @@
 package com.Ambitus.AmbitusAPI.controllers;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.Ambitus.AmbitusAPI.DTOs.DadosEvento;
+import com.Ambitus.AmbitusAPI.DTOs.DadosEventoRetorno;
 import com.Ambitus.AmbitusAPI.DTOs.DadosParticipantes;
 import com.Ambitus.AmbitusAPI.DTOs.MeusEventos;
 import com.Ambitus.AmbitusAPI.Security.BloqueioEdicao;
 import com.Ambitus.AmbitusAPI.entities.Evento;
+import com.Ambitus.AmbitusAPI.entities.Evento.OpcaoEvento;
 import com.Ambitus.AmbitusAPI.entities.Usuario;
 import com.Ambitus.AmbitusAPI.repositories.EventoRepository;
 
@@ -45,9 +47,18 @@ public class EventoController {
 	}
 	
 	@GetMapping
-	private ResponseEntity<Page<Evento>> listarEventos(Pageable paginacao) {
-		Page<Evento> eventos =  eventoRepositoy.findAll(paginacao);
-		return ResponseEntity.ok(eventos);
+	private ResponseEntity<List<DadosEventoRetorno>> listarEventos(Pageable paginacao) {
+		List<Evento> eventos =  eventoRepositoy.findAll();
+		List<DadosEventoRetorno> dadosRetorno = eventos.stream().map(DadosEventoRetorno::new).toList();
+		return ResponseEntity.ok(dadosRetorno);
+	}
+	
+	@GetMapping("/{tipoEvento}")
+	private ResponseEntity<List<DadosEventoRetorno>> listarEventos(@PathVariable String tipoEvento) {
+		OpcaoEvento opcao = OpcaoEvento.valueOf(tipoEvento);
+		List<Evento> eventos =  eventoRepositoy.findByTipo(opcao);
+		List<DadosEventoRetorno> dadosRetornoEvento = eventos.stream().map(DadosEventoRetorno::new).toList();
+		return ResponseEntity.ok(dadosRetornoEvento);
 	}
 
 	
@@ -84,6 +95,18 @@ public class EventoController {
 		evento.getParticipantes().remove(usuario);
 		eventoRepositoy.save(evento);
 		return ResponseEntity.ok().build();
+	}
+	
+	@DeleteMapping("/{id}")
+	private ResponseEntity<String> deletarEvento(@PathVariable Long id){
+		Evento evento = eventoRepositoy.findById(id).get();
+		Usuario usuario = (Usuario)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if(evento.getOrganizador().equals(usuario)) {
+			evento.getParticipantes().clear();
+			eventoRepositoy.delete(evento);
+			return ResponseEntity.ok().build();
+		}
+		return ResponseEntity.badRequest().body("Você não pode excluir um evento que não seja o organizador");
 	}
 	
 	@PutMapping("/editarEvento/{id}")
