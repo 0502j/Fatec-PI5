@@ -125,7 +125,7 @@ class _eventDetailPageState extends State<eventDetailPage> {
                                           child: event.image == null
                                               ? ClipRRect(
                                                   child: Image.asset(
-                                                    'assets/images/rawpixel-eventPlaceholder.jpg',
+                                                    'assets/images/eventPlaceholder.jpg',
                                                     fit: BoxFit.cover,
                                                     height: 80,
                                                     width: 100,
