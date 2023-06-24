@@ -5,8 +5,9 @@
     <br><br>
   <img align="center" alt="Flutter" height="30" src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white&color=black">
   <img align="center" alt="Dart" height="30" src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white&color=black">
-      <img align="center" alt="Potgre" height="30" src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white&color=black">
-              <img align="center" alt="Spring" height="30" src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white&color=black"
+  <img align="center" alt="Spring" height="30" src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=spring&logoColor=white&color=black"
+  <img align="center" alt="Potgre" height="30" src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white&color=black">
+  <img align="center" alt="Spring" height="30" src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white&color=black"
 ">
  <img align="center" alt="AWS" height="30" src="https://img.shields.io/badge/Amazon_AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white&color=black"
 >
@@ -61,9 +62,9 @@
 <h4>Diagramas</h4>
 
 <section align="center">
-    <img src="https://github.com/0502j/Fatec-PI5/assets/71787801/bc326b6d-b822-4354-bbce-6a281dbd945f" width=500>
+    <img src="https://github.com/0502j/Fatec-PI5/assets/71787801/bc326b6d-b822-4354-bbce-6a281dbd945f" width=400>
     <br><br>
-    <img src="https://github.com/0502j/Fatec-PI5/assets/71787801/961583de-5bc7-42fa-b1e1-d277489442f8" width=500>
+    <img src="https://github.com/0502j/Fatec-PI5/assets/71787801/961583de-5bc7-42fa-b1e1-d277489442f8" width=400>
 </section>
 <p></p>
 ***Para mais detalhes da documentação do projeto, acesse a pasta "Docs" do repositório.
@@ -96,19 +97,19 @@ No link abaixo, você pode acessar a coleção de endpoints da API:
 
 <p align="center">
   <a href="https://github.com/jamisousa">
-    <img src="https://avatars.githubusercontent.com/jamisousa" width="10%">
+    <img src="https://avatars.githubusercontent.com/jamisousa" width="12%">
   </a>
   <a href="https://github.com/VitorHenri">
-    <img src="https://avatars.githubusercontent.com/VitorHenri" width="10%">
+    <img src="https://avatars.githubusercontent.com/VitorHenri" width="12%">
   </a>
     <a href="https://github.com/ArielAndrielli">
-    <img src="https://avatars.githubusercontent.com/ArielAndrielli" width="10%">
+    <img src="https://avatars.githubusercontent.com/ArielAndrielli" width="12%">
   </a>
   <a href="https://github.com/JpedroBH">
-    <img src="https://avatars.githubusercontent.com/JpedroBH" width="10%">
+    <img src="https://avatars.githubusercontent.com/JpedroBH" width="12%">
   </a>
   <a href="https://github.com/Andreflp343">
-    <img src="https://avatars.githubusercontent.com/Andreflp343" width="10%">
+    <img src="https://avatars.githubusercontent.com/Andreflp343" width="12%">
   </a>
 </p>
 
