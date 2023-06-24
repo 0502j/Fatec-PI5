@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pi5_flutter_application/pages/eventDetailPage.dart';
-import 'package:pi5_flutter_application/pages/eventManagementPage.dart';
 import 'package:pi5_flutter_application/pages/settingsPage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pi5_flutter_application/services/api_services.dart';
