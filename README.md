@@ -73,7 +73,7 @@
 
 <h4>Endpoints</h4>
 
-<p> A definir
+<p><a href="https://www.postman.com/telecoms-participant-77681922/workspace/sistema-agendamento/collection/20892555-5225ddaa-a586-4d85-8b04-77e623930c05?action=share&creator=20892555">Coleção de ENDPOINTS POSTMAN API AMBITUS</a>
 </p>
 
 
