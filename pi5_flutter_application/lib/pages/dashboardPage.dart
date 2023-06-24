@@ -96,9 +96,8 @@ class _dashboardPageState extends State<dashboardPage> {
       if (userToken != null) {
         var response = await getEvents(userToken);
         if (response.statusCode == 200) {
-          var data = json.decode(utf8.decode(response.bodyBytes));
-          List<dynamic> eventList = data['content'];
-          events = eventList
+          var eventDataList = json.decode(utf8.decode(response.bodyBytes));
+          events = eventDataList
               .map<Event>((eventData) => Event.fromJson(eventData))
               .toList();
         }
@@ -598,7 +597,7 @@ class _dashboardPageState extends State<dashboardPage> {
                                             child: imagem == null
                                                 ? ClipRRect(
                                                     child: Image.asset(
-                                                      'assets/images/rawpixel-eventPlaceholder.jpg',
+                                                      'assets/images/eventPlaceholder.jpg',
                                                       fit: BoxFit.cover,
                                                       height: 80,
                                                       width: 100,

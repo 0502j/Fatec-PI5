@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:progressive_image/progressive_image.dart';
 
+/*
+  Widget usado para imagens que NÃO vêm de requisições back-end, mas sim de imagens da pasta assets do projeto.
+ */
+
 class ProgressiveImageWidget extends StatelessWidget {
   final String? imgPath;
   final bool isOval;

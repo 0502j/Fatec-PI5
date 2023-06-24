@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pi5_flutter_application/pages/eventDetailPage.dart';
-import 'package:pi5_flutter_application/pages/eventManagementPage.dart';
 import 'package:pi5_flutter_application/pages/settingsPage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pi5_flutter_application/services/api_services.dart';
@@ -70,6 +69,7 @@ class _userEventsPageState extends State<userEventsPage> {
       });
     }
     getUserEventsFunction(userToken);
+    print(events);
     setState(() {
       isLoading = false;
     });
@@ -378,47 +378,8 @@ class _userEventsPageState extends State<userEventsPage> {
                                                                     Row(
                                                                       children: [
                                                                         GestureDetector(
-                                                                          onTap:
-                                                                              () {
-                                                                            /* TO DO - verifica se o usuário é dono do evento ou não antes de atualizar
-                                                                            var email =
-                                                                                await getUserEmail();
-                                                                            print(email);
-                                                                            print(event.id);
-
-                                                                            var participants =
-                                                                                await getEventParticipants(
-                                                                                    userToken!,
-                                                                                    event.id);
-                                                                            print(participants.body);
-
-                                                                            List<dynamic>
-                                                                                participantes =
-                                                                                jsonDecode(participants
-                                                                                        .body
-                                                                                        .toString())[
-                                                                                    'participantes'];
-                                                                            List emails = participantes
-                                                                                .map((participante) =>
-                                                                                    participante[
-                                                                                        'email'])
-                                                                                .toList();
-
-                                                                            if (emails
-                                                                                .contains(email)) {
-                                                                              print(
-                                                                                  'O e-mail do usuário logado corresponde a um dos e-mails na resposta.');
-                                                                            } else {
-                                                                              print(
-                                                                                  'O e-mail do usuário logado não corresponde a nenhum dos e-mails na resposta.');
-                                                                            }
-                                                                            */
-
-                                                                            Navigator.push(
-                                                                              context,
-                                                                              MaterialPageRoute(builder: (context) => eventManagementPage(isUpdating: true, event: event)),
-                                                                            );
-                                                                          },
+                                                                          // onTap:
+                                                                          //     () async {},
                                                                           child:
                                                                               FaIcon(
                                                                             FontAwesomeIcons.edit,
@@ -466,7 +427,7 @@ class _userEventsPageState extends State<userEventsPage> {
                                                                                     builder: (BuildContext context) {
                                                                                       return AlertDialog(
                                                                                         title: Text("Não foi possível deletar."),
-                                                                                        content: Text("Tente novamente mais tarde!"),
+                                                                                        content: Text("Certifique-se que você é o proprietário do evento e tente novamente mais tarde."),
                                                                                         actions: <Widget>[
                                                                                           TextButton(
                                                                                             child: Text('Fechar'),
