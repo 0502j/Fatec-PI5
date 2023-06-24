@@ -61,12 +61,13 @@
 <br>
 <h4>Diagramas</h4>
 
-<section align="center">
-    <img src="https://github.com/0502j/Fatec-PI5/assets/71787801/bc326b6d-b822-4354-bbce-6a281dbd945f" width=400>
-    <br><br>
-    <img src="https://github.com/0502j/Fatec-PI5/assets/71787801/961583de-5bc7-42fa-b1e1-d277489442f8" width=400>
-</section>
-<p></p>
+<table>
+  <tr>
+    <td valign="top"><img src="https://github.com/0502j/Fatec-PI5/assets/71787801/bc326b6d-b822-4354-bbce-6a281dbd945f"/></td>
+    <td valign="top"><img src="https://github.com/0502j/Fatec-PI5/assets/71787801/961583de-5bc7-42fa-b1e1-d277489442f8"/></td>
+  </tr>
+</table>
+
 ***Para mais detalhes da documentação do projeto, acesse a pasta "Docs" do repositório.
 
 <br><br><p></p>
