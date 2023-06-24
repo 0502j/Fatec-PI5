@@ -214,10 +214,43 @@ class _participantsPageState extends State<participantsPage> {
                                                     .map((participant) {
                                                   return Container(
                                                     child: ListTile(
-                                                      leading: CircleAvatar(
-                                                        backgroundImage: AssetImage(
-                                                            "assets/images/becris-user.png"),
-                                                      ),
+                                                      // leading: CircleAvatar(
+                                                      //   backgroundImage: AssetImage(
+                                                      //       "assets/images/becris-user.png"),
+                                                      // ),
+                                                      leading: participant
+                                                                      .image ==
+                                                                  null ||
+                                                              participant
+                                                                      .image ==
+                                                                  ""
+                                                          ? Container(
+                                                              width: 50,
+                                                              height: 50,
+                                                              decoration: const BoxDecoration(
+                                                                  shape: BoxShape
+                                                                      .circle,
+                                                                  image: DecorationImage(
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                      image: AssetImage(
+                                                                          "assets/images/becris-user.png"))),
+                                                            )
+                                                          : ClipOval(
+                                                              child:
+                                                                  Image.memory(
+                                                                base64Decode(participant
+                                                                    .image!
+                                                                    .replaceAll(
+                                                                        RegExp(
+                                                                            r'\s+'),
+                                                                        '')),
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                                width: 50,
+                                                                height: 50,
+                                                              ),
+                                                            ),
                                                       title: Row(
                                                         children: [
                                                           Expanded(

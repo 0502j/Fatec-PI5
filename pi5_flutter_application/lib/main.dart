@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:pi5_flutter_application/pages/indexPage.dart';
 
 void main() {
-  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
       overlays: [SystemUiOverlay.bottom]);
 
