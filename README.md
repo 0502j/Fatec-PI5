@@ -85,9 +85,14 @@ No link abaixo, você pode acessar a coleção de endpoints da API:
 <pre>
   flutter pub get
 </pre>
-<p>Ainda no terminal, rode o flutter. Caso haja mais de um navegador, você poderá escolher qual plataforma deseja inicializar o projeto.</p>
+<p>Conecte um dispositivo físico em seu computador com a depuração ativada. </p>
+<p>Ainda no terminal, rode o flutter. Caso haja mais de um dispositivo, você poderá escolher qual plataforma deseja inicializar o projeto.</p>
 <pre>
   flutter run
+</pre>
+<p>Como alternativa, você também pode gerar um apk do projeto para instalação em dispositivos móveis.</p>
+<pre>
+  flutter build apk
 </pre>
 
 
