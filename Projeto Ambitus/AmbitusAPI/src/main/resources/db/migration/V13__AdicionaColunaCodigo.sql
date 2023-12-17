@@ -1,0 +1,1 @@
+ALTER table cupom add column codigo varchar(255);

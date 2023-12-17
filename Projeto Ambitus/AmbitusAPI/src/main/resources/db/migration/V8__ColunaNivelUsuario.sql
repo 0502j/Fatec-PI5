@@ -1,0 +1,1 @@
+alter table usuario add nivel int default 0;

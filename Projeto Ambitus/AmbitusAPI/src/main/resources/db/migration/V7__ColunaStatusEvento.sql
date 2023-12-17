@@ -1,0 +1,1 @@
+alter table evento add status varchar(255) not null;
